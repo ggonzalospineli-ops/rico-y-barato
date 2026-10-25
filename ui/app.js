@@ -2,6 +2,10 @@
 import { createEngine } from '../engine/engine.js';
 import { demoSource } from '../sources/demo.js';
 import { jsonSource } from '../sources/json.js';
+import { splitBill, splitMessage } from '../engine/split.js';
+import { parseIntent } from '../engine/intent.js';
+import { mountAssistant } from './assistant.js';
+import { hasKey, setKey, hasAI, aiLabel, activeProvider, detectLocal, warmLocal, localStatus, getProvider, setProvider, testAI, interpretWithAI, readTicket } from './ai.js';
 
 // ---------- Datos y motor ----------
 const real = await fetch('../data/rappi-catalog.json').then(r => (r.ok ? r.json() : null)).catch(() => null);
@@ -41,6 +45,14 @@ const BADGES = {
   'mas-vendido':       ['🔥 De lo más pedido', 'red'],
   'descuento':         ['% Descuento', 'green'],
   'favorito':          ['❤️ Favorito', 'dark'],
+  'aprobado-morfy':    ['✅ Aprobado en Morfy', 'green'],
+  'popular-google':    ['🔎 Popular en Google', ''],
+  'opiniones-divididas': ['⚠️ Opiniones divididas', 'warn'],
+  'bajo-precio':       ['📉 Bajó de precio', 'green'],
+  'tachado-inflado':   ['⚠️ Tachado inflado', 'warn'],
+  'mas-barato-en-otra': ['💸 Más barato en otra app', 'warn'],
+  'no-te-gusto':       ['👎 No te gustó', 'warn'],
+  'cierra-pronto':     ['🕐 Cierra pronto', 'warn'],
 };
 const EXCLUDABLE = { cerdo: '🐷 Cerdo', lacteos: '🧀 Lácteos', pescado: '🐟 Pescado', frito: '🍟 Frito', picante: '🌶️ Picante' };
 
@@ -49,10 +61,15 @@ const $ = sel => document.querySelector(sel);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const fmt = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 });
 const ars = n => (Number.isFinite(n) ? fmt.format(n) : 'sin tope');
+const itemPrice = item => item.price > 0 ? ars(item.price) : 'Consultar precio';
 const look = cat => LOOK[cat] || LOOK.otro;
 const catOfItem = it => Object.keys(it.yields || {})[0] || 'otro';
 // El score de la página del local viene con cantidad de reseñas; el del listado, no.
-const stars = r => (r.rappiScore ?? r.rappiRating ?? r.googleRating ?? '—');
+// Un local sin reseñas en Rappi trae score 0: eso es "sin datos", no "cero estrellas".
+const stars = r => {
+  const v = (r.rappiReviews ? r.rappiScore : null) ?? r.googleRating ?? (r.rappiReviews == null ? r.rappiRating : null);
+  return v == null ? '—' : (Math.round(v * 10) / 10).toLocaleString('es-AR'); // Rappi a veces manda 4.48165
+};
 const reviewsTxt = r => (r.rappiReviews ? `<small>(${r.rappiReviews})</small>` : '');
 
 const ICONS = {
@@ -91,9 +108,25 @@ function coverHtml({ category, imageUrl }) {
   return `<span class="art">${look(category).e}</span>${photo(imageUrl)}`;
 }
 const coverStyle = cat => `style="background:${look(cat).bg}"`;
+// Portada grande de las hojas: la foto en más resolución y entera, sobre la misma foto desenfocada
+// (así una foto apaisada no se recorta ni se estira en la columna alta del modal de escritorio).
+const bigImage = url => url && url.replace(/d=\d+x\d+/, 'd=1400x1400');
+function sheetCoverHtml(category, url) {
+  if (!url) return `<span class="art">${look(category).e}</span>`;
+  return `<span class="art">${look(category).e}</span><span class="backdrop" style="background-image:url('${esc(bigImage(url))}')"></span>${photo(bigImage(url), 500)}`;
+}
 const thumb = (cat, imageUrl, cls = '') => `<div class="thumb ${cls}" ${coverStyle(cat)}><span>${look(cat).e}</span>${photo(imageUrl)}</div>`;
 const logoThumb = (rest, cat) => `<div class="thumb logo" ${coverStyle(cat)}><span>${look(cat).e}</span>${photo(rest.logoUrl, 120)}</div>`;
 const deliveryText = r => [r.deliveryFee != null ? (r.deliveryFee ? `🛵 ${ars(r.deliveryFee)}` : '🛵 Gratis') : null, r.etaMin ? `${r.etaMin} min` : null].filter(Boolean).join(' · ');
+const sourceHtml = item => {
+  if (!item.source) return '';
+  const label = item.officialSource ? '✓ Menú oficial' : item.source;
+  const title = [item.sourceValidity, item.sourceScope].filter(Boolean).join(' · ');
+  const sourceUrl = /^https?:\/\//i.test(item.sourceUrl || '') ? item.sourceUrl : null;
+  return sourceUrl
+    ? `<a class="source-chip ${item.officialSource ? 'official' : ''}" href="${esc(sourceUrl)}" target="_blank" rel="noopener" title="${esc(title)}">${esc(label)} ${icon('out')}</a>`
+    : `<span class="source-chip ${item.officialSource ? 'official' : ''}" title="${esc(title)}">${esc(label)}</span>`;
+};
 
 document.addEventListener('load', e => {
   const img = e.target;
@@ -118,12 +151,14 @@ function currentResult() {
     categories: ui.category === 'all' ? undefined : [ui.category],
     ricoWeight: ui.ricoWeight,
     people: ui.people,
+    exclude: ui.tempExclude || [],
+    openOnly: !ui.showClosed,
     limit: 20,
     map: true,
   });
   return lastResult;
 }
-const findPlan = id => lastResult?.options.find(p => p.id === id) || lastResult?.all?.find(p => p.id === id) || lastResult?.overBudget.find(p => p.id === id)
+const findPlan = id => lastResult?.options.find(p => p.id === id) || lastResult?.all?.find(p => p.id === id) || favPlans.find(p => p.id === id) || lastResult?.overBudget.find(p => p.id === id)
   || engine.getState().cart.find(p => p.id === id);
 
 // ---------- Vistas ----------
@@ -206,6 +241,8 @@ function viewHome() {
     </div>
     </div>
 
+    ${askBarHtml()}
+    <div id="rate-wrap"></div>
     <div class="home-grid"><aside class="home-controls">
     ${heroHtml()}
 
@@ -248,6 +285,8 @@ function viewHome() {
     </section>
 
     </aside><div class="home-results">
+    <section class="section" id="fav-wrap"></section>
+    <section class="section" id="drops-wrap"></section>
     <section class="section results-head">
       <div class="results-bar">
         <div><h2>Para vos ahora</h2><span id="result-count"></span></div>
@@ -259,6 +298,7 @@ function viewHome() {
           <button class="btn red decide-btn" data-decide>🎰 Decidí por mí</button>
         </div>
       </div>
+      <div id="closed-note"></div>
       <div id="map-wrap"></div>
       <div class="cards" id="results"></div>
     </section>
@@ -284,6 +324,8 @@ function renderResults() {
   box.innerHTML = r.options.length ? r.options.map(planCard).join('') : `
     <div class="empty-state"><div class="e">🥲</div><h3>Con esa plata no llego</h3>
     <p>Probá con menos hambre, otra comida o subí el monto.${r.overBudget.length ? ' Abajo te muestro lo que se pasa por poco.' : ''}</p></div>`;
+  renderFavRail(r);
+  renderExtras(r);
   const over = r.overBudget.slice(0, 5);
   $('#over-wrap').innerHTML = over.length ? `
     <div class="section-head"><h2>Con un poco más…</h2><span>se pasan por poco</span></div>
@@ -304,7 +346,7 @@ function planCard(p) {
   <article class="card ${p.badges.includes('punto-dulce') ? 'is-sweet' : ''}" data-plan="${esc(p.id)}">
     <div class="cover" ${coverStyle(p.category)}>
       ${coverHtml({ category: p.category, imageUrl: planImage(p), multi: p.lines.reduce((s, l) => s + l.qty, 0) > 2 })}
-      <span class="qty">${look(p.category).e} ${p.quantity} ${unitLabel(p.quantity, p.unit)}${p.variant === 'un-poco-menos' ? ' · un poco menos' : ''}</span>
+      <span class="qty">${look(p.category).e} ${p.quantity} ${unitLabel(p.quantity, p.unit)}${variantLabel(p.variant)}</span>
       <button class="fav ${fav ? 'on' : ''}" data-fav-plan="${esc(p.id)}" aria-label="Favorito">${icon('heart', fav ? 'fill' : '')}</button>
       <div class="badges">${p.badges.filter(b => b !== 'favorito').slice(0, 2).map(b => `<span class="badge ${BADGES[b][1]}">${BADGES[b][0]}</span>`).join('')}</div>
     </div>
@@ -322,7 +364,7 @@ function planCard(p) {
       <div class="card-foot">
         <div>
           <div class="price">${ars(p.total)}${orig > p.total ? `<s>${ars(orig)}</s>` : ''}</div>
-          <div class="per">${ars(p.unitCost)} c/u · ${p.restaurant.deliveryFee == null ? '+ envío' : deliveryText(p.restaurant)}</div>
+          <div class="per">${ars(p.unitCost)} c/u · ${p.restaurant.deliveryFee == null ? '+ envío' : deliveryText(p.restaurant)}${p.restaurant.distanceKm != null ? ` · 📍 ${km(p.restaurant.distanceKm)}` : ''}</div>
         </div>
         <button class="add ${added ? 'done' : ''}" data-add="${esc(p.id)}" aria-label="Agregar al pedido">${icon(added ? 'check' : 'plus')}</button>
       </div>
@@ -332,12 +374,14 @@ function planCard(p) {
 
 function viewTop() {
   const r = engine.rankings({ limit: 2000 });
-  const tabs = [['sellers', '🔥 Más pedidos'], ['rated', '⭐ Mejor puntuados'], ['gems', '💎 Joyas']];
+  const tabs = [['sellers', '🔥 Más pedidos'], ['rated', '⭐ Puntuados'], ['gems', '💎 Joyas'], ['drops', '📉 Bajas']];
   // Solo lo que el usuario come (y en la categoría elegida en Inicio, si hay una).
   const enabled = engine.getState().profile.enabledCategories;
   const wanted = it => Object.keys(it.yields).some(c => enabled.includes(c) && (ui.category === 'all' || c === ui.category));
   let body;
-  if (ui.topTab === 'sellers') {
+  if (ui.topTab === 'drops') {
+    body = dropsListHtml();
+  } else if (ui.topTab === 'sellers') {
     body = r.bestSellers.filter(wanted).slice(0, 30).map((it, i) => itemRow(it, i + 1)).join('');
   } else {
     const list = (ui.topTab === 'rated' ? r.topRated : r.hiddenGems).slice(0, 30);
@@ -357,6 +401,7 @@ function viewTop() {
     <div class="page-title"><h1>Lo mejor de tu zona</h1></div>
     <div class="seg">${tabs.map(([k, l]) => `<button class="${ui.topTab === k ? 'on' : ''}" data-toptab="${k}">${l}</button>`).join('')}</div>
     <div class="list">${body}</div>
+    ${ui.topTab === 'gems' ? offRappiHtml() : ''}
     ${ui.topTab === 'sellers' ? `<p class="note">"Más pedidos" sale de la sección Populares de cada local en Rappi: lo más pedido de cada local${ui.category === 'all' ? ' entre lo que comés' : ` en ${CATS[ui.category].label}`}, ordenado por el puntaje del local.</p>` : ''}`;
 }
 
@@ -398,9 +443,9 @@ function viewTaste() {
 function viewCart() {
   const st = engine.getState();
   const s = engine.budgetSummary();
-  const orders = [...st.orders].reverse().slice(0, 15);
   return `
     <div class="page-title"><h1>Pedidos</h1></div>
+    ${cartToolsHtml()}
     ${st.cart.length ? `<div class="list">${st.cart.map(p => `
       <div class="cart-item">
         ${thumb(p.category, planImage(p))}
@@ -411,6 +456,7 @@ function viewCart() {
           <div class="cart-actions">
             <a class="btn red sm" href="${esc(p.orderUrl)}" target="_blank" rel="noopener">Pedir en Rappi ${icon('out')}</a>
             <button class="btn primary sm" data-confirm="${esc(p.id)}">${icon('check')} Ya lo pedí</button>
+            <button class="btn ghost sm" data-split="${esc(p.id)}" aria-label="Dividir la cuenta">➗</button>
             <button class="btn ghost sm" data-remove="${esc(p.id)}" aria-label="Quitar">${icon('x')}</button>
           </div>
         </div>
@@ -427,18 +473,16 @@ function viewCart() {
     </div>
     <p class="note">Los totales incluyen el envío cuando Rappi lo publica (es aproximado: depende de tu dirección). No incluyen la tarifa de servicio.</p>
 
-    ${orders.length ? `<section class="section"><div class="section-head"><h2>Historial</h2><span>${st.orders.length} pedidos</span></div>
-      <div class="list">${orders.map(o => `
-        <div class="row"><div class="row-main"><h4>${esc(o.title)}</h4>
-        <p>${new Date(o.at).toLocaleDateString('es-AR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}</p></div>
-        <span class="score">${ars(o.total)}</span></div>`).join('')}</div></section>` : ''}`;
+    ${historyHtml(st.orders)}`;
 }
 
 function viewSettings() {
   const st = engine.getState();
+  const catalog = engine.catalogSummary();
   const hidden = st.hiddenItems.map(id => engine.item(id)).filter(Boolean);
   return `
     <div class="page-title"><h1>Ajustes</h1></div>
+    ${extraSettingsHtml()}
 
     <div class="settings-grid">
     <div class="setting">
@@ -477,7 +521,7 @@ function viewSettings() {
     </div>
 
     </div>
-    <p class="note">${real ? `Datos: Rappi, relevado el ${new Date(real.meta.scrapedAt).toLocaleDateString('es-AR')} · ${real.restaurants.length} locales.` : 'Datos de ejemplo.'}</p>`;
+    <p class="note">${real ? `Catálogo unificado: ${catalog.rows.toLocaleString('es-AR')} productos · ${catalog.restaurants.toLocaleString('es-AR')} locales · ${catalog.officialMenuRows.toLocaleString('es-AR')} filas de menús oficiales${catalog.consolidatedAt ? ` · actualizado el ${new Date(catalog.consolidatedAt).toLocaleDateString('es-AR')}` : ''}.` : 'Datos de ejemplo.'}</p>`;
 }
 
 const stepper = (cat, field, val) => `
@@ -498,7 +542,7 @@ function openPlan(id) {
   const orig = planOriginal(p);
   const favs = engine.getState().favorites;
   openSheet(`
-    <div class="cover" ${coverStyle(p.category)}>${coverHtml({ category: p.category, imageUrl: planImage(p), multi: true })}</div>
+    <div class="cover sheet-cover" ${coverStyle(p.category)}>${sheetCoverHtml(p.category, planImage(p))}</div>
     <div class="sheet-top">
       <button class="icon-btn" data-close aria-label="Cerrar">${icon('back')}</button>
       <span class="pill">${look(p.category).e} ${p.quantity} ${unitLabel(p.quantity, p.unit)}</span>
@@ -513,15 +557,17 @@ function openPlan(id) {
         <div><small>Por ${unitLabel(1, p.unit)}</small><b>${ars(p.unitCost)}</b></div>
         <div><small>Pediste</small><b>${p.target} → ${p.quantity}</b></div>
       </div>
+      ${placeHtml(p.restaurant)}
       ${deliveryText(p.restaurant) || p.restaurant.rappiReviews ? `<p class="blurb">${[deliveryText(p.restaurant), p.restaurant.rappiReviews ? `${p.restaurant.rappiReviews} reseñas en Rappi` : ''].filter(Boolean).join(' · ')}${p.restaurant.deliveryFee != null ? ' · envío aproximado' : ''}</p>` : ''}
       ${p.restaurant.address ? `<p class="blurb">📍 ${esc(p.restaurant.address)}</p>` : ''}
+      ${reputationHtml(p.restaurant)}
       ${p.variant === 'un-poco-menos' ? `<p class="blurb">Comés un poco menos de lo que querías (${p.quantity} de ${p.target}) pero te ahorrás bastante.</p>` : ''}
       ${plateHtml(p, true)}
       <div class="section-head" style="margin-top:22px"><h2>Qué pedís</h2><span>${p.lines.length} producto${p.lines.length > 1 ? 's' : ''}</span></div>
       <div class="list">${p.lines.map(l => `
         <div class="line-item">
           <span class="q">${l.qty}×</span>
-          <div class="row-main"><h4>${esc(l.name)}</h4><p>${ars(l.price)} c/u${l.discount ? ` · ${esc(l.discount)}` : ''}</p></div>
+          <div class="row-main"><h4>${esc(l.name)}</h4><p>${ars(l.price)} c/u${l.discount ? ` · ${esc(l.discount)}` : ''}</p>${signalsHtml(l.signals)}${priceChangeHtml(l)}${otherAppsHtml(l.otherApps, l.price)}</div>
           <button class="heart ${favs.includes(l.itemId) ? 'on' : ''}" data-fav="${esc(l.itemId)}" aria-label="Favorito">${icon('heart', favs.includes(l.itemId) ? 'fill' : '')}</button>
           <button class="flag" data-hide="${esc(l.itemId)}" title="La cantidad o la comida está mal detectada">Está mal</button>
         </div>`).join('')}</div>
@@ -529,6 +575,7 @@ function openPlan(id) {
     </div>
     <div class="sheet-bar">
       <div class="tot"><small>Total${p.restaurant.deliveryFee == null ? ' + envío' : ' con envío'}</small><b>${ars(p.total)}</b>${orig > p.total ? `<s>${ars(orig)}</s>` : ''}</div>
+      <button class="btn ghost split-btn" data-split="${esc(p.id)}" title="Dividir la cuenta">➗</button>
       ${inCart(p.id)
         ? `<a class="btn red" href="${esc(p.orderUrl)}" target="_blank" rel="noopener">Pedir en Rappi ${icon('out')}</a>`
         : `<button class="btn primary" data-add="${esc(p.id)}">${icon('bag')} Agregar al pedido</button>`}
@@ -544,7 +591,7 @@ function openMenu(restaurantId) {
   const mainCat = Object.entries(items.reduce((acc, it) => { const c = catOfItem(it); if (c !== 'otro') acc[c] = (acc[c] || 0) + 1; return acc; }, {}))
     .sort((a, b) => b[1] - a[1])[0]?.[0] || 'otro';
   openSheet(`
-    <div class="cover" ${coverStyle(mainCat)}>${coverHtml({ category: mainCat, imageUrl: rest.coverUrl })}</div>
+    <div class="cover sheet-cover" ${coverStyle(mainCat)}>${sheetCoverHtml(mainCat, rest.coverUrl)}</div>
     <div class="sheet-top">
       <button class="icon-btn" data-close aria-label="Cerrar">${icon('back')}</button>
       <span class="pill">Menú · ${items.length} productos</span>
@@ -558,13 +605,15 @@ function openMenu(restaurantId) {
         <div><small>Envío</small><b>${rest.deliveryFee != null ? (rest.deliveryFee ? ars(rest.deliveryFee) : 'Gratis') : '—'}</b></div>
         <div><small>Demora</small><b>${rest.etaMin ? `${rest.etaMin} min` : '—'}</b></div>
       </div>
+      ${placeHtml(rest)}
+      ${reputationHtml(rest)}
       <p class="blurb">Tocá el ❤️ en lo que te gusta de acá: con eso aprendo tu gusto y te lo priorizo.</p>
       ${Object.entries(bySection).map(([sec, list]) => `
         <div class="menu-section">${esc(sec)}</div>
         <div class="list" style="margin-top:10px">${list.map(it => `
           <div class="line-item">
             ${thumb(catOfItem(it), it.imageUrl, 'sm')}
-            <div class="row-main"><h4>${esc(it.name)}</h4><p>${ars(it.price)}${it.discount ? ` · ${esc(it.discount)}` : ''}${Object.keys(it.yields).length ? ` · rinde ${Object.entries(it.yields).map(([c, n]) => `${n} ${unitLabel(n, CATS[c].unit)}`).join(' + ')}` : ''}</p></div>
+            <div class="row-main"><h4>${esc(it.name)}</h4><p>${itemPrice(it)}${it.discount ? ` · ${esc(it.discount)}` : ''}${Object.keys(it.yields).length ? ` · rinde ${Object.entries(it.yields).map(([c, n]) => `${n} ${unitLabel(n, CATS[c].unit)}`).join(' + ')}` : ''}</p>${sourceHtml(it)}${signalsHtml(it.signals)}${priceChangeHtml(it)}${otherAppsHtml(it.otherApps, it.price)}</div>
             <button class="heart ${it.favorite ? 'on' : ''}" data-fav="${esc(it.id)}" aria-label="Favorito">${icon('heart', it.favorite ? 'fill' : '')}</button>
           </div>`).join('')}</div>`).join('')}
     </div>
@@ -601,7 +650,7 @@ document.addEventListener('click', e => {
   if (d.swipe) { swipe(d.swipe); return; }
   if ('spin' in d) { spin(); return; }
   if (d.cmd) { runCommand(+d.cmd); return; }
-  if (d.tab) { closeSheet(); ui.tab = d.tab; render(); $('#view').scrollTop = 0; return; }
+  if (d.tab) { closeSheet(); ui.tab = d.tab; if (d.toptab) ui.topTab = d.toptab; render(); $('#view').scrollTop = 0; return; }
   if (d.hunger) { ui.hunger = d.hunger; saveUi(); render(); return; }
   if (d.cat) { ui.category = d.cat; saveUi(); render(); return; }
   if ('money' in d) { ui.money = d.money ? +d.money : null; saveUi(); render(); return; }
@@ -707,7 +756,7 @@ function renderSearch(q) {
   const hits = RESTAURANTS.filter(r => norm(r.name).includes(nq)).slice(0, 12);
   box.className = 'search-results';
   box.innerHTML = hits.length ? hits.map(r => `
-    <button data-rest="${esc(r.id)}"><span class="rating">${icon('star', 'fill')} ${r.rappiRating ?? '—'}</span>
+    <button data-rest="${esc(r.id)}"><span class="rating">${icon('star', 'fill')} ${stars(r)}</span>
     <span class="row-main"><h4>${esc(r.name)}</h4><p>${r.chain ? 'Cadena' : 'Local'}</p></span></button>`).join('')
     : '<div class="empty">No encontré locales con ese nombre.</div>';
 }
@@ -1053,3 +1102,536 @@ function onKey(e) {
     schedule(renderResults);
   }
 }
+
+// =====================================================================
+// Señales de Google y Morfy (data/signals.json)
+// =====================================================================
+function variantLabel(v) {
+  return { 'un-poco-menos': ' · un poco menos', 'tu-favorito': ' · ❤️ tu favorito', 'recomendado': ' · ✅ el recomendado' }[v] || '';
+}
+
+function signalsHtml(signals) {
+  if (!signals?.length) return '';
+  return `<div class="signals">${signals.map(s => `
+    <span class="signal ${s.source}">${s.source === 'morfy' ? `<b>${s.approval}%</b>` : '🔎'} ${esc(s.text)}</span>`).join('')}</div>`;
+}
+
+// Reputación en Google: barra de reseñas positivas / neutras / negativas + lo que más se menciona.
+function reputationHtml(r) {
+  if (r.googlePositive == null && !r.mentions?.length) return '';
+  const pos = r.googlePositive ?? 0, neg = r.googleNegative ?? 0, mid = Math.max(0, 100 - pos - neg);
+  return `<div class="reputation ${neg >= 15 ? 'split' : ''}">
+    <div class="rep-head"><b>Google ${r.googleRating ?? ''}</b><span>${r.googleReviews ? `${r.googleReviews.toLocaleString('es-AR')} opiniones` : ''}</span>
+      ${neg >= 15 ? '<span class="rep-warn">⚠️ Opiniones divididas</span>' : ''}</div>
+    ${r.googlePositive != null ? `<div class="rep-bar" role="img" aria-label="${pos}% positivas, ${neg}% negativas">
+      <i class="pos" style="width:${pos}%"></i><i class="mid" style="width:${mid}%"></i><i class="neg" style="width:${neg}%"></i></div>
+    <div class="rep-legend"><span>👍 ${pos}% de 4-5★</span><span>👎 ${neg}% de 1-2★</span></div>` : ''}
+    ${r.mentions?.length ? `<ul class="rep-mentions">${r.mentions.map(m => `<li>${esc(m)}</li>`).join('')}</ul>` : ''}
+  </div>`;
+}
+
+// Planes armados con tus favoritos, aunque no ganen el ranking general ni entren justo en la plata:
+// si se pasan, se muestra por cuánto.
+var favPlans = []; // var: se usa en el primer render, antes de esta línea
+function renderFavRail() {
+  const host = $('#fav-wrap');
+  if (!host) return;
+  const favs = engine.getState().favorites;
+  if (!favs.length) { host.innerHTML = ''; return; }
+  const free = engine.recommend({
+    hunger: ui.hunger, categories: ui.category === 'all' ? undefined : [ui.category],
+    ricoWeight: ui.ricoWeight, people: ui.people, map: true,
+  });
+  const money = ui.money ?? Infinity;
+  favPlans = free.all.filter(p => p.lines.some(l => favs.includes(l.itemId)))
+    .sort((a, b) => (a.total > money) - (b.total > money) || b.scores.total - a.scores.total).slice(0, 6);
+  const plans = favPlans;
+  host.innerHTML = plans.length ? `
+    <div class="section-head"><h2>❤️ Lo que ya sabés que te gusta</h2><span>armado con tus favoritos</span></div>
+    <div class="rail">${plans.map(p => `
+      <div class="mini fav-mini" data-plan="${esc(p.id)}">
+        <div class="cover" ${coverStyle(p.category)}>${coverHtml({ category: p.category, imageUrl: planImage(p) })}</div>
+        <h4>${esc(p.lines.map(l => `${l.qty > 1 ? `${l.qty}× ` : ''}${l.name}`).join(' + '))}</h4>
+        <p>${esc(p.restaurant.name)}</p>
+        <p class="price-mini">${ars(p.total)} · ${p.quantity} ${unitLabel(p.quantity, p.unit)}</p>
+        ${p.total > (ui.money ?? Infinity) ? `<p class="over">+${ars(p.total - ui.money)} sobre tu plata</p>` : ''}
+      </div>`).join('')}</div>` : '';
+}
+
+// Locales que otras fuentes recomiendan pero Rappi no tiene (no se pueden pedir desde acá).
+function offRappiHtml() {
+  const list = engine.notOnRappi();
+  if (!list.length) return '';
+  return `<section class="section">
+    <div class="section-head"><h2>Fuera de Rappi</h2><span>recomendados en Morfy</span></div>
+    <div class="list">${list.map(x => `
+      <div class="setting off-rappi">
+        <div class="card-row"><h3>${esc(x.name)}</h3>${x.morfy ? `<span class="score">⭐ ${x.morfy.rating}</span>` : ''}</div>
+        <p>${esc(x.address || '')}${x.morfy ? ` · ${x.morfy.reviews.toLocaleString('es-AR')} opiniones · +${x.morfy.chosenBy.toLocaleString('es-AR')} lo eligieron en Morfy` : ''}</p>
+        ${x.topSellers?.length ? `<div class="list" style="margin-top:10px">${x.topSellers.map((t, i) => `
+          <div class="line-item"><span class="q">#${i + 1}</span>
+            <div class="row-main"><h4>${esc(t.name)}</h4><p>${ars(t.price)} · ${t.approval}% de aprobación (${t.votes} votos)</p></div></div>`).join('')}</div>` : ''}
+        ${x.note ? `<p class="note">${esc(x.note)}</p>` : ''}
+      </div>`).join('')}</div>
+  </section>`;
+}
+
+// =====================================================================
+// Abierto ahora, distancia y envío
+// =====================================================================
+function km(d) { return d < 1 ? `${Math.round(d * 1000)} m` : `${d.toFixed(1).replace('.', ',')} km`; }
+
+function placeHtml(r) {
+  const o = r.open || {};
+  const bits = [];
+  if (o.known) bits.push(`<span class="chip-open ${o.open ? (o.closingSoon ? 'soon' : 'yes') : 'no'}">${o.open ? '🟢' : '🔴'} ${esc(o.label)}</span>`);
+  if (r.distanceKm != null) bits.push(`<span>📍 a ${km(r.distanceKm)} de tu casa</span>`);
+  return bits.length ? `<div class="place">${bits.join('')}</div>` : '';
+}
+
+// =====================================================================
+// Historial de precios y otras apps
+// =====================================================================
+function sparkline(points) {
+  if (!points || points.length < 3) return '';
+  const W = 90, H = 24, ys = points.map(p => p[1]);
+  const lo = Math.min(...ys), hi = Math.max(...ys), span = hi - lo || 1;
+  const d = points.map((p, i) => `${i ? 'L' : 'M'}${(i / (points.length - 1) * W).toFixed(1)},${(H - 2 - (p[1] - lo) / span * (H - 4)).toFixed(1)}`).join(' ');
+  return `<svg class="spark" viewBox="0 0 ${W} ${H}" aria-label="Precio en los últimos ${points.length} relevamientos"><path d="${d}"/></svg>`;
+}
+
+function priceChangeHtml(x) {
+  const out = [];
+  const c = x.priceChange;
+  if (c) {
+    const when = new Date(`${c.since}T12:00:00`).toLocaleDateString('es-AR', { day: 'numeric', month: 'short' });
+    out.push(`<span class="pchange ${c.pct < 0 ? 'down' : 'up'}">${c.pct < 0 ? '📉 Bajó' : '📈 Subió'} de ${ars(c.from)} a ${ars(c.to)} (${c.pct > 0 ? '+' : ''}${c.pct}%) desde el ${when}</span>`);
+  }
+  if (x.inflatedOriginal) out.push('<span class="pchange warn">⚠️ El precio tachado es más alto que cualquiera al que lo vimos vender</span>');
+  const sp = sparkline(x.priceHistory);
+  return out.length || sp ? `<div class="prices">${out.join('')}${sp}</div>` : '';
+}
+
+const APP_NAMES = { morfy: 'Morfy', pedidosya: 'PedidosYa', rappi: 'Rappi' };
+function otherAppsHtml(list, price) {
+  if (!list?.length) return '';
+  return `<div class="other-apps">${list.map(o => {
+    const cheaper = o.same && o.price < price;
+    return `<span class="oapp ${cheaper ? 'cheaper' : ''}">${cheaper ? `💸 ${ars(price - o.price)} más barato en ${APP_NAMES[o.app] || esc(o.app)}` : `En ${APP_NAMES[o.app] || esc(o.app)}: ${ars(o.price)}`}${o.note ? ` · ${esc(o.note)}` : ''}</span>`;
+  }).join('')}</div>`;
+}
+
+function dropsListHtml() {
+  const days = engine.priceTracking().days;
+  const drops = engine.priceDrops({ limit: 40 });
+  const since = days[0] ? new Date(`${days[0]}T12:00:00`).toLocaleDateString('es-AR', { day: 'numeric', month: 'long' }) : null;
+  if (!drops.length) {
+    return `<div class="empty-state"><div class="e">📉</div><h3>Todavía no hay bajas</h3>
+      <p>${days.length < 2
+        ? `Empecé a seguir los precios${since ? ` el ${since}` : ''}. Las bajas aparecen cuando haya otro relevamiento para comparar (corré <code>tools/actualizar.ps1</code>).`
+        : 'Entre los últimos dos relevamientos ningún plato que comés bajó 5% o más.'}</p></div>`;
+  }
+  return drops.map((it, i) => `
+    <div class="row">
+      <span class="rank ${i < 3 ? 'top' : ''}">${i + 1}</span>
+      ${thumb(catOfItem(it), it.imageUrl)}
+      <div class="row-main click" data-rest="${esc(it.restaurant.id)}">
+        <h4>${esc(it.name)}</h4>
+        <p>${esc(it.restaurant.name)}</p>
+        <div class="price">${ars(it.price)}<s>${ars(it.priceChange.from)}</s></div>
+      </div>
+      <span class="score down">${it.priceChange.pct}%</span>
+    </div>`).join('');
+}
+
+// =====================================================================
+// Inicio: pedir hablando, "¿estuvo rico?", bajas en favoritos, cerrados
+// =====================================================================
+function askBarHtml() {
+  const temp = ui.tempExclude || [];
+  return `
+    <section class="ask">
+      <div class="ask-in">
+        <span class="ask-ico">💬</span>
+        <input id="ask" placeholder="Contame: somos 3, uno no come carne, 25 lucas y mucha hambre" autocomplete="off" value="${esc(ui.askText || '')}">
+        ${'webkitSpeechRecognition' in window || 'SpeechRecognition' in window ? `<button class="ask-mic" data-mic aria-label="Dictar">🎤</button>` : ''}
+        <button class="btn red ask-go" data-ask>Armar</button>
+      </div>
+      ${ui.askUnderstood?.length || temp.length ? `<div class="ask-chips">
+        ${(ui.askUnderstood || []).map(u => `<span class="achip">✓ ${esc(u)}</span>`).join('')}
+        ${temp.length ? `<button class="achip x" data-clear-temp>Solo para este pedido: sin ${esc(temp.join(', '))} ✕</button>` : ''}
+        ${ui.askClaude ? `<span class="achip ai">✨ ${esc(ui.askClaude)}</span>` : ''}
+      </div>` : ''}
+      ${ui.askUnknown?.length ? `<div class="ask-unknown">No entendí: “${esc(ui.askUnknown.join(', '))}”.
+        ${hasAI() ? `<button class="linkish" data-claude>Preguntarle a la ${esc(aiLabel())} ✨</button>` : '<button class="linkish" data-tab="settings">Conectá una IA en Ajustes</button> para frases más libres.'}</div>` : ''}
+    </section>`;
+}
+
+function applyIntent(intent, { fromClaude = false } = {}) {
+  if (intent.people) ui.people = Math.max(1, Math.min(12, intent.people));
+  if (intent.money != null) ui.money = Number.isFinite(intent.money) ? intent.money : null;
+  if (intent.hunger) ui.hunger = intent.hunger;
+  if (intent.category && engine.getState().profile.enabledCategories.includes(intent.category)) ui.category = intent.category;
+  if (intent.ricoWeight != null) ui.ricoWeight = Math.max(0, Math.min(1, intent.ricoWeight));
+  ui.tempExclude = intent.exclude || [];
+  ui.askUnderstood = intent.understood || [];
+  ui.askUnknown = fromClaude ? [] : intent.unknown || [];
+  ui.askClaude = fromClaude ? intent.summary : null;
+  saveUi(); render();
+}
+
+async function askClaude() {
+  const text = ui.askText || $('#ask')?.value || '';
+  if (!text.trim()) return;
+  toast(`✨ Preguntándole a la ${aiLabel()}…`);
+  try {
+    const ai = await interpretWithAI(text);
+    // Lo que el intérprete local entendió con seguridad manda; la IA completa lo que faltó.
+    // Las exclusiones se suman: perder un "vegano" es peor que sacar algo de más.
+    const mine = parseIntent(text);
+    const pick = k => mine[k] ?? ai[k] ?? null;
+    applyIntent({
+      people: pick('people'), money: pick('money'), hunger: pick('hunger'), category: pick('category'), ricoWeight: pick('ricoWeight'),
+      exclude: [...new Set([...(mine.exclude || []), ...(ai.exclude || [])])],
+      summary: ai.summary, understood: [],
+    }, { fromClaude: true });
+  } catch (err) { toast(err.message); }
+}
+
+// Frase escrita o dictada: primero el intérprete local (instantáneo). Si quedó algo sin entender y hay
+// IA local (gratis), se le pregunta sola; con Claude (se cobra) queda el botón para que decida el usuario.
+function understand(text) {
+  ui.askText = text;
+  const r = parseIntent(text);
+  applyIntent(r);
+  if (r.unknown.length && activeProvider() === 'local') askClaude();
+}
+
+function listen() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) return;
+  const rec = new SR();
+  rec.lang = 'es-AR'; rec.interimResults = false; rec.maxAlternatives = 1;
+  const btn = $('[data-mic]');
+  btn?.classList.add('rec');
+  rec.onresult = e => understand(e.results[0][0].transcript);
+  rec.onerror = e => toast(e.error === 'not-allowed' ? 'Sin permiso para el micrófono' : 'No te escuché, probá de nuevo');
+  rec.onend = () => btn?.classList.remove('rec');
+  rec.start();
+}
+
+function renderExtras(r) {
+  // Locales cerrados
+  const note = $('#closed-note');
+  if (note) note.innerHTML = r.closed && !ui.showClosed
+    ? `<div class="closed-note">🌙 ${r.closed} locales están cerrados ahora y no los muestro. <button class="linkish" data-showclosed>Ver igual</button></div>`
+    : ui.showClosed ? '<div class="closed-note">Mostrando también locales cerrados. <button class="linkish" data-showclosed>Ocultarlos</button></div>' : '';
+  // ¿Estuvo rico?
+  const rate = $('#rate-wrap');
+  const pending = engine.pendingRatings()[0];
+  if (rate) rate.innerHTML = pending ? `
+    <section class="rate">
+      <div><small>Hace un rato pediste</small><b>${esc(pending.title)}</b><span>¿Estuvo rico? Con esto aprendo qué te gusta.</span></div>
+      <div class="rate-btns">
+        <button class="btn primary" data-rate="${esc(pending.id)}:up">👍 Rico</button>
+        <button class="btn ghost" data-rate="${esc(pending.id)}:down">👎 Meh</button>
+        <button class="linkish" data-skip="${esc(pending.id)}">Después</button>
+      </div>
+    </section>` : '';
+  // Bajas en lo que te gusta
+  const drops = $('#drops-wrap');
+  const alerts = engine.priceAlerts();
+  if (drops) drops.innerHTML = alerts.length ? `
+    <div class="section-head"><h2>📉 Bajó lo que te gusta</h2><button data-tab="top" data-toptab="drops">Ver todas</button></div>
+    <div class="rail">${alerts.slice(0, 8).map(it => `
+      <div class="mini" data-rest="${esc(it.restaurant.id)}">
+        <div class="cover" ${coverStyle(catOfItem(it))}>${coverHtml({ category: catOfItem(it), imageUrl: it.imageUrl })}</div>
+        <h4>${esc(it.name)}</h4><p>${esc(it.restaurant.name)}</p>
+        <p class="price-mini">${ars(it.price)} <s>${ars(it.priceChange.from)}</s> <b class="down">${it.priceChange.pct}%</b></p>
+      </div>`).join('')}</div>` : '';
+}
+
+// =====================================================================
+// Pedidos: historial con calificación, carga de ticket o a mano
+// =====================================================================
+function historyHtml(orders) {
+  if (!orders.length) return '';
+  const list = [...orders].reverse().slice(0, 20);
+  return `<section class="section"><div class="section-head"><h2>Historial</h2><span>${orders.length} pedidos</span></div>
+    <div class="list">${list.map(o => `
+      <div class="row order-row">
+        <div class="row-main"><h4>${esc(o.title)}</h4>
+          <p>${new Date(o.at).toLocaleDateString('es-AR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
+          ${o.source === 'ticket' ? ' · 📸 ticket' : o.source === 'manual' ? ' · ✍️ a mano' : ''}${o.tip ? ` · propina ${ars(o.tip)}` : ''}</p>
+          <div class="order-rate">${o.rating === 'up' ? '<span class="rated up">👍 Estuvo rico</span>' : o.rating === 'down' ? '<span class="rated down">👎 No te gustó</span>'
+            : (o.lines || []).some(l => l.itemId) ? `<button class="btn ghost sm" data-rate="${esc(o.id)}:up">👍</button><button class="btn ghost sm" data-rate="${esc(o.id)}:down">👎</button>` : ''}</div>
+        </div>
+        <span class="score">${ars(o.total)}</span>
+      </div>`).join('')}</div></section>`;
+}
+
+function cartToolsHtml() {
+  return `<div class="cart-tools">
+    <button class="btn ghost" data-ticket>📸 Cargar ticket</button>
+    <button class="btn ghost" data-manual>✍️ Cargar a mano</button>
+  </div>`;
+}
+
+function openTicket({ withPhoto }) {
+  reopen = null;
+  const names = [...new Set(RESTAURANTS.map(r => r.name))];
+  openSheet(`
+    <div class="sheet-body form-sheet">
+      <div class="sheet-title-row"><h2>${withPhoto ? '📸 Cargar ticket' : '✍️ Cargar un pedido'}</h2><button class="icon-btn" data-close aria-label="Cerrar">${icon('x')}</button></div>
+      <p class="note">Para registrar algo que pediste por fuera de la app: suma al gasto del mes y después te pregunto si estuvo rico.</p>
+      ${withPhoto ? `<label class="drop">
+          <input id="ticket-file" type="file" accept="image/*" capture="environment" hidden>
+          <span>📷 Sacar o elegir la foto del ticket</span>
+          <small>${hasAI() ? `La ${esc(aiLabel())} lo lee y completa el formulario.` : 'Sin IA conectada la foto no se lee sola: completá los datos abajo.'}</small>
+        </label><div id="ticket-status"></div>` : ''}
+      <label class="fld"><span>Local</span><input id="t-rest" list="t-rest-list" placeholder="Ej: Dean & Dennys - Palermo"></label>
+      <datalist id="t-rest-list">${names.map(n => `<option value="${esc(n)}">`).join('')}</datalist>
+      <div class="fld-row">
+        <label class="fld"><span>Total pagado</span><input id="t-total" inputmode="numeric" placeholder="$"></label>
+        <label class="fld"><span>Envío</span><input id="t-fee" inputmode="numeric" placeholder="$"></label>
+        <label class="fld"><span>Propina</span><input id="t-tip" inputmode="numeric" placeholder="$"></label>
+      </div>
+      <label class="fld"><span>Fecha</span><input id="t-date" type="date" value="${new Date().toISOString().slice(0, 10)}"></label>
+      <label class="fld"><span>Qué pediste (opcional, uno por línea)</span><textarea id="t-items" rows="3" placeholder="2 Doble Dean Burger"></textarea></label>
+      <button class="btn primary block" data-save-order>Guardar pedido</button>
+    </div>`);
+}
+
+async function onTicketFile(file) {
+  const status = $('#ticket-status');
+  if (!hasAI()) { status.innerHTML = '<p class="note">Foto cargada. Completá los datos a mano.</p>'; return; }
+  status.innerHTML = `<p class="note">✨ La ${esc(aiLabel())} está leyendo el ticket…</p>`;
+  try {
+    const t = await readTicket(file);
+    const set = (id, v) => { if (v != null && $(id)) $(id).value = v; };
+    const match = t.restaurant && RESTAURANTS.find(r => norm(r.name).includes(norm(t.restaurant)) || norm(t.restaurant).includes(norm(r.name.split(' - ')[0])));
+    set('#t-rest', match ? match.name : t.restaurant);
+    set('#t-total', t.total); set('#t-fee', t.deliveryFee); set('#t-tip', t.tip); set('#t-date', t.date);
+    set('#t-items', (t.items || []).map(i => `${i.qty > 1 ? `${i.qty} ` : ''}${i.name}`).join('\n'));
+    status.innerHTML = `<p class="note">${t.confidence === 'alta' ? '✅ Listo, revisá y guardá.' : '⚠️ Algunos datos no se leían bien: revisalos antes de guardar.'}</p>`;
+  } catch (err) { status.innerHTML = `<p class="note">${esc(err.message)} Completá los datos a mano.</p>`; }
+}
+
+function saveExternalOrder() {
+  const money = id => +String($(id)?.value || '').replace(/\D/g, '') || null;
+  const total = money('#t-total');
+  if (!total) { toast('Falta el total'); return; }
+  const name = $('#t-rest').value.trim();
+  const rest = RESTAURANTS.find(r => norm(r.name) === norm(name));
+  const menu = rest ? engine.menu(rest.id) : [];
+  const lines = $('#t-items').value.split('\n').map(s => s.trim()).filter(Boolean).map(s => {
+    const m = s.match(/^(\d+)\s*x?\s+(.*)$/i);
+    const qty = m ? +m[1] : 1, label = m ? m[2] : s;
+    const item = menu.find(i => norm(i.name) === norm(label)) || menu.find(i => norm(i.name).includes(norm(label)));
+    return { qty, name: item ? item.name : label, itemId: item?.id || null, price: item?.price ?? null };
+  });
+  const date = $('#t-date').value;
+  engine.addExternalOrder({
+    restaurantId: rest?.id || null, restaurantName: name || 'Pedido', total,
+    deliveryFee: money('#t-fee'), tip: money('#t-tip'), lines,
+    // Hoy = ahora; otro día = a la noche, que es cuando más se pide.
+    at: !date || date === new Date().toLocaleDateString('sv') ? Date.now() : new Date(`${date}T21:00:00`).getTime(),
+    source: $('#ticket-file') ? 'ticket' : 'manual',
+  });
+  closeSheet();
+  toast('✅ Pedido guardado');
+}
+
+// =====================================================================
+// Dividir la cuenta
+// =====================================================================
+var splitState = null; // var: se usa desde el primer render
+function openSplit(plan) {
+  const n = Math.max(2, ui.people || 2);
+  const each = Math.floor(plan.quantity / n), extra = plan.quantity - each * n;
+  splitState = { plan, tipPct: 10, people: Array.from({ length: n }, (_, i) => ({ name: i ? '' : 'Yo', units: each + (i < extra ? 1 : 0) })) };
+  renderSplit();
+}
+
+function renderSplit() {
+  const { plan, people, tipPct } = splitState;
+  const res = splitBill({ subtotal: plan.subtotal, deliveryFee: plan.deliveryFee || 0, tipPct,
+    people: people.map((p, i) => ({ name: p.name || `Persona ${i + 1}`, units: p.units })) });
+  const assigned = people.reduce((s, p) => s + p.units, 0);
+  reopen = null;
+  openSheet(`
+    <div class="sheet-body form-sheet">
+      <div class="sheet-title-row"><h2>➗ Dividir la cuenta</h2><button class="icon-btn" data-close aria-label="Cerrar">${icon('x')}</button></div>
+      <p class="note">${esc(plan.restaurant.name)} · ${plan.quantity} ${unitLabel(plan.quantity, plan.unit)} · ${ars(plan.subtotal)} + envío ${ars(plan.deliveryFee || 0)}.
+        Cada uno paga lo que come; envío y propina, parejo.</p>
+      <div class="split-people">${people.map((p, i) => `
+        <div class="split-row">
+          <input class="split-name" data-split-name="${i}" value="${esc(p.name)}" placeholder="Persona ${i + 1}">
+          <div class="stepper"><div><button data-split-units="${i}:-1">−</button><span>${p.units}</span><button data-split-units="${i}:1">+</button></div></div>
+          <b>${ars(res.shares[i].amount)}</b>
+        </div>`).join('')}</div>
+      <div class="split-actions">
+        <button class="btn ghost sm" data-split-people="1">+ persona</button>
+        ${people.length > 2 ? '<button class="btn ghost sm" data-split-people="-1">− persona</button>' : ''}
+        <span class="${assigned === plan.quantity ? 'ok' : 'warn'}">${assigned} de ${plan.quantity} ${esc(plan.unit)} repartidas</span>
+      </div>
+      <div class="tagset">${[0, 10, 15].map(t => `<button class="${tipPct === t ? 'on' : ''}" data-split-tip="${t}">${t ? `Propina ${t}%` : 'Sin propina'}</button>`).join('')}</div>
+      <div class="summary"><div class="line total"><span>Total${res.tip ? ` (propina ${ars(res.tip)})` : ''}</span><span>${ars(res.total)}</span></div></div>
+      <div class="split-share">
+        <button class="btn ghost" data-split-copy>📋 Copiar</button>
+        <a class="btn primary" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(splitMessage({ restaurant: plan.restaurant.name, lines: plan.lines, split: res, fmt: ars }))}">Mandar por WhatsApp</a>
+      </div>
+    </div>`);
+  splitState.result = res;
+}
+
+// =====================================================================
+// Ajustes: Claude, app instalable, avisos
+// =====================================================================
+var installPrompt = null;
+function extraSettingsHtml() {
+  const days = engine.priceTracking().days;
+  const perm = 'Notification' in window ? Notification.permission : 'unsupported';
+  return `
+    ${aiSettingsHtml()}
+    <div class="setting">
+      <h3>📲 App y avisos</h3>
+      <p>Instalala en el celular o la compu: abre sola, sin barra del navegador, y funciona sin internet con el último catálogo.</p>
+      <div class="cart-actions">
+        <button class="btn primary sm" data-install ${installPrompt ? '' : 'disabled'}>${installPrompt ? 'Instalar Rico y Barato' : matchMedia('(display-mode: standalone)').matches ? 'Ya está instalada' : 'Instalar (desde el menú del navegador)'}</button>
+        <button class="btn ghost sm" data-notify ${perm === 'granted' || perm === 'unsupported' ? 'disabled' : ''}>${perm === 'granted' ? '🔔 Avisos activados' : perm === 'denied' ? '🔕 Avisos bloqueados en el navegador' : perm === 'unsupported' ? 'Este navegador no tiene avisos' : '🔔 Avisarme bajas de precio'}</button>
+      </div>
+      <p class="note">Los avisos saltan al abrir la app cuando bajó de precio algo que tenés en favoritos. Precios seguidos: ${days.length ? days.map(d => new Date(`${d}T12:00:00`).toLocaleDateString('es-AR', { day: 'numeric', month: 'short' })).join(', ') : 'todavía ninguno'}.</p>
+    </div>`;
+}
+
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); installPrompt = e; if (ui.tab === 'settings') render(); });
+
+async function notifyPriceDrops() {
+  if (!('Notification' in window) || Notification.permission !== 'granted') return;
+  const seenKey = 'ryb:notified';
+  let seen = [];
+  try { seen = JSON.parse(localStorage.getItem(seenKey)) || []; } catch {}
+  const fresh = engine.priceAlerts().filter(it => !seen.includes(`${it.id}@${it.price}`));
+  if (!fresh.length) return;
+  const reg = await navigator.serviceWorker?.getRegistration();
+  const body = fresh.slice(0, 3).map(it => `${it.name}: ${ars(it.priceChange.from)} → ${ars(it.price)}`).join('\n');
+  const title = fresh.length === 1 ? '📉 Bajó algo que te gusta' : `📉 Bajaron ${fresh.length} cosas que te gustan`;
+  if (reg) reg.showNotification(title, { body, icon: 'icons/icon-192.png', tag: 'bajas' });
+  else new Notification(title, { body });
+  try { localStorage.setItem(seenKey, JSON.stringify([...seen, ...fresh.map(it => `${it.id}@${it.price}`)].slice(-200))); } catch {}
+}
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').then(() => notifyPriceDrops()).catch(() => {});
+}
+
+// =====================================================================
+// Clics y teclas de las funciones de esta sección
+// =====================================================================
+document.addEventListener('click', async e => {
+  const t = e.target.closest('[data-ask],[data-mic],[data-claude],[data-clear-temp],[data-showclosed],[data-rate],[data-skip],[data-split],[data-split-units],[data-split-people],[data-split-tip],[data-split-copy],[data-ticket],[data-manual],[data-save-order],[data-key-save],[data-key-test],[data-key-clear],[data-install],[data-notify],[data-ai-provider],[data-ai-detect]');
+  if (!t) return;
+  const d = t.dataset;
+  if ('ask' in d) { understand($('#ask').value); return; }
+  if ('mic' in d) { listen(); return; }
+  if ('claude' in d) { askClaude(); return; }
+  if ('clearTemp' in d) { ui.tempExclude = []; ui.askUnderstood = []; saveUi(); render(); return; }
+  if ('showclosed' in d) { ui.showClosed = !ui.showClosed; render(); return; }
+  if (d.rate) { const [id, v] = d.rate.split(':'); engine.rateOrder(id, v); toast(v === 'up' ? '👍 Anotado: lo sumo a tus favoritos' : '👎 Anotado: no te lo voy a recomendar'); return; }
+  if (d.skip) { engine.skipRating(d.skip); return; }
+  if (d.split) { e.stopPropagation(); const p = findPlan(d.split); if (p) openSplit(p); return; }
+  if (d.splitUnits) { const [i, delta] = d.splitUnits.split(':').map(Number); splitState.people[i].units = Math.max(0, splitState.people[i].units + delta); renderSplit(); return; }
+  if (d.splitPeople) {
+    if (+d.splitPeople > 0) splitState.people.push({ name: '', units: 0 }); else if (splitState.people.length > 2) splitState.people.pop();
+    renderSplit(); return;
+  }
+  if (d.splitTip) { splitState.tipPct = +d.splitTip; renderSplit(); return; }
+  if ('splitCopy' in d) {
+    const text = splitMessage({ restaurant: splitState.plan.restaurant.name, lines: splitState.plan.lines, split: splitState.result, fmt: ars });
+    try { await navigator.clipboard.writeText(text); toast('📋 Copiado'); } catch { toast('No se pudo copiar'); }
+    return;
+  }
+  if ('ticket' in d) { openTicket({ withPhoto: true }); return; }
+  if ('manual' in d) { openTicket({ withPhoto: false }); return; }
+  if ('saveOrder' in d) { saveExternalOrder(); return; }
+  if ('keySave' in d) { const k = $('#ai-key').value.trim(); if (!k) { toast('Pegá la clave primero'); return; } setKey(k); toast('🔑 Clave guardada en este navegador'); render(); return; }
+  if ('keyTest' in d) { toast('Probando…'); const t0 = performance.now(); try { await testAI(); toast(`✅ ${aiLabel()} responde (${((performance.now() - t0) / 1000).toFixed(1)} s)`); } catch (err) { toast(err.message); } return; }
+  if (d.aiProvider) { setProvider(d.aiProvider); render(); return; }
+  if ('aiDetect' in d) { toast('Buscando la IA local…'); await detectLocal(); toast(localStatus().up ? '🟢 IA local encontrada' : '🔴 No está corriendo'); render(); return; }
+  if ('keyClear' in d) { setKey(''); toast('Clave borrada'); render(); return; }
+  if ('install' in d && installPrompt) { installPrompt.prompt(); await installPrompt.userChoice; installPrompt = null; render(); return; }
+  if ('notify' in d) { const p = await Notification.requestPermission(); toast(p === 'granted' ? '🔔 Listo, te aviso las bajas' : 'Sin permiso para avisos'); render(); notifyPriceDrops(); return; }
+});
+
+document.addEventListener('input', e => {
+  if (e.target.id === 'ask') ui.askText = e.target.value;
+  if (e.target.dataset?.splitName != null && splitState) splitState.people[+e.target.dataset.splitName].name = e.target.value;
+});
+document.addEventListener('change', e => {
+  if (e.target.id === 'ticket-file' && e.target.files[0]) onTicketFile(e.target.files[0]);
+  if (e.target.dataset?.splitName != null && splitState) renderSplit();
+});
+document.addEventListener('keydown', e => {
+  if (e.target.id === 'ask' && e.key === 'Enter') understand(e.target.value);
+});
+
+// =====================================================================
+// Ajustes de IA: local (Ollama en esta compu) o Claude (clave propia)
+// =====================================================================
+function aiSettingsHtml() {
+  const st = localStatus();
+  const prov = getProvider();
+  const active = activeProvider();
+  const localLine = !st.checked ? 'Buscando…'
+    : !st.up ? '🔴 No está corriendo. Arrancala con <code>tools\\ia-local.ps1</code>.'
+    : st.hasModel ? `🟢 Corriendo con <b>${esc(st.model)}</b> en tu compu. Sin costo y sin mandar nada afuera.`
+    : `🟡 Corriendo, pero falta el modelo <b>${esc(st.model)}</b>. Lo baja <code>tools\\ia-local.ps1</code>.`;
+  return `
+    <div class="setting">
+      <h3>✨ IA ${active ? `<span class="ai-on">· usando ${esc(aiLabel())}</span>` : '<span class="ai-off">· apagada</span>'}</h3>
+      <p>"Pedir hablando" entiende frases libres y la foto del ticket se lee sola.</p>
+      <div class="tagset">${[['auto', 'Automático'], ['local', 'Local'], ['claude', 'Claude'], ['off', 'Apagada']]
+        .map(([k, l]) => `<button class="${prov === k ? 'on' : ''}" data-ai-provider="${k}">${l}</button>`).join('')}</div>
+      <div class="ai-box">
+        <b>💻 Local</b>
+        <p>${localLine}</p>
+        <div class="cart-actions"><button class="btn ghost sm" data-ai-detect>Volver a buscar</button></div>
+      </div>
+      <div class="ai-box">
+        <b>☁️ Claude</b>
+        <p>Con tu clave de API de Anthropic. Queda solo en este navegador y cada consulta se cobra en tu cuenta.
+          Es la opción para cuando la app la usen otros: ahí conviene un servidor propio que guarde la clave.</p>
+        <div class="field"><span>🔑</span><input id="ai-key" type="password" autocomplete="off" placeholder="${hasKey() ? '•••••••• (guardada)' : 'sk-ant-…'}"></div>
+        <div class="cart-actions">
+          <button class="btn ghost sm" data-key-save>Guardar clave</button>
+          ${hasKey() ? '<button class="btn ghost sm" data-key-clear>Borrar</button>' : ''}
+        </div>
+      </div>
+      <div class="cart-actions"><button class="btn primary sm" data-key-test ${active ? '' : 'disabled'}>Probar la IA</button></div>
+    </div>`;
+}
+
+// Al arrancar se busca la IA local; si aparece, se redibuja lo que depende de ella.
+detectLocal().then(() => { warmLocal(); if (ui.tab === 'settings' || ui.askUnknown?.length) render(); });
+
+// =====================================================================
+// Asistente por voz (botón rojo abajo a la derecha) — ver ui/assistant.js
+// =====================================================================
+mountAssistant({
+  engine, parseIntent, ars, esc, look, unitLabel, toast,
+  openPlan: id => { reopen = () => openPlan(id); openPlan(id); },
+  getResult: () => currentResult(),
+  setFilters: i => {
+    if (i.people) ui.people = Math.max(1, Math.min(12, i.people));
+    if (i.money != null) ui.money = Number.isFinite(i.money) ? i.money : null;
+    if (i.hunger) ui.hunger = i.hunger;
+    if (i.category && engine.getState().profile.enabledCategories.includes(i.category)) ui.category = i.category;
+    if (i.ricoWeight != null) ui.ricoWeight = i.ricoWeight;
+    if (i.exclude?.length) ui.tempExclude = [...new Set([...(ui.tempExclude || []), ...i.exclude])];
+    saveUi(); if (ui.tab !== 'home') ui.tab = 'home'; render();
+  },
+  describeFilters: () => `${ui.people} persona(s), hambre ${ui.hunger}, ${ui.category === 'all' ? 'cualquier comida' : ui.category}, `
+    + `${ui.money ? `${ui.money} pesos` : 'sin límite de plata'}, ${ui.ricoWeight < 0.4 ? 'prioriza barato' : ui.ricoWeight > 0.6 ? 'prioriza rico' : 'mitad rico mitad barato'}`
+    + `${ui.tempExclude?.length ? `, sin ${ui.tempExclude.join(', ')}` : ''}`,
+});

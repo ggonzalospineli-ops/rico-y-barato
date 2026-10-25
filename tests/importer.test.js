@@ -134,3 +134,40 @@ test('fotos: solo la del product_id exacto, nunca un placeholder del local', () 
   const r = cat.restaurants[0];
   assert.deepEqual([r.rappiScore, r.rappiReviews, r.deliveryFee, r.etaMin], [4.1, 80, 990, 25]);
 });
+
+test('señales: un plato aprobado en Morfy genera su propio plan aunque no sea el más barato', async () => {
+  const p = (id, name, price) => ({ product_id: id, name, description: '', category: 'Hamburguesas', price_ars: price, original_price_ars: price });
+  const url = 'https://www.rappi.com.ar/restaurantes/7-dd';
+  const cat = convert({ restaurants: [{ restaurant: 'Dean - Palermo', url, rating: 4.5, products: [
+    p('1', 'Superpromo Cheeseburger', 9000), p('2', 'Bacon Cheeseburger Doble', 18000),
+  ]}]}, { signals: {
+    restaurants: { 'dean-palermo': { google: { rating: 4.0, reviews: 900, positive: 70, negative: 16 }, mentions: ['x'] } },
+    items: { 'dean-palermo:2': [{ source: 'morfy', approval: 99, votes: 34, text: '#1 en Morfy' }] },
+    notOnRappi: [{ name: 'Mi Barrio' }],
+  } });
+  assert.deepEqual(cat.meta.unmatchedSignals, []);
+  const e = createEngine({ source: jsonSource(async () => structuredClone(cat)) });
+  await e.load();
+  const opts = e.recommend({ categories: ['hamburguesa'], limit: 10 }).options;
+  const rec = opts.find(o => o.variant === 'recomendado');
+  assert.equal(rec.lines[0].name, 'Bacon Cheeseburger Doble');
+  assert.ok(rec.badges.includes('aprobado-morfy') && rec.badges.includes('opiniones-divididas'));
+  assert.deepEqual(e.notOnRappi().map(x => x.name), ['Mi Barrio']);
+});
+
+test('señales: una clave que ya no existe en Rappi se reporta, no se ignora', () => {
+  const cat = convert({ restaurants: [] }, { signals: { restaurants: { 'no-existe': {} }, items: { 'x:1': [] } } });
+  assert.deepEqual(cat.meta.unmatchedSignals, ['no-existe', 'x:1']);
+});
+
+test('parser: un pancho "Cuarto de Libra" no es hamburguesa', () => {
+  assert.deepEqual(y('Pancho Cuarto de Libra', 'Salchicha con cheddar y cebolla'), {});
+});
+
+test('parser: un fatay de 4 quesos no es una pizza aunque la descripción la nombre', () => {
+  assert.deepEqual(y('4 Quesos', 'Mezcla de cuatro quesos, ideal para pizzas y pastas.', 'Fatay'), {});
+});
+
+test('parser: un pan de provolone no es una pizza', () => {
+  assert.deepEqual(y('Pan de Provolone', '', 'Pizzas'), {});
+});

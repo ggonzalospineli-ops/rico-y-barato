@@ -2,6 +2,8 @@
 // Rappi no dice cuánto rinde cada producto: lo deducimos del texto ("x10", "24 piezas",
 // "media docena", "grande"). Funciones puras para poder testearlas.
 
+import { distanceKm } from '../engine/hours.js';
+
 const CATEGORY_RULES = [
   // El orden importa: "Roll New Mila" es sushi, "Milanesa fugazzeta" es milanesa;
   // "empanados" y "empanaditas" no son empanadas.
@@ -19,14 +21,16 @@ const CATEGORY_RULES = [
 const CATEGORY_EXCLUDE = {
   pasta:    /\barroz\b|\bravioles chinos\b|\bwan ?tan|\bgyozas?\b|\bdumplings?\b|\bsopa\b/,
   milanesa: /\bbites\b|\bbocaditos\b|\bentradita\b|\bpastelito/,
-  pizza:    /\bfainuzza\b|\bpastelito|\bcanastita|\ba la pizza\b|\bmatambre/, // "Matambre a la pizza" no es pizza
+  pizza:    /\bfainuzza\b|\bpastelito|\bcanastita|\ba la pizza\b|\bmatambre|\bpan de\b/, // "Matambre a la pizza", "Pan de provolone"
+  hamburguesa: /\bpanchos?\b|\bhot ?dogs?\b|\bsalchicha/,                // "Pancho Cuarto de Libra" tampoco
 };
 
 // Secciones donde todo lo que hay es de esa categoría, diga lo que diga el nombre.
 const SECTION_DECIDES = ['empanadas', 'pizza'];
 
 // Secciones del menú o productos que nunca son "la comida" aunque mencionen una.
-const NOT_A_MEAL_SECTION = /bebida|cerveza|vino|trago|postre|helado|salsa|aderezo|extra|adicional|cafeter|desayuno|merienda/i;
+// Fatay/lahmacun: comida, pero el motor no sabe medirla (y sus descripciones hablan de "pizza").
+const NOT_A_MEAL_SECTION = /bebida|cerveza|vino|trago|postre|helado|salsa|aderezo|extra|adicional|cafeter|desayuno|merienda|fatay|lahmacun|lehmeyun|sfiha/i;
 // Se prueba sobre el nombre normalizado (sin tildes).
 const NOT_A_MEAL_NAME = /^(salsa|dip|aderezo|adicional|extra)\b|\bsalsa para\b|\bsin cargo\b|\bfaina\b|\bpan de pizza\b|\bcachito\b|\bcaramel|\bmacchiato|\bcanela\b|\bnutella\b|\bdulce de leche\b/;
 // Arepas, empanadas venezolanas, etc. que toman nombres de hamburguesa.
@@ -182,9 +186,19 @@ export function parseYields(product, restaurantName = '') {
   return yields;
 }
 
+// "carne" (vacuna, cordero, etc.) y "pollo" sirven para "no como carne" / vegetariano.
+// Una hamburguesa o milanesa es de carne salvo que diga de qué otra cosa es.
+const MEAT = /\bcarne|\bvacun|\bternera|\bbife|\blomo\b|\blomito|\basado|\bpicada|\bcuarto de libra|\bbig mac|\bwhopper|\bmedallon|\bentran|\bvacio\b|\bmatambre|\bpastrami|\bkebab|\bshawarma|\bcordero|\bangus|\bbarbacoa de res/;
+const BEEF_BY_DEFAULT = /\bhamburgues|\bburgers?\b|\bsmash|\bcheeseburger|\bmilanes|\bmila\b|\bmilas\b/;
+const NOT_BEEF = /\bpollo|\bchicken|\bsuprema|\bveggie|\bvegan|\bvegetal|\blenteja|\bgarbanzo|\bsoja|\bseitan|\btofu|\bberenjena|\bhongo|\bcalabaza|\bzucchini|\bzapallito|\bpescado|\bsalmon|\batun\b|\bnot ?burger|\bplant/;
+const POULTRY = /\bpollo|\bchicken|\bnugg?ets?\b|\bsuprema|\balitas|\bwings\b|\bpechuga|\bpresas?\b|\bpavita|\bpavo\b/;
+
 export function parseTags(product) {
   const t = normalize(`${product.name} ${product.description || ''}`);
-  return TAG_RULES.filter(([, re]) => re.test(t)).map(([tag]) => tag);
+  const tags = TAG_RULES.filter(([, re]) => re.test(t)).map(([tag]) => tag);
+  if (MEAT.test(t) || (BEEF_BY_DEFAULT.test(t) && !NOT_BEEF.test(t))) tags.push('carne');
+  if (POULTRY.test(t)) tags.push('pollo');
+  return tags;
 }
 
 export function brandOf(restaurantName) {
@@ -210,7 +224,13 @@ const PRODUCT_IMG = 'https://images.rappi.com.ar/products/';
 const sized = url => url && `${url.split('?')[0]}?d=600x600&e=webp&q=80`;
 
 // pages: salida de tools/fetch-rappi-pages.mjs, indexada por URL del local.
-export function convert(scrape, { google = {}, preferences = null, minPrice = 300, pages = {} } = {}) {
+// home: { lat, lng } de la dirección de entrega (para la distancia a cada local).
+// priceSnapshots: [{ date: 'AAAA-MM-DD', prices: { url: { productId: precio } } }] en cualquier orden.
+// otherApps: { itemId: [{ app, name, price, same, note }] } — precios del mismo producto en otras apps.
+export function convert(scrape, { google = {}, preferences = null, minPrice = 300, pages = {}, signals = null,
+  home = null, priceSnapshots = [], otherApps = {} } = {}) {
+  const snapshots = [...priceSnapshots].sort((a, b) => a.date.localeCompare(b.date));
+  const scrapeDay = scrape.scraped_at ? scrape.scraped_at.slice(0, 10) : null;
   const brandCount = {};
   for (const r of scrape.restaurants) { const b = brandOf(r.restaurant); brandCount[b] = (brandCount[b] || 0) + 1; }
   const genericImages = findGenericImages(scrape, pages);
@@ -230,8 +250,11 @@ export function convert(scrape, { google = {}, preferences = null, minPrice = 30
       deliveryFee: page.deliveryPrice ?? null,
       etaMin: page.eta ? parseInt(page.eta, 10) || null : null,
       logoUrl: page.logo ? `${page.logo.split('?')[0]}?d=200x200&e=webp&q=80` : null,
-      coverUrl: page.background ? `${page.background.split('?')[0]}?d=900x600&e=webp&q=80` : null,
+      coverUrl: page.background ? `${page.background.split('?')[0]}?d=1600x1200&e=webp&q=82` : null, // la CDN no agranda: si el original es menor, llega el original
+      schedule: page.schedule || null,
+      distanceKm: home && page.location ? +distanceKm([home.lat, home.lng], [page.location[1], page.location[0]]).toFixed(2) : null,
     });
+    if (!r.address && page.address) restaurants[restaurants.length - 1].address = page.address.trim();
 
     let popular = 0;
     for (const p of r.products) {
@@ -244,11 +267,18 @@ export function convert(scrape, { google = {}, preferences = null, minPrice = 30
       const scraped = p.image_url && !p.image_url.startsWith('data:') ? p.image_url : null;
       const imageUrl = file && !genericImages.has(file) ? sized(PRODUCT_IMG + file)
         : !file && scraped && !genericImages.has(scraped.split('/').pop().split('?')[0]) ? sized(scraped) : null;
+      // El precio de la página del local es más nuevo que el del scrapeo: si está, manda.
+      const fresh = page.prices?.[p.product_id];
+      const price = Math.round(fresh ? fresh[0] : p.price_ars);
+      const real = Math.round(fresh ? fresh[1] : p.original_price_ars);
+      const history = priceHistory(r.url, p.product_id, scrapeDay, p.price_ars, snapshots);
       items.push({
         id: itemId, restaurantId: id, name: p.name.trim(), description: p.description || '',
-        section: p.category, price: Math.round(p.price_ars),
-        originalPrice: p.original_price_ars > p.price_ars ? Math.round(p.original_price_ars) : null,
-        discount: p.discount || null,
+        section: p.category, price,
+        originalPrice: real > price ? real : null,
+        discount: fresh ? (real > price ? `-${Math.round((1 - price / real) * 100)}%` : null) : p.discount || null,
+        ...history,
+        ...(otherApps[itemId] ? { otherApps: otherApps[itemId] } : {}),
         imageUrl,
         yields: parseYields(p, r.restaurant), tags: parseTags(p),
         salesRank: /^populares$/i.test(p.category) ? ++popular : null,
@@ -256,9 +286,46 @@ export function convert(scrape, { google = {}, preferences = null, minPrice = 30
     }
   }
 
+  for (const it of items) if (isInflatedOriginal(it.originalPrice, it.priceHistory)) it.inflatedOriginal = true;
   const discarded = dropImplausiblePrices(items);
-  return { meta: { source: scrape.source, address: scrape.delivery_address, scrapedAt: scrape.scraped_at, discarded },
+  const unmatched = applySignals(signals, restaurants, items);
+  return { meta: { source: scrape.source, address: scrape.delivery_address, scrapedAt: scrape.scraped_at, discarded,
+    unmatchedSignals: unmatched, notOnRappi: signals?.notOnRappi || [],
+    home, priceDays: [...new Set([scrapeDay, ...snapshots.map(s => s.date)].filter(Boolean))].sort() },
     restaurants, items, suggestedFavorites: matchPreferences(preferences, restaurants, items) };
+}
+
+// data/signals.json: Google y Morfy ya cruzados a mano con la sucursal correcta (por dirección).
+// Pisa la tabla de Google vieja porque trae % de reseñas positivas y negativas.
+// Devuelve las claves que no encontró, para que un cambio de ids en Rappi no pase en silencio.
+function applySignals(signals, restaurants, items) {
+  if (!signals) return [];
+  const rById = Object.fromEntries(restaurants.map(r => [r.id, r]));
+  const iById = Object.fromEntries(items.map(i => [i.id, i]));
+  const missing = [];
+  for (const [id, s] of Object.entries(signals.restaurants || {})) {
+    const r = rById[id];
+    if (!r) { missing.push(id); continue; }
+    Object.assign(r, {
+      googleRating: s.google?.rating ?? r.googleRating, googleReviews: s.google?.reviews ?? r.googleReviews,
+      googlePositive: s.google?.positive ?? null, googleNegative: s.google?.negative ?? null,
+      mentions: s.mentions || [],
+    });
+  }
+  for (const [id, list] of Object.entries(signals.items || {})) {
+    if (!iById[id]) { missing.push(id); continue; }
+    (iById[id].signals ||= []).push(...list);
+  }
+  for (const [rid, byCat] of Object.entries(signals.categoryMentions || {})) {
+    if (!rById[rid]) { missing.push(rid); continue; }
+    for (const it of items) {
+      if (it.restaurantId !== rid) continue;
+      for (const [cat, text] of Object.entries(byCat)) {
+        if (it.yields[cat]) (it.signals ||= []).push({ source: 'google', text });
+      }
+    }
+  }
+  return missing;
 }
 
 // Una foto que el local usa para 3+ productos distintos, o que comparten marcas distintas,
@@ -283,6 +350,30 @@ function findGenericImages(scrape, pages) {
   for (const [key, set] of names) if (set.size >= 3) generic.add(key.split('|')[1]);
   for (const [file, set] of brands) if (set.size >= 2) generic.add(file);
   return generic;
+}
+
+// Historial de un producto: un punto por día (el último del día gana). Solo se guarda si hay
+// al menos dos días; priceChange compara el último día con el anterior. El tachado es "inflado"
+// cuando, con 3+ días y al menos una semana de datos, nunca lo vimos venderse a ese precio.
+export function priceHistory(url, productId, scrapeDay, scrapePrice, snapshots) {
+  const byDay = new Map();
+  if (scrapeDay && scrapePrice > 0) byDay.set(scrapeDay, Math.round(scrapePrice));
+  for (const s of snapshots) {
+    const v = s.prices?.[url]?.[productId];
+    if (v > 0) byDay.set(s.date, Math.round(v));
+  }
+  const points = [...byDay.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+  if (points.length < 2) return {};
+  const [prevDay, prev] = points[points.length - 2], [, cur] = points[points.length - 1];
+  const out = { priceHistory: points };
+  if (cur !== prev) out.priceChange = { from: prev, to: cur, pct: Math.round(((cur - prev) / prev) * 100), since: prevDay };
+  return out;
+}
+
+export function isInflatedOriginal(originalPrice, points) {
+  if (!originalPrice || !points || points.length < 3) return false;
+  const days = (Date.parse(points[points.length - 1][0]) - Date.parse(points[0][0])) / 86400000;
+  return days >= 7 && originalPrice > Math.max(...points.map(p => p[1])) * 1.05;
 }
 
 // "Pizza grande $499" es el precio base antes de elegir gustos: no sirve para medir.

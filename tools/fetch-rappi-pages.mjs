@@ -27,25 +27,36 @@ const HEADERS = {
 function extract(html) {
   const m = html.match(/<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/);
   if (!m) throw new Error('sin __NEXT_DATA__');
-  const fallback = JSON.parse(m[1]).props?.pageProps?.fallback || {};
+  const pageProps = JSON.parse(m[1]).props?.pageProps || {};
+  const fallback = pageProps.fallback || {};
   const r = fallback[Object.keys(fallback).find(k => k.includes('restaurant/'))];
   if (!r) throw new Error('sin datos del local');
-  const products = {};
-  for (const c of r.corridors || []) for (const p of c.products || []) if (p.image) products[p.id] = p.image;
+  const products = {}, prices = {};
+  for (const c of r.corridors || []) for (const p of c.products || []) {
+    if (p.image) products[p.id] = p.image;
+    if (p.price != null) prices[p.id] = [p.price, p.realPrice ?? p.price];
+  }
   return {
-    storeId: r.id, name: r.name, brandName: r.brandName || null,
+    v: VERSION, fetchedAt: new Date().toISOString(),
+    storeId: r.id, name: r.name, brandName: r.brandName || null, address: r.address || null,
+    location: r.location || null,                    // [lng, lat] del local
+    status: r.status || null, schedule: pageProps.scheduleData || null, // horario de toda la semana
     deliveryPrice: r.deliveryPrice ?? null, eta: r.eta || null,
     logo: r.logo || null, background: r.backgroundImage || null,
     score: r.ratingData?.score ?? r.rating ?? null, reviews: r.ratingData?.total_reviews ?? null,
-    products,
+    products, prices,                                // prices: id → [precio, precio sin descuento]
   };
 }
+
+// Subir VERSION cuando extract() guarde campos nuevos: las entradas viejas de la caché se vuelven a pedir.
+const VERSION = 2;
+const fresh = file => { try { return JSON.parse(readFileSync(file, 'utf8')).v === VERSION; } catch { return false; } };
 
 let fetched = 0, cached = 0, failed = [];
 for (const [i, url] of urls.entries()) {
   const id = url.split('/').pop();
   const file = new URL(`${encodeURIComponent(id)}.json`, cacheDir);
-  if (existsSync(file)) { cached++; continue; }
+  if (existsSync(file) && fresh(file)) { cached++; continue; }
   try {
     let res = await fetch(url, { headers: HEADERS });
     if (res.status === 429 || res.status >= 500) { await sleep(10000); res = await fetch(url, { headers: HEADERS }); }
@@ -65,5 +76,17 @@ for (const url of urls) {
   if (existsSync(file)) pages[url] = JSON.parse(readFileSync(file, 'utf8'));
 }
 writeFileSync(out, JSON.stringify(pages));
+
+// Foto de precios del día para el historial: data/prices/AAAA-MM-DD.json = { url: { productId: precio } }.
+const day = new Date().toLocaleDateString('sv'); // AAAA-MM-DD en hora local (Argentina), no UTC
+const pricesDir = new URL('../data/prices/', import.meta.url);
+mkdirSync(pricesDir, { recursive: true });
+const snapshot = {};
+for (const [url, p] of Object.entries(pages)) {
+  if (!p.prices) continue;
+  snapshot[url] = Object.fromEntries(Object.entries(p.prices).map(([id, [price]]) => [id, price]));
+}
+writeFileSync(new URL(`${day}.json`, pricesDir), JSON.stringify(snapshot));
+console.log(`precios del ${day}: ${Object.values(snapshot).reduce((n, s) => n + Object.keys(s).length, 0)} productos`);
 console.log(`listo: ${Object.keys(pages).length}/${urls.length} locales · fallidos ${failed.length}`);
 if (failed.length) console.log(failed.slice(0, 20).join('\n'));

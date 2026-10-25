@@ -1,0 +1,66 @@
+{
+  "about": "Señales externas transcriptas de los relevamientos del 2026-10-25 (Brainrot 2/analisis_google_morfy_billinghurst_1292.md y morfy_mas_vendidos_billinghurst_1292.md). Solo se cruzan con la sucursal de Rappi cuya dirección coincide; lo de otra sucursal de la misma cadena va solo a nivel producto y dice de dónde viene.",
+  "restaurants": {
+    "romario-recoleta": {
+      "match": "Juncal 2864",
+      "google": { "rating": 3.9, "reviews": 836, "positive": 68.9, "negative": 15.8 },
+      "mentions": ["Empanadas mencionadas 63 veces en Google", "También opinan de la pizza a la piedra"]
+    },
+    "el-hornito-santiagueno-villa-crespo": {
+      "match": "Av. Córdoba 4340",
+      "google": { "rating": 4.2, "reviews": 424, "positive": 79.0, "negative": 17.7 },
+      "mentions": ["Google no marca un plato popular explícito"]
+    },
+    "1810-restaurante-palermo": {
+      "match": "Julián Álvarez 1998",
+      "google": { "rating": 4.3, "reviews": 3310, "positive": 83.4, "negative": 6.9 },
+      "mentions": ["Locro mencionado 232 veces en Google", "Populares en Google: quesillo con cayote y guiso de mondongo"]
+    },
+    "rincon-norteno-recoleta": {
+      "match": "José Antonio Cabrera 3500",
+      "google": { "rating": 4.1, "reviews": 630, "positive": 80.6, "negative": 12.5 },
+      "mentions": ["Populares en Google: docena de empanadas, locro, humita, tucumanas y tamales"]
+    },
+    "la-payada-recoleta": {
+      "match": "José Antonio Cabrera 3200",
+      "google": { "rating": 4.7, "reviews": 35, "positive": 91.4, "negative": 0 },
+      "mentions": ["Empanadas mencionadas 16 veces en Google (muestra chica: 35 opiniones)"]
+    },
+    "alchemy-palermo": {
+      "match": "nombre y barrio (el relevamiento no da dirección)",
+      "google": { "rating": 4.3, "reviews": 4933, "positive": 84.1, "negative": 7.1 },
+      "mentions": ["Populares en Google: helado de remolacha (112 menciones) y Aperol Spritz"]
+    }
+  },
+  "items": {
+    "1810-restaurante-palermo:4310628": [{ "source": "google", "text": "Locro: 232 menciones en Google" }],
+    "1810-restaurante-palermo:4310645": [{ "source": "google", "text": "Plato popular en Google" }],
+    "1810-restaurante-palermo:4310635": [{ "source": "google", "text": "Guiso de mondongo: plato popular en Google" }],
+    "1810-restaurante-palermo:4310616": [{ "source": "google", "text": "Las tucumanas se repiten en las reseñas de Google" }],
+    "rincon-norteno-recoleta:2035905": [{ "source": "google", "text": "Humita: popular en Google" }],
+    "rincon-norteno-recoleta:2035904": [{ "source": "google", "text": "Tamales: populares en Google" }],
+    "dean-dennys-palermo:4289963": [{ "source": "morfy", "approval": 99, "votes": 34, "rank": 1, "text": "#1 del mes en Morfy · 99% de aprobación (34 votos), en las sucursales de Malabia y Junín" }],
+    "dean-dennys-palermo:4289982": [{ "source": "morfy", "approval": 100, "votes": 14, "rank": 2, "text": "#2 del mes en Morfy · 100% de aprobación (14 votos), en las sucursales de Malabia y Junín" }],
+    "dean-dennys-palermo:4289986": [
+      { "source": "morfy", "approval": 95, "votes": 21, "rank": 3, "text": "#3 del mes en Morfy · 95% de aprobación (21 votos), en las sucursales de Malabia y Junín" },
+      { "source": "google", "text": "Google la marca como popular (Dean Burger Doble con papas, Palermo Soho)" }
+    ]
+  },
+  "categoryMentions": {
+    "romario-recoleta": { "empanadas": "Las empanadas de acá se mencionan 63 veces en Google" },
+    "la-payada-recoleta": { "empanadas": "Empanadas mencionadas 16 veces en Google (35 opiniones)" },
+    "rincon-norteno-recoleta": { "empanadas": "La docena de empanadas es popular en Google" }
+  },
+  "notOnRappi": [
+    {
+      "name": "Mi Barrio Hamburguesería — Barrio Norte", "address": "Arenales 2609",
+      "morfy": { "rating": 4.8, "reviews": 2403, "chosenBy": 5500 },
+      "topSellers": [
+        { "name": "2x1 en King Size Triple", "price": 27700, "approval": 97, "votes": 141 },
+        { "name": "2x1 en Big bacon crispy doble", "price": 23700, "approval": 97, "votes": 122 },
+        { "name": "2x1 en CBO Doble", "price": 23200, "approval": 96, "votes": 293 }
+      ],
+      "note": "2x1 para consumir en el local; no está en Rappi."
+    }
+  ]
+}

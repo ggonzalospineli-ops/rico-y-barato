@@ -104,3 +104,17 @@ Rojo y amarillo, estilo bien marcado de app de comida (tipo Rappi/McDonald's/Ped
 grandes con badges, el slider **Rico ↔ Barato** y el selector de hambre como protagonistas, barra de
 gasto del mes siempre visible. Secciones: ¿Qué como?, Más vendidos, Mejor puntuados (con Joyas
 ocultas), Carrito/Gastos, Ajustes (qué como + mi gusto).
+
+## Agregado: horario, calificación, precios, cuenta, ticket
+
+- `recommend({ ..., openOnly = true, at, exclude })`: sin locales cerrados en `at` (por defecto ahora); devuelve
+  `closed` (cuántos se saltearon). `exclude`: etiquetas a sacar solo para este pedido (no toca el perfil).
+- Cada `restaurant` trae `open: { known, open, label, closesAt?, opensAt?, closingSoon? }` y `distanceKm`.
+- Insignias nuevas: `bajo-precio`, `tachado-inflado`, `mas-barato-en-otra`, `no-te-gusto`, `cierra-pronto`.
+- Líneas e items: `priceChange { from, to, pct, since }`, `priceHistory [[fecha, precio]]`, `inflatedOriginal`, `otherApps`.
+- `rateOrder(orderId, 'up'|'down')`, `pendingRatings({ minutes })`, `skipRating(id)`: 👍 suma a favoritos, 👎 resta
+  0,25 en "rico" y saca de favoritos (`state.disliked`).
+- `addExternalOrder({ restaurantId?, restaurantName, total, deliveryFee?, tip?, lines?, at?, source })`.
+- `priceAlerts({ minPct })` (favoritos que bajaron), `priceDrops({ limit, minPct })`, `priceTracking()`.
+- `engine/split.js`: `splitBill({ subtotal, deliveryFee, tipPct, people:[{name, units}] })` → reparto que suma exacto.
+- `engine/intent.js`: `parseIntent(texto)` → `{ people, money, hunger, category, exclude, ricoWeight, understood, unknown }`.

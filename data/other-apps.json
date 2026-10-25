@@ -1,0 +1,17 @@
+{
+  "about": "Precios del mismo producto en otras apps, por id de producto del catálogo. same: true solo cuando es exactamente el mismo producto (mismo contenido); con same: false se muestra como referencia y nunca como 'más barato'. Para sumar PedidosYa, agregar entradas con app: 'pedidosya'.",
+  "items": {
+    "dean-dennys-palermo:4289963": [
+      { "app": "morfy", "name": "Bacon Cheeseburger Doble + Papas + Gaseosa", "price": 21165, "same": false,
+        "note": "En Morfy el combo incluye gaseosa; precio de las sucursales de Malabia y Junín" }
+    ],
+    "dean-dennys-palermo:4289982": [
+      { "app": "morfy", "name": "Cheeseburger Doble + Papas + Gaseosa", "price": 19890, "same": false,
+        "note": "En Morfy el combo incluye gaseosa; precio de las sucursales de Malabia y Junín" }
+    ],
+    "dean-dennys-palermo:4289986": [
+      { "app": "morfy", "name": "Dean Doble + Papas + Gaseosa", "price": 20315, "same": false,
+        "note": "En Morfy el combo incluye gaseosa; precio de las sucursales de Malabia y Junín" }
+    ]
+  }
+}
