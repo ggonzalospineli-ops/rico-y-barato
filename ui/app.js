@@ -4,6 +4,7 @@ import { demoSource } from '../sources/demo.js';
 import { jsonSource } from '../sources/json.js';
 import { splitBill, splitMessage } from '../engine/split.js';
 import { parseIntent } from '../engine/intent.js';
+import { decideDeck } from '../engine/shuffle.js';
 import { mountAssistant } from './assistant.js';
 import { hasKey, setKey, hasAI, aiLabel, activeProvider, detectLocal, warmLocal, localStatus, getProvider, setProvider, testAI, interpretWithAI, readTicket } from './ai.js';
 
@@ -960,9 +961,12 @@ document.addEventListener('pointerover', e => {
 // Decidí por mí: mazo de cartas. Derecha = lo quiero (va al pedido), izquierda = otra.
 // La ruleta gira entre las 8 mejores y frena en una, pesada por puntaje.
 // =====================================================================
-let deck = [], deckIndex = 0;
+let deck = [], deckIndex = 0, lastDeckFirst = null;
 function openDecide() {
-  deck = (lastResult?.options || []).slice(0, 12);
+  // Mezclado con preferencia por el puntaje y un plan por local; antes era el ranking en orden y
+  // la primera carta salía siempre igual.
+  deck = decideDeck(lastResult?.options || [], { lastFirstId: lastDeckFirst });
+  lastDeckFirst = deck[0]?.id ?? null;
   deckIndex = 0;
   if (!deck.length) { toast('No hay opciones con esos filtros'); return; }
   reopen = null;
@@ -1062,7 +1066,7 @@ function showMatch(p) {
 function spin() {
   const pool = deck.slice(deckIndex, deckIndex + 8);
   if (!pool.length) return;
-  const weights = pool.map(p => Math.pow(p.scores.total + 0.05, 3));
+  const weights = pool.map(p => p.scores.total + 0.15); // antes al cubo: casi siempre frenaba en la #1
   let r = Math.random() * weights.reduce((a, b) => a + b, 0), win = 0;
   while (win < pool.length - 1 && (r -= weights[win]) > 0) win++;
   let k = 0;

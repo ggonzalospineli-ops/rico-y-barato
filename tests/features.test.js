@@ -236,3 +236,24 @@ test('frases: "morimos de hambre" y "que no sea frito"', () => {
   assert.equal(parseIntent('somos cinco y morimos de hambre').people, 5);
   assert.deepEqual(parseIntent('algo livianito que no sea frito').exclude, ['frito']);
 });
+
+import { weightedShuffle, decideDeck } from '../engine/shuffle.js';
+
+const plan = (id, rest, total) => ({ id, restaurant: { id: rest }, scores: { total } });
+
+test('decidí por mí: no siempre arranca con la mejor, pero la mejor sale primero más seguido', () => {
+  const plans = [plan('a', 'r1', 0.9), plan('b', 'r2', 0.6), plan('c', 'r3', 0.5), plan('d', 'r4', 0.3)];
+  const firsts = {};
+  for (let i = 0; i < 4000; i++) { const f = decideDeck(plans)[0].id; firsts[f] = (firsts[f] || 0) + 1; }
+  assert.equal(Object.keys(firsts).length, 4);              // todas pueden salir primero
+  assert.ok(firsts.a > firsts.b && firsts.b > firsts.d);    // pero con preferencia por el puntaje
+});
+
+test('decidí por mí: un plan por local y sin repetir la primera carta', () => {
+  const plans = [plan('a1', 'r1', 0.9), plan('a2', 'r1', 0.8), plan('b', 'r2', 0.6)];
+  const deck = decideDeck(plans, { rand: () => 0.5 });
+  assert.deepEqual(deck.map(p => p.restaurant.id).sort(), ['r1', 'r2']);
+  const first = deck[0].id;
+  assert.notEqual(decideDeck(plans, { rand: () => 0.5, lastFirstId: first })[0].id, first);
+  assert.deepEqual(weightedShuffle([], () => 1), []);
+});

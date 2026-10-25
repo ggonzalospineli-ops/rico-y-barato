@@ -4,12 +4,12 @@
 // - Fotos de Rappi: caché a medida que se ven (con tope), para que el modo sin internet no quede vacío.
 // Subir VERSION al cambiar la lista SHELL.
 
-const VERSION = 'ryb-v2';
+const VERSION = 'ryb-v3';
 const SHELL = [
   './', './index.html', './app.js', './ai.js', './assistant.js', './styles.css', './features.css', './manifest.webmanifest',
   './icons/icon-192.png', './icons/icon-512.png',
   '../engine/engine.js', '../engine/planner.js', '../engine/scoring.js', '../engine/taste.js', '../engine/hours.js',
-  '../engine/split.js', '../engine/intent.js', '../engine/voice.js', '../sources/demo.js', '../sources/json.js', '../data/catalog.js',
+  '../engine/split.js', '../engine/intent.js', '../engine/voice.js', '../engine/shuffle.js', '../sources/demo.js', '../sources/json.js', '../data/catalog.js',
 ];
 const CATALOG = '../data/rappi-catalog.json';
 const MAX_IMAGES = 400;
