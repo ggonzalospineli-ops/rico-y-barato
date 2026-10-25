@@ -20,10 +20,26 @@ const CATS = engine.categories();
 const voiceAgent = await fetch('voice-agent.json').then(r => (r.ok ? r.json() : null)).catch(() => null);
 let assistantOn = () => ui.assistant !== false && !!voiceAgent?.agentId;
 const assistantEl = () => document.querySelector('#assistant-dock elevenlabs-convai, elevenlabs-convai[agent-id]');
+// Estado en vivo de la app para el agente (interpolado en su prompt como {{variables}}).
+function assistantState() {
+  const hungerLb = { poco: 'picoteo', normal: 'hambre', mucho: 'mucha hambre', bestia: 'modo bestia' }[ui.hunger] || ui.hunger;
+  const r = currentResult();
+  const planTxt = p => `${p.restaurant.name}: ${p.lines.map(l => `${l.qty}× ${l.name}`).join(' + ')} · total ${ars(p.total)}${p.restaurant.deliveryFee == null ? '' : ` (envío ${deliveryText(p.restaurant)})`} · rico ${Math.round(p.scores.rico * 100)}/barato ${Math.round(p.scores.barato * 100)}`;
+  const top = (r.options.length ? r.options : r.overBudget.slice(0, 3)).slice(0, 3);
+  return {
+    hambre: hungerLb,
+    plata: ui.money ? `${Math.round(ui.money).toLocaleString('es-AR')} pesos` : 'sin límite',
+    categoria: ui.category === 'all' ? 'todo lo que come' : (CATS[ui.category]?.label || ui.category),
+    personas: ui.people === 1 ? '1 (pide para sí)' : `${ui.people}`,
+    modo: balanceHint(),
+    top3: top.length ? top.map((p, i) => `${i + 1}) ${planTxt(p)}`).join(' || ') : 'No hay recomendaciones todavía con este filtro: sugerí qué cambiar (más plata, menos hambre, otra categoría) para que aparezcan.',
+  };
+}
 async function mountAssistantWidget() {
   if (!voiceAgent?.agentId || $('#assistant-dock elevenlabs-convai')) return;
   const el = document.createElement('elevenlabs-convai');
   el.setAttribute('agent-id', voiceAgent.agentId);
+  el.setAttribute('dynamic-variables', JSON.stringify(assistantState()));
   el.setAttribute('dismissible', 'true');
   el.setAttribute('action-text', '¿Qué comemos hoy?');
   el.setAttribute('start-call-text', 'Hablar');
