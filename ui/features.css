@@ -328,4 +328,45 @@ code { font-size: 12px; background: var(--bg); padding: 1px 5px; border-radius: 
 
 @media (prefers-reduced-motion: reduce) {
   .round:hover, .ask-in:focus-within, .va-fab:hover { transform: none; }
+
+/* =====================================================================
+   Asistente IA (ElevenLabs): botón flotante + dock del widget
+   ===================================================================== */
+.assistant-fab {
+  position: fixed; right: 16px; bottom: 92px; z-index: 65;
+  display: grid; place-items: center; gap: 0;
+  width: 56px; height: 56px; border: 0; border-radius: 50%;
+  background: linear-gradient(135deg, var(--red), #FF7A00);
+  color: #fff; font-size: 24px; line-height: 1;
+  box-shadow: 0 10px 24px -6px rgba(228,0,43,.55);
+  cursor: pointer; transition: transform .15s ease, opacity .15s ease;
 }
+.assistant-fab small {
+  position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%);
+  font-size: 11px; font-weight: 800; color: var(--ink);
+  background: var(--card); padding: 2px 8px; border-radius: 999px;
+  border: 1px solid var(--line); white-space: nowrap;
+}
+.assistant-fab:hover { transform: translateY(-2px); }
+.assistant-fab.open { transform: rotate(0deg) scale(.94); }
+.assistant-fab.off { display: none; }
+.assistant-dock {
+  position: fixed; right: 16px; bottom: 92px; z-index: 66;
+  width: min(360px, calc(100vw - 32px)); height: min(540px, 72vh);
+  border-radius: 22px; background: var(--card);
+  box-shadow: 0 40px 80px -24px rgba(29,26,23,.55);
+  overflow: hidden; display: none; contain: paint;
+}
+.assistant-dock.on { display: block; animation: pop .18s ease; }
+#assistant-dock elevenlabs-convai { position: absolute; inset: 0; contain: paint; }
+
+@media (min-width: 1024px) {
+  .assistant-fab { right: 24px; bottom: 24px; }
+  .assistant-fab small { bottom: -24px; }
+  .assistant-dock { right: 24px; bottom: 92px; height: min(600px, calc(100vh - 140px)); }
+}
+
+/* El agente de ElevenLabs se abre desde el botón rojo de Mila: el dock queda arriba del botón, no encima. */
+.assistant-dock { position: absolute; right: 18px; bottom: calc(var(--tabbar-h) + 92px); }
+@media (min-width: 768px) and (max-width: 1023px) { .assistant-dock { right: 28px; bottom: calc(var(--tabbar-h) + 104px); } }
+@media (min-width: 1024px) { .assistant-dock { right: 28px; bottom: 104px; } }
