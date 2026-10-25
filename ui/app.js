@@ -30,7 +30,8 @@ function assistantState() {
   const hungerLb = { poco: 'picoteo', normal: 'hambre', mucho: 'mucha hambre', bestia: 'modo bestia' }[ui.hunger] || ui.hunger;
   const r = currentResult();
   const planTxt = p => `${p.restaurant.name}: ${p.lines.map(l => `${l.qty}× ${l.name}`).join(' + ')} · total ${ars(p.total)}${p.restaurant.deliveryFee == null ? '' : ` (envío ${deliveryText(p.restaurant)})`} · rico ${Math.round(p.scores.rico * 100)}/barato ${Math.round(p.scores.barato * 100)}`;
-  const top = (r.options.length ? r.options : r.overBudget.slice(0, 3)).slice(0, 3);
+  // Hasta 8, un plan por local: con solo las 3 primeras el agente recomendaba siempre el mismo.
+  const top = onePerPlace(r.options.length ? r.options : r.overBudget).slice(0, 8);
   return {
     hambre: hungerLb,
     plata: ui.money ? `${Math.round(ui.money).toLocaleString('es-AR')} pesos` : 'sin límite',
@@ -40,11 +41,53 @@ function assistantState() {
     top3: top.length ? top.map((p, i) => `${i + 1}) ${planTxt(p)}`).join(' || ') : 'No hay recomendaciones todavía con este filtro: sugerí qué cambiar (más plata, menos hambre, otra categoría) para que aparezcan.',
   };
 }
+function onePerPlace(plans) {
+  const seen = new Set();
+  const first = plans.filter(p => (seen.has(p.restaurant.id) ? false : seen.add(p.restaurant.id)));
+  return [...first, ...plans.filter(p => !first.includes(p))];
+}
+
+// Herramienta de cliente "buscar_opciones" (configurada en el agente con tools/update-agent-tools.mjs):
+// el agente la llama con lo que pidió la persona; se aplican los filtros en pantalla y se devuelven
+// las opciones reales del motor, así nunca recomienda algo que la app no muestra.
+function buscarOpciones(params = {}) {
+  const cat = String(params.categoria || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  const catKey = Object.keys(CATS).find(k => cat && (k.startsWith(cat.slice(0, 5)) || cat.startsWith(k.slice(0, 5))));
+  if (cat && /todo|cualquier/.test(cat)) ui.category = 'all';
+  else if (catKey && engine.getState().profile.enabledCategories.includes(catKey)) ui.category = catKey;
+  if (+params.plata > 0) ui.money = Math.round(+params.plata);
+  if (['poco', 'normal', 'mucho', 'bestia'].includes(params.hambre)) ui.hunger = params.hambre;
+  if (+params.personas > 0) ui.people = Math.max(1, Math.min(12, Math.round(+params.personas)));
+  const pref = { rico: 0.85, barato: 0.15, mitad: 0.5 }[String(params.preferencia || '').toLowerCase()];
+  if (pref != null) ui.ricoWeight = pref;
+  saveUi();
+  if (ui.tab !== 'home') ui.tab = 'home';
+  render();
+  const r = lastResult || currentResult();
+  const list = onePerPlace(r.options).slice(0, 6);
+  if (!list.length) {
+    const over = r.overBudget.slice(0, 2).map(p => `${p.restaurant.name} por ${p.total} pesos (se pasa por ${p.overBudgetBy})`).join('; ');
+    return `No hay opciones abiertas que entren con esos filtros (${r.closed || 0} locales cerrados ahora).${over ? ` Se pasan por poco: ${over}.` : ''}`;
+  }
+  return `Opciones reales de la app, de mejor a peor para lo que pidió (${ui.people} persona/s, `
+    + `${ui.money ? `${ui.money} pesos` : 'sin límite de plata'}, hambre ${ui.hunger}):\n`
+    + list.map((p, i) => `${i + 1}) ${p.restaurant.name}: ${p.lines.map(l => `${l.qty} ${l.name}`).join(' + ')}; `
+      + `${p.quantity} ${p.unit}; total ${p.total} pesos${p.restaurant.deliveryFee != null ? ' con envío' : ''}; `
+      + `${p.restaurant.open?.label || ''}; rico ${Math.round(p.scores.rico * 100)}/100, barato ${Math.round(p.scores.barato * 100)}/100`
+      + `${p.badges.includes('punto-dulce') ? '; punto dulce' : ''}${p.badges.includes('joya-oculta') ? '; joya oculta' : ''}`).join('\n');
+}
+
 async function mountAssistantWidget() {
-  if (!voiceAgent?.agentId || $('#assistant-dock elevenlabs-convai')) return;
+  if (!voiceAgent?.agentId) return;
+  // Se arma de nuevo en cada apertura: las variables se leen al empezar la charla y antes quedaban
+  // congeladas en la primera apertura.
+  $('#assistant-dock elevenlabs-convai')?.remove();
   const el = document.createElement('elevenlabs-convai');
   el.setAttribute('agent-id', voiceAgent.agentId);
   el.setAttribute('dynamic-variables', JSON.stringify(assistantState()));
+  el.addEventListener('elevenlabs-convai:call', event => {
+    event.detail.config.clientTools = { buscar_opciones: params => buscarOpciones(params) };
+  });
   el.setAttribute('dismissible', 'true');
   el.setAttribute('action-text', '¿Qué comemos hoy?');
   el.setAttribute('start-call-text', 'Hablar');
@@ -52,11 +95,14 @@ async function mountAssistantWidget() {
   el.setAttribute('expand-text', 'Asistente IA');
   el.setAttribute('avatar-orb-color-1', '#E4002B');
   el.setAttribute('avatar-orb-color-2', '#FFC72C');
-  const s = document.createElement('script');
-  s.src = 'https://unpkg.com/@elevenlabs/convai-widget-embed';
-  s.type = 'text/javascript';
-  s.async = true;
-  document.head.appendChild(s);
+  if (!document.querySelector('script[data-convai]')) {
+    const s = document.createElement('script');
+    s.src = 'https://unpkg.com/@elevenlabs/convai-widget-embed';
+    s.type = 'text/javascript';
+    s.async = true;
+    s.dataset.convai = '';
+    document.head.appendChild(s);
+  }
   $('#assistant-dock').appendChild(el);
 }
 function mountAssistantShell() {
@@ -218,6 +264,7 @@ const findPlan = id => lastResult?.options.find(p => p.id === id) || lastResult?
 
 // ---------- Vistas ----------
 function render() {
+  if (ui.tab !== 'home') askExample.tab = ui.tab; // así al volver a Inicio cambia la frase de ejemplo
   const views = { home: viewHome, top: viewTop, taste: viewTaste, cart: viewCart, settings: viewSettings };
   $('#view').innerHTML = views[ui.tab]();
   $('#view').classList.remove('view'); void $('#view').offsetWidth; $('#view').classList.add('view');
@@ -1336,7 +1383,7 @@ function askBarHtml() {
     <section class="ask">
       <div class="ask-in">
         <span class="ask-ico">💬</span>
-        <input id="ask" placeholder="Contame: somos 3, uno no come carne, 25 lucas y mucha hambre" autocomplete="off" value="${esc(ui.askText || '')}">
+        <input id="ask" placeholder="Contame: ${esc(askExample())}" autocomplete="off" value="${esc(ui.askText || '')}">
         ${'webkitSpeechRecognition' in window || 'SpeechRecognition' in window ? `<button class="ask-mic" data-mic aria-label="Dictar">🎤</button>` : ''}
         <button class="btn red ask-go" data-ask>Armar</button>
       </div>
@@ -1606,7 +1653,14 @@ async function notifyPriceDrops() {
 }
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js').then(() => notifyPriceDrops()).catch(() => {});
+  navigator.serviceWorker.register('sw.js').then(reg => { reg.update(); notifyPriceDrops(); }).catch(() => {});
+  // Cuando se activa una versión nueva, recargar una vez para usarla ya (si no, la tablet seguía con la vieja).
+  let reloadedForUpdate = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (reloadedForUpdate) return;
+    reloadedForUpdate = true;
+    location.reload();
+  });
 }
 
 // =====================================================================
@@ -1704,7 +1758,8 @@ detectLocal().then(() => { warmLocal(); if (ui.tab === 'settings' || ui.askUnkno
 mountAssistant({
   engine, parseIntent, ars, esc, look, unitLabel, toast,
   openPlan: id => { reopen = () => openPlan(id); openPlan(id); },
-  getResult: () => currentResult(),
+  // Un plan por local primero: con el ranking crudo Mila veía cinco variantes del mismo lugar.
+  getResult: () => { const r = currentResult(); return { ...r, options: onePerPlace(r.options) }; },
   setFilters: i => {
     if (i.people) ui.people = Math.max(1, Math.min(12, i.people));
     if (i.money != null) ui.money = Number.isFinite(i.money) ? i.money : null;
@@ -1741,3 +1796,27 @@ document.addEventListener('click', e => {
   fab.classList.toggle('open', open);
   if (open) mountAssistantWidget();
 }, true);
+
+// =====================================================================
+// Frase de ejemplo de "Contame": cambia al azar en cada entrada a Inicio
+// =====================================================================
+function askExample() {
+  const examples = [
+    'somos 3, uno no come carne, 25 lucas y mucha hambre',
+    'algo rico de sushi para dos, la plata no importa',
+    'me muero de hambre y tengo 15 mil',
+    'empanadas para picar, gasto poco',
+    'somos 5 viendo el partido, 50 lucas, pizza',
+    'algo liviano que no sea frito',
+    'una milanga bien barata para mí',
+    'con mi novia, algo rico y que no pase de 30 mil',
+    'hamburguesas para cuatro, modo bestia',
+    'sin TACC y sin lácteos, 20 lucas',
+    'pasta casera para tres, mitad rico mitad barato',
+    'nuggets para el pibe, que sea barato',
+  ];
+  // Una por entrada: se elige al pasar a Inicio y queda fija mientras se usa la pantalla.
+  if (askExample.tab !== 'home' || !askExample.current) askExample.current = examples[Math.floor(Math.random() * examples.length)];
+  askExample.tab = ui.tab;
+  return askExample.current;
+}

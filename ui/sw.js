@@ -1,10 +1,11 @@
 // Service worker: la app abre sin internet con el último catálogo guardado.
-// - App (html, js, css, íconos): primero caché, y se actualiza por detrás.
+// - App (html, js, css, íconos): red primero, sin la caché HTTP del navegador; si no hay red, lo guardado.
+//   (Antes era caché primero y la tablet seguía mostrando la versión vieja después de publicar.)
 // - Catálogo: red primero (para tener precios nuevos); si no hay red, el guardado.
 // - Fotos de Rappi: caché a medida que se ven (con tope), para que el modo sin internet no quede vacío.
 // Subir VERSION al cambiar la lista SHELL.
 
-const VERSION = 'ryb-v3';
+const VERSION = 'ryb-v4';
 const SHELL = [
   './', './index.html', './app.js', './ai.js', './assistant.js', './styles.css', './features.css', './manifest.webmanifest',
   './icons/icon-192.png', './icons/icon-512.png',
@@ -15,7 +16,8 @@ const CATALOG = '../data/rappi-catalog.json';
 const MAX_IMAGES = 400;
 
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(VERSION).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
+  // cache: 'reload' evita que GitHub Pages (max-age=600) devuelva archivos de hace 10 minutos.
+  e.waitUntil(caches.open(VERSION).then(c => c.addAll(SHELL.map(u => new Request(u, { cache: 'reload' })))).then(() => self.skipWaiting()));
 });
 
 self.addEventListener('activate', e => {
@@ -52,13 +54,10 @@ self.addEventListener('fetch', e => {
   }
 
   if (url.origin === self.location.origin) {
-    e.respondWith(caches.match(e.request).then(hit => {
-      const net = fetch(e.request).then(res => {
-        if (res.ok) { const copy = res.clone(); caches.open(VERSION).then(c => c.put(e.request, copy)); }
-        return res;
-      }).catch(() => hit);
-      return hit || net;
-    }));
+    e.respondWith(fetch(e.request, { cache: 'no-cache' }).then(res => {
+      if (res.ok) { const copy = res.clone(); caches.open(VERSION).then(c => c.put(e.request, copy)); }
+      return res;
+    }).catch(() => caches.match(e.request)));
   }
 });
 
