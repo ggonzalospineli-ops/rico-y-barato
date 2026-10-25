@@ -16,11 +16,49 @@ const engine = createEngine({ source, storage: store });
 await engine.load();
 const CATS = engine.categories();
 
+// ---------- Asistente IA (ElevenLabs Conversational AI, voz es-AR) ----------
+const voiceAgent = await fetch('voice-agent.json').then(r => (r.ok ? r.json() : null)).catch(() => null);
+let assistantOn = () => ui.assistant !== false && !!voiceAgent?.agentId;
+const assistantEl = () => document.querySelector('#assistant-dock elevenlabs-convai, elevenlabs-convai[agent-id]');
+async function mountAssistantWidget() {
+  if (!voiceAgent?.agentId || $('#assistant-dock elevenlabs-convai')) return;
+  const el = document.createElement('elevenlabs-convai');
+  el.setAttribute('agent-id', voiceAgent.agentId);
+  el.setAttribute('dismissible', 'true');
+  el.setAttribute('action-text', '¿Qué comemos hoy?');
+  el.setAttribute('start-call-text', 'Hablar');
+  el.setAttribute('end-call-text', 'Cortar');
+  el.setAttribute('expand-text', 'Asistente IA');
+  el.setAttribute('avatar-orb-color-1', '#E4002B');
+  el.setAttribute('avatar-orb-color-2', '#FFC72C');
+  const s = document.createElement('script');
+  s.src = 'https://unpkg.com/@elevenlabs/convai-widget-embed';
+  s.type = 'text/javascript';
+  s.async = true;
+  document.head.appendChild(s);
+  $('#assistant-dock').appendChild(el);
+}
+function mountAssistantShell() {
+  if (!voiceAgent?.agentId || !document.querySelector('.app')) return;
+  const fab = document.createElement('button');
+  fab.id = 'assistant-fab';
+  fab.className = 'assistant-fab';
+  fab.innerHTML = '🤖<small>Asistente</small>';
+  fab.setAttribute('data-assist-toggle', '');
+  fab.setAttribute('aria-label', 'Abrir asistente IA');
+  document.querySelector('.app').appendChild(fab);
+  const dock = document.createElement('div');
+  dock.id = 'assistant-dock';
+  dock.className = 'assistant-dock';
+  document.querySelector('.app').appendChild(dock);
+  if (!assistantOn()) fab.classList.add('off');
+}
+
 // ---------- Estado de la interfaz (preferencias del visor, no del motor) ----------
 const ui = Object.assign({
   tab: 'home', hunger: 'mucho', category: 'all', money: 20000, ricoWeight: 0.5, topTab: 'sellers', people: 1, results: 'cards',
 }, store.get('ui') || {});
-const saveUi = () => store.set('ui', { hunger: ui.hunger, category: ui.category, money: ui.money, ricoWeight: ui.ricoWeight, topTab: ui.topTab, people: ui.people, results: ui.results });
+const saveUi = () => store.set('ui', { hunger: ui.hunger, category: ui.category, money: ui.money, ricoWeight: ui.ricoWeight, topTab: ui.topTab, people: ui.people, results: ui.results, assistant: ui.assistant });
 
 const LOOK = {
   nuggets:     { e: '🍗', bg: 'linear-gradient(135deg,#FFE08A,#FF9F1C)' },
@@ -476,6 +514,12 @@ function viewSettings() {
         <button class="btn ghost sm" data-unhide="${esc(it.id)}">Restaurar</button></div>`).join('') : '<p class="note">No ocultaste nada.</p>'}</div>
     </div>
 
+    <div class="setting">
+      <h3>🤖 Asistente IA</h3>
+      <p>Asistente de voz con acento argentino: le contás qué te pinta y te ayuda a decidir qué pedir.</p>
+      ${voiceAgent?.agentId ? `<button class="toggle ${assistantOn() ? 'on' : ''}" data-assist-enable aria-label="Asistente IA"></button>` : '<p class="note">No hay agente configurado (falta ui/voice-agent.json).</p>'}
+    </div>
+
     </div>
     <p class="note">${real ? `Datos: Rappi, relevado el ${new Date(real.meta.scrapedAt).toLocaleDateString('es-AR')} · ${real.restaurants.length} locales.` : 'Datos de ejemplo.'}</p>`;
 }
@@ -588,7 +632,7 @@ engine.on(({ type }) => {
 });
 
 document.addEventListener('click', e => {
-  const t = e.target.closest('[data-palette],[data-people],[data-results],[data-decide],[data-swipe],[data-cmd],[data-spin],[data-tab],[data-hunger],[data-cat],[data-money],[data-add],[data-fav],[data-fav-plan],[data-plan],[data-rest],[data-close],[data-hide],[data-unhide],[data-confirm],[data-remove],[data-toptab],[data-step],[data-enable],[data-exclude],[data-suggest],#sheet-wrap');
+  const t = e.target.closest('[data-palette],[data-people],[data-results],[data-decide],[data-swipe],[data-cmd],[data-spin],[data-tab],[data-hunger],[data-cat],[data-money],[data-add],[data-fav],[data-fav-plan],[data-plan],[data-rest],[data-close],[data-hide],[data-unhide],[data-confirm],[data-remove],[data-toptab],[data-step],[data-enable],[data-exclude],[data-suggest],[data-assist-toggle],[data-assist-enable],#sheet-wrap');
   if (!t) return;
   const d = t.dataset;
 
@@ -634,6 +678,25 @@ document.addEventListener('click', e => {
     return;
   }
   if (d.unhide) { engine.unhideItem(d.unhide); return; }
+if (d.assistEnable) {
+  ui.assistant = assistantOn() ? false : true;
+  saveUi();
+  document.querySelector('.assistant-fab')?.classList.toggle('off', !assistantOn());
+  toast(assistantOn() ? '🤖 Asistente activado' : 'Asistente IA apagado');
+  const card = document.querySelector('[data-assist-enable]');
+  if (card) card.classList.toggle('on', assistantOn());
+  return;
+}
+if ('assistToggle' in d) {
+  const fab = document.querySelector('.assistant-fab');
+  const dock = $('#assistant-dock');
+  if (!fab || !dock) return;
+  const open = !dock.classList.contains('on');
+  dock.classList.toggle('on', open);
+  fab.classList.toggle('open', open);
+  if (open) mountAssistantWidget();
+  return;
+}
   if (d.confirm) { engine.confirmOrder(d.confirm); toast('✅ Pasó a gastado'); return; }
   if (d.remove) { engine.removeFromCart(d.remove); return; }
   if (d.rest) {
@@ -712,10 +775,10 @@ function renderSearch(q) {
     : '<div class="empty">No encontré locales con ese nombre.</div>';
 }
 document.addEventListener('focusout', e => {
-  if (e.target.id === 'search') setTimeout(() => { const b = $('#search-results'); if (b && !b.matches(':hover')) { b.className = ''; b.innerHTML = ''; } }, 150);
+  if (e.target.id === 'search')  setTimeout(() => { const b = $('#search-results'); if (b && !b.matches(':hover')) { b.className = ''; b.innerHTML = ''; } }, 150);
 });
-
 render();
+mountAssistantShell();
 
 // =====================================================================
 // Proyección del mes: a este ritmo, ¿con cuánto llegás?
@@ -1021,7 +1084,7 @@ document.addEventListener('input', e => { if (e.target.id === 'cmd') { cmdSel = 
 
 function onKey(e) {
   if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); openPalette(); return; }
-  if (e.key === 'Escape') { closeSheet(); reopen = null; return; }
+  if (e.key === 'Escape') { closeSheet(); reopen = null; document.querySelector('.assistant-fab')?.classList.remove('open'); $('#assistant-dock')?.classList.remove('on'); return; }
   if (e.target.id === 'cmd') {
     if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
       e.preventDefault();
