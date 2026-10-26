@@ -13,6 +13,8 @@ const out = flag('--out', new URL('../data/rappi-pages.json', import.meta.url));
 const delay = +flag('--delay', 1000);
 // --refresh <texto>: vuelve a pedir los locales cuya URL lo contenga aunque estén en caché (p. ej. "mcdonalds").
 const refresh = flag('--refresh', null);
+// --max-age-hours N: vuelve a pedir las páginas bajadas hace más de N horas (sin borrarlas: se mezclan).
+const maxAgeHours = flag('--max-age-hours', null);
 const input = args[0];
 if (!input) { console.error('Falta el JSON de productos de Rappi.'); process.exit(1); }
 
@@ -53,7 +55,12 @@ function extract(html) {
 
 // Subir VERSION cuando extract() guarde campos nuevos: las entradas viejas de la caché se vuelven a pedir.
 const VERSION = 3;
-const fresh = file => { try { return JSON.parse(readFileSync(file, 'utf8')).v === VERSION; } catch { return false; } };
+const fresh = file => {
+  try {
+    const p = JSON.parse(readFileSync(file, 'utf8'));
+    return p.v === VERSION && (maxAgeHours == null || Date.now() - Date.parse(p.fetchedAt) < maxAgeHours * 3600e3);
+  } catch { return false; }
+};
 
 let fetched = 0, cached = 0, failed = [];
 for (const [i, url] of urls.entries()) {
