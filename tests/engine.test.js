@@ -175,3 +175,15 @@ test('pedido de un producto suelto del menú: "Ya lo pedí" no falla aunque no t
   e.confirmOrder(plan.id);
   assert.equal(e.getState().orders.at(-1).total, plan.total);
 });
+
+test('avisos de precio: seguir un producto y saber cuándo llegó al precio pedido', async () => {
+  const e = await engine();
+  const it = e.menu(e.restaurants()[0].id)[0];
+  e.watchPrice(it.id, it.price - 1000);
+  assert.equal(e.watchedItems()[0].watch.reached, false);
+  e.watchPrice(it.id, it.price);                    // pedir el precio actual: ya llegó
+  assert.equal(e.watchedItems()[0].watch.reached, true);
+  e.unwatchPrice(it.id);
+  assert.equal(e.watchedItems().length, 0);
+  assert.throws(() => e.watchPrice('no-existe', 100));
+});

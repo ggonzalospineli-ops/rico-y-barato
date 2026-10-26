@@ -35,6 +35,7 @@ function defaultState() {
       excludedTags: [],            // ej: ['cerdo', 'tacc', 'lacteos']
     },
     hiddenItems: [],               // productos que el usuario marcó como mal medidos o que no quiere ver
+    watches: {},                   // avisos de precio: itemId → { target, since, priceAtStart }
     favorites: [],                 // ids de productos
     disliked: [],                  // productos calificados 👎: bajan en "rico" y nunca salen como favoritos
     seededFavorites: [],           // sugeridos por la fuente ya aplicados (para no re-agregar los que el usuario sacó)
@@ -405,6 +406,27 @@ export function createEngine({ source, storage = memoryStorage(), now = () => Da
     },
     skipRating(orderId) { const o = state.orders.find(x => x.id === orderId); if (o) { o.ratingSkipped = true; emit('ratings'); } },
     // Bajas de precio en lo que te gusta (favoritos y lo que calificaste 👍).
+    // Avisos de precio elegidos por el usuario: "avisame cuando esto baje de $X".
+    watchPrice(itemId, target) {
+      const it = items.find(i => i.id === itemId);
+      if (!it) throw new Error(`No existe el producto ${itemId}`);
+      if (!(target > 0)) throw new Error('El precio objetivo tiene que ser mayor a 0');
+      state.watches = { ...(state.watches || {}), [itemId]: { target: Math.round(target), since: now(), priceAtStart: it.price } };
+      emit('watches');
+    },
+    unwatchPrice(itemId) {
+      const { [itemId]: _, ...rest } = state.watches || {};
+      state.watches = rest;
+      emit('watches');
+    },
+    // Los productos seguidos, con el aviso; reached = ya está en el precio pedido o menos. Si un producto
+    // desapareció del catálogo queda afuera (no se borra el aviso: puede volver).
+    watchedItems() {
+      return Object.entries(state.watches || {}).map(([id, w]) => {
+        const it = items.find(i => i.id === id);
+        return it && { ...publicItem(it), watch: { ...w, reached: it.price <= w.target } };
+      }).filter(Boolean).sort((a, b) => b.watch.reached - a.watch.reached || a.price / a.watch.target - b.price / b.watch.target);
+    },
     priceAlerts({ minPct = 5 } = {}) {
       return items.filter(it => state.favorites.includes(it.id) && it.priceChange && it.priceChange.pct <= -minPct)
         .map(publicItem).sort((a, b) => a.priceChange.pct - b.priceChange.pct);

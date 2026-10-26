@@ -451,6 +451,7 @@ function viewHome() {
 
     </aside><div class="home-results">
     <section class="section" id="fav-wrap"></section>
+    <section class="section" id="watch-wrap"></section>
     <section class="section" id="drops-wrap"></section>
     <section class="section results-head">
       <div class="results-bar">
@@ -493,6 +494,7 @@ function renderResults() {
     <div class="empty-state"><div class="e">🥲</div><h3>Con esa plata no llego</h3>
     <p>Probá con menos hambre, otra comida o subí el monto.${r.overBudget.length ? ' Abajo te muestro lo que se pasa por poco.' : ''}</p></div>`;
   renderFavRail(r);
+  renderWatchRail();
   renderExtras(r);
   const over = r.overBudget.slice(0, 5);
   $('#over-wrap').innerHTML = over.length ? `
@@ -830,6 +832,7 @@ function openItem(itemId, qty = 1) {
         <span>Cantidad</span>
         <div class="stepper"><div><button data-iqty="-1" aria-label="Menos">−</button><span>${qty}</span><button data-iqty="1" aria-label="Más">+</button></div></div>
       </div>
+      ${watchBoxHtml(it)}
       <div class="item-actions">
         <button class="btn ghost" data-fav="${esc(it.id)}">${icon('heart', fav ? 'fill' : '')} ${fav ? 'En favoritos' : 'Me gusta'}</button>
         ${yields.length ? `<button class="btn ghost" data-hide="${esc(it.id)}" title="La cantidad o la comida está mal detectada">Está mal medido</button>` : ''}
@@ -861,7 +864,7 @@ engine.on(({ type }) => {
 });
 
 document.addEventListener('click', e => {
-  const t = e.target.closest('[data-palette],[data-people],[data-results],[data-decide],[data-swipe],[data-cmd],[data-spin],[data-tab],[data-hunger],[data-cat],[data-money],[data-add],[data-fav],[data-fav-plan],[data-plan],[data-rest],[data-close],[data-hide],[data-unhide],[data-confirm],[data-remove],[data-toptab],[data-step],[data-enable],[data-exclude],[data-suggest],[data-assist-toggle],[data-assist-enable],[data-item],[data-iqty],[data-when],[data-eta],[data-km],#sheet-wrap');
+  const t = e.target.closest('[data-palette],[data-people],[data-results],[data-decide],[data-swipe],[data-cmd],[data-spin],[data-tab],[data-hunger],[data-cat],[data-money],[data-add],[data-fav],[data-fav-plan],[data-plan],[data-rest],[data-close],[data-hide],[data-unhide],[data-confirm],[data-remove],[data-toptab],[data-step],[data-enable],[data-exclude],[data-suggest],[data-assist-toggle],[data-assist-enable],[data-item],[data-iqty],[data-when],[data-eta],[data-km],[data-watch],[data-unwatch],#sheet-wrap');
   if (!t) return;
   const d = t.dataset;
 
@@ -878,6 +881,16 @@ document.addEventListener('click', e => {
   if (d.hunger) { ui.hunger = d.hunger; saveUi(); render(); return; }
   if (d.cat) { ui.category = d.cat; saveUi(); render(); return; }
   if ('money' in d) { ui.money = d.money ? +d.money : null; saveUi(); render(); return; }
+  if (d.watch) {
+    const input = $('#watch-target');
+    const target = Math.round(+String(input?.value || '').replace(/\D/g, ''));
+    if (!(target > 0)) { toast('Poné un precio'); return; }
+    engine.watchPrice(d.watch, target);
+    toast(`🔔 Te aviso cuando baje de ${ars(target)}`);
+    if ('Notification' in window && Notification.permission === 'default') Notification.requestPermission().catch(() => {});
+    return;
+  }
+  if (d.unwatch) { engine.unwatchPrice(d.unwatch); toast('Dejé de seguir ese precio'); return; }
   if ('when' in d) { ui.when = d.when === '' ? null : +d.when; render(); return; }
   if ('eta' in d) { ui.maxEta = d.eta === '' ? null : +d.eta; saveUi(); render(); return; }
   if ('km' in d) { ui.maxKm = d.km === '' ? null : +d.km; saveUi(); render(); return; }
@@ -1784,6 +1797,23 @@ function extraSettingsHtml() {
 
 window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); installPrompt = e; if (ui.tab === 'settings') render(); });
 
+// Avisos elegidos que llegaron a su precio: notificación del sistema si hay permiso; si no, aviso en la app.
+// Cada producto avisa una vez por precio (para no repetir en cada apertura).
+async function notifyWatches() {
+  const key = 'ryb:watch-notified';
+  let seen = [];
+  try { seen = JSON.parse(localStorage.getItem(key)) || []; } catch {}
+  const fresh = engine.watchedItems().filter(it => it.watch.reached && !seen.includes(`${it.id}@${it.price}`));
+  if (!fresh.length) return;
+  const title = fresh.length === 1 ? `🔔 ${fresh[0].name} llegó a tu precio` : `🔔 ${fresh.length} productos llegaron a tu precio`;
+  const body = fresh.slice(0, 3).map(it => `${it.name}: ${ars(it.price)} (pediste ${ars(it.watch.target)})`).join('\n');
+  const reg = 'Notification' in window && Notification.permission === 'granted' ? await navigator.serviceWorker?.getRegistration() : null;
+  if (reg) reg.showNotification(title, { body, icon: 'icons/icon-192.png', tag: 'avisos' });
+  else toast(title);
+  try { localStorage.setItem(key, JSON.stringify([...seen, ...fresh.map(it => `${it.id}@${it.price}`)].slice(-200))); } catch {}
+}
+setTimeout(() => notifyWatches().catch(() => {}), 1500);
+
 async function notifyPriceDrops() {
   if (!('Notification' in window) || Notification.permission !== 'granted') return;
   const seenKey = 'ryb:notified';
@@ -2016,4 +2046,37 @@ function spendingHtml() {
           </div>`).join('')}
       </div>
     </section>`;
+}
+
+// ---------- Avisos de precio ----------
+function watchBoxHtml(it) {
+  const w = engine.getState().watches?.[it.id];
+  if (w) {
+    const reached = it.price <= w.target;
+    return `<div class="watch-box ${reached ? 'reached' : ''}">
+      <div><b>${reached ? '🎉 Llegó a tu precio' : `🔔 Te aviso si baja de ${ars(w.target)}`}</b>
+      <small>${reached ? `Está a ${ars(it.price)} y pediste ${ars(w.target)}.` : `Hoy está a ${ars(it.price)}. Los precios se actualizan todos los días.`}</small></div>
+      <button class="btn ghost sm" data-unwatch="${esc(it.id)}">Dejar de seguir</button>
+    </div>`;
+  }
+  const suggested = Math.max(100, Math.floor((it.price * 0.9) / 100) * 100);
+  return `<div class="watch-box">
+    <div><b>🔔 Avisame si baja de</b><small>Te aviso cuando el precio llegue a ese número o menos.</small></div>
+    <div class="watch-form"><span>$</span><input id="watch-target" inputmode="numeric" value="${suggested.toLocaleString('es-AR')}" aria-label="Precio objetivo">
+    <button class="btn primary sm" data-watch="${esc(it.id)}">Seguir</button></div>
+  </div>`;
+}
+
+function renderWatchRail() {
+  const box = $('#watch-wrap');
+  if (!box) return;
+  const list = engine.watchedItems();
+  box.innerHTML = list.length ? `
+    <div class="section-head"><h2>🔔 Precios que seguís</h2><span>${(n => n ? `${n} ${n === 1 ? 'llegó' : 'llegaron'} a tu precio` : 'ninguno llegó todavía')(list.filter(i => i.watch.reached).length)}</span></div>
+    <div class="rail">${list.map(it => `
+      <div class="mini ${it.watch.reached ? 'reached' : ''}" data-item="${esc(it.id)}">
+        <div class="cover" ${coverStyle(catOfItem(it))}>${coverHtml({ category: catOfItem(it), imageUrl: it.imageUrl })}</div>
+        <h4>${esc(it.name)}</h4>
+        <p><b>${ars(it.price)}</b> · ${it.watch.reached ? '¡llegó!' : `querés ${ars(it.watch.target)}`}</p>
+      </div>`).join('')}</div>` : '';
 }
