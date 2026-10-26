@@ -19,5 +19,6 @@ node tools/fetch-rappi-pages.mjs $scrape --max-age-hours 20
 if ($LASTEXITCODE -ne 0) { throw 'Falló la descarga de páginas' }
 node tools/import-rappi.mjs $scrape --google $google --prefs $prefs
 if ($LASTEXITCODE -ne 0) { throw 'Falló la importación' }
-node --test tests/
+# Node 24 toma una carpeta como archivo de test: se le pasa el patrón.
+node --test "tests/*.test.js"
 if ($LASTEXITCODE -ne 0) { throw 'Fallaron los tests' }

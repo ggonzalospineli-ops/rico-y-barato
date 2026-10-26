@@ -21,7 +21,7 @@ try {
   git pull --ff-only --quiet
   if ($LASTEXITCODE -ne 0) { throw 'No se pudo traer lo último de GitHub (git pull)' }
 
-  & (Join-Path $PSScriptRoot 'actualizar.ps1') *>> $log
+  & (Join-Path $PSScriptRoot 'actualizar.ps1') *>&1 | Out-File -Append -Encoding utf8 $log
 
   git add data
   git diff --cached --quiet
