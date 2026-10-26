@@ -485,6 +485,36 @@ function balanceHint() {
     : w <= 0.55 ? 'Mitad y mitad.' : w < 0.85 ? 'Rico, sin regalar la plata.' : 'Lo más rico, cueste lo que cueste.';
 }
 
+// Actualiza una lista sin recrear lo que no cambió: cada hijo se identifica por key; si su HTML es el mismo
+// se reusa el nodo (la foto ya cargada no parpadea) y solo se lo mueve de lugar. Lo nuevo o distinto se crea.
+function patchChildren(box, items) {
+  const old = new Map([...box.children].filter(el => el._key).map(el => [el._key, el]));
+  const tpl = document.createElement('template');
+  let ref = box.firstChild;
+  for (const { key, html } of items) {
+    let el = old.get(key);
+    if (el && el._html === html) old.delete(key);
+    else {
+      tpl.innerHTML = html.trim();
+      const fresh = tpl.content.firstElementChild;
+      fresh._key = key; fresh._html = html;
+      // Si la tarjeta ya estaba y solo cambió algún detalle, se conserva la foto ya cargada.
+      if (el) {
+        old.delete(key);
+        for (const img of fresh.querySelectorAll('img.photo')) {
+          const prev = [...el.querySelectorAll('img.photo')].find(o => o.getAttribute('src') === img.getAttribute('src'));
+          if (prev) img.replaceWith(prev);
+        }
+        el.replaceWith(fresh);
+        if (ref === el) ref = fresh;
+      }
+      el = fresh;
+    }
+    if (el !== ref) box.insertBefore(el, ref); else ref = ref.nextSibling;
+  }
+  while (ref) { const next = ref.nextSibling; ref.remove(); ref = next; }
+}
+
 function renderResults() {
   const r = currentResult();
   const box = $('#results');
@@ -494,10 +524,16 @@ function renderResults() {
   $('#map-wrap').innerHTML = ui.results === 'map' && r.all.length ? mapHtml(r) : '';
   box.classList.toggle('below-map', ui.results === 'map');
   const more = r.total - r.options.length;
-  box.innerHTML = r.options.length ? r.options.map(planCard).join('')
-    + (more > 0 ? `<button class="btn ghost block more-results" data-more>Ver ${Math.min(more, PAGE)} más (quedan ${more})</button>` : '') : `
+  if (r.options.length) {
+    patchChildren(box, [
+      ...r.options.map(p => ({ key: p.id, html: planCard(p) })),
+      ...(more > 0 ? [{ key: 'more', html: `<button class="btn ghost block more-results" data-more>Ver ${Math.min(more, PAGE)} más (quedan ${more})</button>` }] : []),
+    ]);
+  } else {
+    box.innerHTML = `
     <div class="empty-state"><div class="e">🥲</div><h3>Con esa plata no llego</h3>
     <p>Probá con menos hambre, otra comida o subí el monto.${r.overBudget.length ? ' Abajo te muestro lo que se pasa por poco.' : ''}</p></div>`;
+  }
   renderFavRail(r);
   renderExtras(r);
   const over = r.overBudget.slice(0, 5);
