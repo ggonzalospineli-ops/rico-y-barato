@@ -1,0 +1,23 @@
+{
+  "store": "McDonald's Mad",
+  "brand": "mcdonalds",
+  "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/mcdonalds-mad-7cd06dd3-e701-4ba3-be8c-993a46bb5741-menu",
+  "fetchedAt": "2026-10-26T05:54:47.990Z",
+  "partial": "Local cerrado al relevarlo: solo se ven los productos con descuento y bebidas",
+  "products": [
+    ["Doble carne Doble queso + Papas medianas", 7100, 15700],
+    ["McNuggets x 6", 4500, 8700],
+    ["1 Hamburguesa con Queso + 1 Papas Medianas + 1 Pileta de Cheddar", 10499, 16700],
+    ["McPollo + Papas Pequeñas", 8599, 12500],
+    ["1 Grand Tostado + Papas Medianas", 8599, 12300],
+    ["McFlurry Oreo", 3570, 5100],
+    ["Big Mac Mediano", 13610, 19100],
+    ["McNuggets X10 Mediano", 12999, 18400],
+    ["Tasty Feat Cuarto Simple Mediano", 15820, 22300],
+    ["McCrispy Deluxe +Side Salad", 11599, 15400],
+    ["Big Mac + Papas Medianas", 12000, 15200],
+    ["2 Cajitas Felices", 23120, 28900],
+    ["2 McCombos Medianos BigMac", 30880, 38200],
+    ["McShake Frutilla", 5015, 5900]
+  ]
+}

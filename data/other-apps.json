@@ -2,16 +2,166 @@
   "about": "Precios del mismo producto en otras apps, por id de producto del catálogo. same: true solo cuando es exactamente el mismo producto (mismo contenido); con same: false se muestra como referencia y nunca como 'más barato'. Para sumar PedidosYa, agregar entradas con app: 'pedidosya'.",
   "items": {
     "dean-dennys-palermo:4289963": [
-      { "app": "morfy", "name": "Bacon Cheeseburger Doble + Papas + Gaseosa", "price": 21165, "same": false,
-        "note": "En Morfy el combo incluye gaseosa; precio de las sucursales de Malabia y Junín" }
+      {
+        "app": "morfy",
+        "name": "Bacon Cheeseburger Doble + Papas + Gaseosa",
+        "price": 21165,
+        "same": false,
+        "note": "En Morfy el combo incluye gaseosa; precio de las sucursales de Malabia y Junín"
+      }
     ],
     "dean-dennys-palermo:4289982": [
-      { "app": "morfy", "name": "Cheeseburger Doble + Papas + Gaseosa", "price": 19890, "same": false,
-        "note": "En Morfy el combo incluye gaseosa; precio de las sucursales de Malabia y Junín" }
+      {
+        "app": "morfy",
+        "name": "Cheeseburger Doble + Papas + Gaseosa",
+        "price": 19890,
+        "same": false,
+        "note": "En Morfy el combo incluye gaseosa; precio de las sucursales de Malabia y Junín"
+      }
     ],
     "dean-dennys-palermo:4289986": [
-      { "app": "morfy", "name": "Dean Doble + Papas + Gaseosa", "price": 20315, "same": false,
-        "note": "En Morfy el combo incluye gaseosa; precio de las sucursales de Malabia y Junín" }
+      {
+        "app": "morfy",
+        "name": "Dean Doble + Papas + Gaseosa",
+        "price": 20315,
+        "same": false,
+        "note": "En Morfy el combo incluye gaseosa; precio de las sucursales de Malabia y Junín"
+      }
+    ],
+    "mcdonald-s-almagro:2970868": [
+      {
+        "app": "pedidosya",
+        "name": "Big Mac Mediano",
+        "price": 13610,
+        "same": true,
+        "note": "McDonald's Mad, con descuento (sin descuento 19.100); relevado el 2026-10-26"
+      }
+    ],
+    "mcdonald-s-almagro:2969920": [
+      {
+        "app": "pedidosya",
+        "name": "Doble carne Doble queso + Papas medianas",
+        "price": 7100,
+        "same": true,
+        "note": "McDonald's Mad, con descuento (sin descuento 15.700); relevado el 2026-10-26"
+      }
+    ],
+    "mcdonald-s-almagro:2969943": [
+      {
+        "app": "pedidosya",
+        "name": "McPollo + Papas Pequeñas",
+        "price": 8599,
+        "same": true,
+        "note": "McDonald's Mad, con descuento (sin descuento 12.500); relevado el 2026-10-26"
+      }
+    ],
+    "mcdonald-s-almagro:2969947": [
+      {
+        "app": "pedidosya",
+        "name": "Big Mac + Papas Medianas",
+        "price": 12000,
+        "same": true,
+        "note": "McDonald's Mad, con descuento (sin descuento 15.200); relevado el 2026-10-26"
+      }
+    ],
+    "mcdonald-s-almagro:2969692": [
+      {
+        "app": "pedidosya",
+        "name": "McCrispy Deluxe +Side Salad",
+        "price": 11599,
+        "same": true,
+        "note": "McDonald's Mad, con descuento (sin descuento 15.400); relevado el 2026-10-26"
+      }
+    ],
+    "mcdonald-s-almagro:2969664": [
+      {
+        "app": "pedidosya",
+        "name": "1 Grand Tostado + Papas Medianas",
+        "price": 8599,
+        "same": true,
+        "note": "McDonald's Mad, con descuento (sin descuento 12.300); relevado el 2026-10-26"
+      }
+    ],
+    "mcdonald-s-almagro:2970298": [
+      {
+        "app": "pedidosya",
+        "name": "2 McCombos Medianos BigMac",
+        "price": 30880,
+        "same": true,
+        "note": "McDonald's Mad, con descuento (sin descuento 38.200); relevado el 2026-10-26"
+      }
+    ],
+    "mcdonald-s-almagro:2970193": [
+      {
+        "app": "pedidosya",
+        "name": "2 Cajitas Felices",
+        "price": 23120,
+        "same": true,
+        "note": "McDonald's Mad, con descuento (sin descuento 28.900); relevado el 2026-10-26"
+      }
+    ],
+    "mcdonald-s-almagro:2969859": [
+      {
+        "app": "pedidosya",
+        "name": "Tasty Feat Cuarto Simple Mediano",
+        "price": 15820,
+        "same": true,
+        "note": "McDonald's Mad, con descuento (sin descuento 22.300); relevado el 2026-10-26"
+      }
+    ],
+    "mcdonald-s-almagro:2970989": [
+      {
+        "app": "pedidosya",
+        "name": "McNuggets X10 Mediano",
+        "price": 12999,
+        "same": true,
+        "note": "McDonald's Mad, con descuento (sin descuento 18.400); relevado el 2026-10-26"
+      }
+    ],
+    "mcdonald-s-almagro:2971883": [
+      {
+        "app": "pedidosya",
+        "name": "McNuggets x 6",
+        "price": 4500,
+        "same": true,
+        "note": "McDonald's Mad, con descuento (sin descuento 8.700); relevado el 2026-10-26"
+      }
+    ],
+    "mcdonald-s-almagro:2972097": [
+      {
+        "app": "pedidosya",
+        "name": "McFlurry Oreo",
+        "price": 3570,
+        "same": true,
+        "note": "McDonald's Mad, con descuento (sin descuento 5.100); relevado el 2026-10-26"
+      }
+    ],
+    "mcdonald-s-almagro:2972102": [
+      {
+        "app": "pedidosya",
+        "name": "McShake Frutilla",
+        "price": 5015,
+        "same": true,
+        "note": "McDonald's Mad, con descuento (sin descuento 5.900); relevado el 2026-10-26"
+      }
+    ],
+    "postres-mcdonald-s-palermo:2411623": [
+      {
+        "app": "pedidosya",
+        "name": "McFlurry Oreo",
+        "price": 3570,
+        "same": true,
+        "note": "McDonald's Mad, con descuento (sin descuento 5.100); relevado el 2026-10-26"
+      }
+    ],
+    "postres-mcdonald-s-palermo:2411641": [
+      {
+        "app": "pedidosya",
+        "name": "McShake Frutilla",
+        "price": 5015,
+        "same": true,
+        "note": "McDonald's Mad, con descuento (sin descuento 5.900); relevado el 2026-10-26"
+      }
     ]
   }
 }
