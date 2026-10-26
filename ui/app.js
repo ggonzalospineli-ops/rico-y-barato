@@ -517,6 +517,20 @@ function patchChildren(box, items) {
   while (ref) { const next = ref.nextSibling; ref.remove(); ref = next; }
 }
 
+// Una tira horizontal (título + tarjetas) sin parpadeo: el título solo se reescribe si cambió y las tarjetas
+// se actualizan con patchChildren (las que siguen iguales conservan su foto).
+function renderRail(host, headHtml, items) {
+  if (!host) return;
+  if (!items.length) { host.innerHTML = ''; host._head = null; return; }
+  let rail = host.querySelector(':scope > .rail');
+  if (host._head !== headHtml || !rail) {
+    host.innerHTML = `${headHtml}<div class="rail"></div>`;
+    host._head = headHtml;
+    rail = host.querySelector(':scope > .rail');
+  }
+  patchChildren(rail, items);
+}
+
 function renderResults() {
   const r = currentResult();
   const box = $('#results');
@@ -539,15 +553,14 @@ function renderResults() {
   renderFavRail(r);
   renderExtras(r);
   const over = r.overBudget.slice(0, 5);
-  $('#over-wrap').innerHTML = over.length ? `
-    <div class="section-head"><h2>Con un poco más…</h2><span>se pasan por poco</span></div>
-    <div class="rail">${over.map(p => `
+  renderRail($('#over-wrap'), '<div class="section-head"><h2>Con un poco más…</h2><span>se pasan por poco</span></div>',
+    over.map(p => ({ key: p.id, html: `
       <div class="mini" data-plan="${esc(p.id)}">
         <div class="cover" ${coverStyle(p.category)}>${coverHtml({ category: p.category, imageUrl: planImage(p) })}</div>
         <h4>${esc(p.restaurant.name)}</h4>
         <p>${p.quantity} ${unitLabel(p.quantity, p.unit)} · ${ars(p.total)}</p>
         <p class="over">+${ars(p.overBudgetBy)}</p>
-      </div>`).join('')}</div>` : '';
+      </div>` })));
 }
 
 function planCard(p) {
@@ -1514,7 +1527,7 @@ function renderFavRail() {
   const host = $('#fav-wrap');
   if (!host) return;
   const favs = engine.getState().favorites;
-  if (!favs.length) { host.innerHTML = ''; return; }
+  if (!favs.length) { renderRail(host, '', []); return; }
   const free = engine.recommend({
     hunger: ui.hunger, categories: ui.category === 'all' ? undefined : [ui.category],
     ricoWeight: ui.ricoWeight, people: ui.people, map: true,
@@ -1523,16 +1536,15 @@ function renderFavRail() {
   favPlans = free.all.filter(p => p.lines.some(l => favs.includes(l.itemId)))
     .sort((a, b) => (a.total > money) - (b.total > money) || b.scores.total - a.scores.total).slice(0, 6);
   const plans = favPlans;
-  host.innerHTML = plans.length ? `
-    <div class="section-head"><h2>❤️ Lo que ya sabés que te gusta</h2><span>armado con tus favoritos</span></div>
-    <div class="rail">${plans.map(p => `
+  renderRail(host, '<div class="section-head"><h2>❤️ Lo que ya sabés que te gusta</h2><span>armado con tus favoritos</span></div>',
+    plans.map(p => ({ key: p.id, html: `
       <div class="mini fav-mini" data-plan="${esc(p.id)}">
         <div class="cover" ${coverStyle(p.category)}>${coverHtml({ category: p.category, imageUrl: planImage(p) })}</div>
         <h4>${esc(p.lines.map(l => `${l.qty > 1 ? `${l.qty}× ` : ''}${l.name}`).join(' + '))}</h4>
         <p>${esc(p.restaurant.name)}</p>
         <p class="price-mini">${ars(p.total)} · ${p.quantity} ${unitLabel(p.quantity, p.unit)}</p>
         ${p.total > (ui.money ?? Infinity) ? `<p class="over">+${ars(p.total - ui.money)} sobre tu plata</p>` : ''}
-      </div>`).join('')}</div>` : '';
+      </div>` })));
 }
 
 // Locales que otras fuentes recomiendan pero Rappi no tiene (no se pueden pedir desde acá).
@@ -1720,14 +1732,13 @@ function renderExtras(r) {
   // Bajas en lo que te gusta
   const drops = $('#drops-wrap');
   const alerts = engine.priceAlerts();
-  if (drops) drops.innerHTML = alerts.length ? `
-    <div class="section-head"><h2>📉 Bajó lo que te gusta</h2><button data-tab="top" data-toptab="drops">Ver todas</button></div>
-    <div class="rail">${alerts.slice(0, 8).map(it => `
+  renderRail(drops, '<div class="section-head"><h2>📉 Bajó lo que te gusta</h2><button data-tab="top" data-toptab="drops">Ver todas</button></div>',
+    alerts.slice(0, 8).map(it => ({ key: it.id, html: `
       <div class="mini" data-rest="${esc(it.restaurant.id)}">
         <div class="cover" ${coverStyle(catOfItem(it))}>${coverHtml({ category: catOfItem(it), imageUrl: it.imageUrl })}</div>
         <h4>${esc(it.name)}</h4><p>${esc(it.restaurant.name)}</p>
         <p class="price-mini">${ars(it.price)} <s>${ars(it.priceChange.from)}</s> <b class="down">${it.priceChange.pct}%</b></p>
-      </div>`).join('')}</div>` : '';
+      </div>` })));
 }
 
 // =====================================================================
