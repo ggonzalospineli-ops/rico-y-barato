@@ -331,6 +331,7 @@ code { font-size: 12px; background: var(--bg); padding: 1px 5px; border-radius: 
 
 @media (prefers-reduced-motion: reduce) {
   .round:hover, .ask-in:focus-within, .va-fab:hover { transform: none; }
+}
 
 /* =====================================================================
    Asistente IA (ElevenLabs): botón flotante + dock del widget
@@ -384,3 +385,4 @@ code { font-size: 12px; background: var(--bg); padding: 1px 5px; border-radius: 
 .item-qty { display: flex; align-items: center; justify-content: space-between; margin-top: 18px; padding: 12px 14px; border-radius: 16px; background: var(--card); box-shadow: var(--shadow-sm); font-weight: 700; }
 .item-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
 .item-actions .btn { flex: 1; min-width: 140px; }
+.item-actions .btn { background: var(--card); box-shadow: var(--shadow-sm); }

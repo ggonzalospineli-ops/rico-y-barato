@@ -221,7 +221,9 @@ const coverStyle = cat => `style="background:${look(cat).bg}"`;
 const bigImage = url => url && url.replace(/d=\d+x\d+/, 'd=1400x1400');
 function sheetCoverHtml(category, url) {
   if (!url) return `<span class="art">${look(category).e}</span>`;
-  return `<span class="art">${look(category).e}</span><span class="backdrop" style="background-image:url('${esc(bigImage(url))}')"></span>${photo(bigImage(url), 500)}`;
+  // Mínimo 320 px: la portada muestra la foto entera sobre la misma foto desenfocada, así que una de ~500
+  // se ve bien. Con 500 se descartaban fotos de 491 px que en las tarjetas sí aparecían.
+  return `<span class="art">${look(category).e}</span><span class="backdrop" style="background-image:url('${esc(bigImage(url))}')"></span>${photo(bigImage(url), 320)}`;
 }
 const thumb = (cat, imageUrl, cls = '') => `<div class="thumb ${cls}" ${coverStyle(cat)}><span>${look(cat).e}</span>${photo(imageUrl)}</div>`;
 const logoThumb = (rest, cat) => `<div class="thumb logo" ${coverStyle(cat)}><span>${look(cat).e}</span>${photo(rest.logoUrl, 120)}</div>`;
