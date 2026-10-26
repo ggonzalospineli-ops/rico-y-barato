@@ -187,3 +187,15 @@ test('avisos de precio: seguir un producto y saber cuándo llegó al precio pedi
   assert.equal(e.watchedItems().length, 0);
   assert.throws(() => e.watchPrice('no-existe', 100));
 });
+
+test('modo fitness: los planes traen calorías, el máximo por persona filtra y lo sano sube', async () => {
+  const e = await engine();
+  const normal = e.recommend({ limit: 50 });
+  assert.ok(normal.options.every(p => p.nutrition.kcal > 0 && p.nutrition.health >= 5));
+  const avg = list => list.slice(0, 5).reduce((s, p) => s + p.nutrition.health, 0) / Math.min(5, list.length);
+  const fit = e.recommend({ limit: 50, fitness: true });
+  assert.ok(avg(fit.options) >= avg(normal.options));
+  const light = e.recommend({ limit: 50, fitness: true, maxKcal: 700, people: 2 });
+  assert.ok(light.options.length > 0 && light.options.every(p => p.nutrition.kcalPerPerson <= 700));
+  assert.ok(e.menu(e.restaurants()[0].id)[0].nutrition.kcal > 0);
+});

@@ -16,7 +16,7 @@ const CATEGORY_WORDS = {
   hamburguesa: /\bhamburgues|\bburgers?\b|\bhambur/,
   empanadas: /\bempanad/,
   pizza: /\bpizz/,
-  milanesa: /\bmilanes|\bmila(s)?\b/,
+  milanesa: /\bmilanes|\bmila(s)?\b|\bmilangas?\b/,
   pollo: /\bpollo frito\b|\bpresas\b|\bpollo entero\b/,
   pasta: /\bpastas?\b|\bfideos\b|\bravioles\b|\bsorrentinos\b|\bnoquis\b/,
   tacos: /\btacos?\b|\btaquitos?\b|\bquesadillas?\b/,
@@ -88,7 +88,7 @@ export function parseIntent(text) {
   if (out.ricoWeight != null) out.understood.push(out.ricoWeight < 0.5 ? 'priorizar barato' : 'priorizar rico');
 
   // Lo que no se usó (aproximado): palabras largas que ninguna regla tocó.
-  const used = /somos|para|tenemos|tengo|lucas|luca|mil|hambre|plata|precio|sin|no|como|come|comemos|barat|rico|bueno|gusto|vegetarian|vegan|cerdo|carne|pescado|lacteos|picante|frito|pollo|bestia|picar|poca|mucha|nugg|sushi|hambur|burger|empanad|pizz|milanes|mila|pasta|fideos|ravioles|sorrentinos|noquis|taco|quesadilla|wrap|burrito|fajita|parrilla|asado|bife|entrana|vacio|matambre|ensalada|caesar|cesar|sandwich|sanguche|lomito|tarta|quiche|wok|bowl|poke|limite|tope|algo|queremos|quiero|pedir|uno|una|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|mas|menos|que|con|los|las|del|una|unos|unas|esta|este|estamos|vamos/;
+  const used = /somos|para|tenemos|tengo|lucas|luca|mil|hambre|plata|precio|sin|no|como|come|comemos|barat|rico|bueno|gusto|vegetarian|vegan|cerdo|carne|pescado|lacteos|picante|frito|pollo|bestia|picar|poca|mucha|nugg|sushi|hambur|burger|empanad|pizz|milanes|mila|milanga|pasta|fideos|ravioles|sorrentinos|noquis|taco|quesadilla|wrap|burrito|fajita|parrilla|asado|bife|entrana|vacio|matambre|ensalada|caesar|cesar|sandwich|sanguche|lomito|tarta|quiche|wok|bowl|poke|limite|tope|algo|queremos|quiero|pedir|uno|una|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|mas|menos|que|con|los|las|del|una|unos|unas|esta|este|estamos|vamos/;
   out.unknown = t.split(/[^a-z0-9ñ]+/).filter(w => w.length > 4 && !used.test(w) && !/^\d+$/.test(w));
   return out;
 }

@@ -1,6 +1,7 @@
 // Fachada del motor. La UI solo habla con lo que devuelve createEngine().
 // Estado persistente: perfil (apetito, exclusiones), favoritos, presupuesto, carrito y pedidos.
 
+import { estimateNutrition, healthLabel } from './nutrition.js';
 import { CATEGORIES, BIG_FOUR } from '../data/catalog.js';
 import { cheapestCover } from './planner.js';
 import { quality, isHiddenGem, cheapnessByRank, clamp01 } from './scoring.js';
@@ -79,6 +80,7 @@ export function createEngine({ source, storage = memoryStorage(), now = () => Da
     byRestaurant = {};
     for (const it of items) (byRestaurant[it.restaurantId] ||= []).push(it);
     medianUnitPrice = computeMedians(items);
+    nutritionCache.clear();
     for (const id of data.suggestedFavorites || []) {
       if (state.seededFavorites.includes(id)) continue;
       state.seededFavorites.push(id);
@@ -102,7 +104,7 @@ export function createEngine({ source, storage = memoryStorage(), now = () => Da
   // map: true devuelve además todos los planes que entran en la plata, para el mapa Rico × Barato.
   // openOnly: sin locales cerrados en el momento `at` (por defecto, ahora).
   function recommend({ hunger = 'normal', money = Infinity, categories, ricoWeight = 0.5, limit = 12, people = 1, map = false,
-    openOnly = true, at = null, exclude = [], maxEta = null, maxKm = null } = {}) {
+    openOnly = true, at = null, exclude = [], maxEta = null, maxKm = null, fitness = false, maxKcal = null } = {}) {
     const n = Math.max(1, Math.round(people));
     const when = new Date(at ?? now());
     const status = Object.fromEntries(restaurants.map(r => [r.id, openStatus(r.schedule, when)]));
@@ -149,9 +151,13 @@ export function createEngine({ source, storage = memoryStorage(), now = () => Da
 
     for (const p of plans) {
       p.scores.total = ricoWeight * p.scores.rico + (1 - ricoWeight) * p.scores.barato;
+      p.nutrition.kcalPerPerson = Math.round(p.nutrition.kcal / n / 10) * 10;
+      // Modo fitness: lo sano pesa casi la mitad del puntaje.
+      if (fitness) p.scores.total = 0.55 * p.scores.total + 0.45 * (p.nutrition.health / 100);
       p.overBudgetBy = Math.max(0, p.total - available);
     }
-    const affordable = plans.filter(p => !p.overBudgetBy);
+    const fitsKcal = p => !fitness || maxKcal == null || p.nutrition.kcalPerPerson <= maxKcal;
+    const affordable = plans.filter(p => !p.overBudgetBy && fitsKcal(p));
     markSweetSpots(affordable);
     const byScore = (a, b) => b.scores.total - a.scores.total;
     const ranked = maxPerRestaurant(affordable.sort(byScore), 2);
@@ -199,6 +205,7 @@ export function createEngine({ source, storage = memoryStorage(), now = () => Da
         otherApps: l.product.otherApps || [],
       })),
       subtotal: cover.subtotal,
+      nutrition: planNutrition(cover.lines),
       deliveryFee: r.deliveryFee || 0,
       total,
       unitCost: Math.round(total / cover.quantity),
@@ -207,6 +214,23 @@ export function createEngine({ source, storage = memoryStorage(), now = () => Da
       orderUrl: source.orderUrl(r),
     };
   }
+
+  // Calorías del pedido (estimadas) y qué tan sano es, ponderado por las calorías de cada producto.
+  function planNutrition(lines) {
+    let kcal = 0, weighted = 0;
+    for (const l of lines) {
+      const est = nutritionOf(l.product);
+      kcal += est.kcal * l.qty;
+      weighted += est.health * est.kcal * l.qty;
+    }
+    const health = kcal ? Math.round(weighted / kcal) : 50;
+    return { kcal: Math.round(kcal / 10) * 10, health, label: healthLabel(health) };
+  }
+  const nutritionCache = new Map();
+  const nutritionOf = it => {
+    if (!nutritionCache.has(it.id)) nutritionCache.set(it.id, estimateNutrition(it));
+    return nutritionCache.get(it.id);
+  };
 
   function markCheapestChainPerCategory(plans) {
     const seen = new Set();
@@ -287,7 +311,7 @@ export function createEngine({ source, storage = memoryStorage(), now = () => Da
     price: it.price, originalPrice: it.originalPrice || null, discount: it.discount || null,
     imageUrl: it.imageUrl || null, signals: it.signals || [],
     priceHistory: it.priceHistory || null, priceChange: it.priceChange || null, inflatedOriginal: !!it.inflatedOriginal,
-    otherApps: it.otherApps || [], disliked: state.disliked.includes(it.id),
+    otherApps: it.otherApps || [], disliked: state.disliked.includes(it.id), nutrition: nutritionOf(it),
     yields: it.yields, tags: it.tags, salesRank: it.salesRank ?? null,
     source: it.source || null, sourceType: it.sourceType || null, sourceUrl: it.sourceUrl || null,
     officialSource: !!it.officialSource, sourceValidity: it.sourceValidity || null, sourceScope: it.sourceScope || null,

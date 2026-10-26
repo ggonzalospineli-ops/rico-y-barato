@@ -5,6 +5,7 @@ import { jsonSource } from '../sources/json.js';
 import { splitBill, splitMessage } from '../engine/split.js';
 import { parseIntent } from '../engine/intent.js';
 import { decideDeck } from '../engine/shuffle.js';
+import { dailyKcal } from '../engine/nutrition.js';
 import { mountAssistant } from './assistant.js';
 import { hasKey, setKey, hasAI, aiLabel, activeProvider, detectLocal, warmLocal, localStatus, getProvider, setProvider, testAI, interpretWithAI, readTicket } from './ai.js';
 
@@ -125,7 +126,7 @@ function mountAssistantShell() {
 const ui = Object.assign({
   tab: 'home', hunger: 'mucho', category: 'all', money: 20000, ricoWeight: 0.5, topTab: 'sellers', people: 1, results: 'cards',
 }, store.get('ui') || {});
-const saveUi = () => store.set('ui', { hunger: ui.hunger, category: ui.category, money: ui.money, ricoWeight: ui.ricoWeight, topTab: ui.topTab, people: ui.people, results: ui.results, assistant: ui.assistant, maxEta: ui.maxEta ?? null, maxKm: ui.maxKm ?? null });
+const saveUi = () => store.set('ui', { hunger: ui.hunger, category: ui.category, money: ui.money, ricoWeight: ui.ricoWeight, topTab: ui.topTab, people: ui.people, results: ui.results, assistant: ui.assistant, maxEta: ui.maxEta ?? null, maxKm: ui.maxKm ?? null, fitness: !!ui.fitness, maxKcal: ui.maxKcal ?? null, bodyWeight: ui.bodyWeight ?? null, goal: ui.goal || 'mantener' });
 
 const LOOK = {
   nuggets:     { e: '🍗', bg: 'linear-gradient(135deg,#FFE08A,#FF9F1C)' },
@@ -258,7 +259,7 @@ let lastResult = null;
 const PAGE = 20;
 let shown = { key: '', n: PAGE };
 function shownLimit() {
-  const key = JSON.stringify([ui.hunger, ui.money, ui.category, ui.ricoWeight, ui.people, ui.tempExclude, ui.showClosed, ui.when, ui.maxEta, ui.maxKm]);
+  const key = JSON.stringify([ui.hunger, ui.money, ui.category, ui.ricoWeight, ui.people, ui.tempExclude, ui.showClosed, ui.when, ui.maxEta, ui.maxKm, ui.fitness, ui.maxKcal]);
   if (key !== shown.key) shown = { key, n: PAGE };
   return shown.n;
 }
@@ -279,6 +280,8 @@ function currentResult() {
     at: whenAt(),
     maxEta: ui.maxEta ?? null,
     maxKm: ui.maxKm ?? null,
+    fitness: !!ui.fitness,
+    maxKcal: ui.fitness ? ui.maxKcal ?? null : null,
     limit: shownLimit(),
     map: true,
   });
@@ -460,9 +463,11 @@ function viewHome() {
             <button class="${ui.results === 'cards' ? 'on' : ''}" data-results="cards">▦ Tarjetas</button>
             <button class="${ui.results === 'map' ? 'on' : ''}" data-results="map">⚡ Mapa</button>
           </div>
+          <button class="btn ghost fit-btn ${ui.fitness ? 'on' : ''}" data-fitness aria-pressed="${!!ui.fitness}">💪 Fitness</button>
           <button class="btn red decide-btn" data-decide>🎰 Decidí por mí</button>
         </div>
       </div>
+      ${ui.fitness ? fitnessBarHtml() : ''}
       <div id="closed-note"></div>
       <div id="map-wrap"></div>
       <div class="cards" id="results"></div>
@@ -524,6 +529,7 @@ function planCard(p) {
         <span class="rating">${icon('star', 'fill')} ${stars(p.restaurant)} ${reviewsTxt(p.restaurant)}</span>
       </div>
       <p class="card-lines">${p.lines.map(l => `${l.qty}× ${esc(l.name)}`).join(' + ')}</p>
+      ${ui.fitness ? cardNutritionHtml(p) : ''}
       ${plateHtml(p)}
       <div class="meter">
         <div><small><span>Rico</span><span>${Math.round(p.scores.rico * 100)}</span></small><i><b style="width:${p.scores.rico * 100}%;background:var(--red)"></b></i></div>
@@ -738,6 +744,7 @@ function openPlan(id) {
       ${reputationHtml(p.restaurant)}
       ${p.variant === 'un-poco-menos' ? `<p class="blurb">Comés un poco menos de lo que querías (${p.quantity} de ${p.target}) pero te ahorrás bastante.</p>` : ''}
       ${plateHtml(p, true)}
+      ${nutritionBoxHtml({ kcal: p.nutrition.kcal, perPerson: p.nutrition.kcalPerPerson, people: lastResult?.people || 1, health: p.nutrition.health, label: p.nutrition.label })}
       <div class="section-head" style="margin-top:22px"><h2>Qué pedís</h2><span>${p.lines.length} producto${p.lines.length > 1 ? 's' : ''}</span></div>
       <div class="list">${p.lines.map(l => `
         <div class="line-item">
@@ -826,6 +833,7 @@ function openItem(itemId, qty = 1) {
       </div>
       ${placeHtml(rest)}
       ${sourceHtml(it)}${signalsHtml(it.signals)}${priceChangeHtml(it)}${otherAppsHtml(it.otherApps, it.price)}
+      ${it.nutrition ? nutritionBoxHtml({ kcal: it.nutrition.kcal * qty, perUnit: it.nutrition.perUnit, health: it.nutrition.health, label: it.nutrition.label, reasons: it.nutrition.reasons, range: it.nutrition.range.map(k => k * qty), qty }) : ''}
       <div class="item-qty">
         <span>Cantidad</span>
         <div class="stepper"><div><button data-iqty="-1" aria-label="Menos">−</button><span>${qty}</span><button data-iqty="1" aria-label="Más">+</button></div></div>
@@ -861,7 +869,7 @@ engine.on(({ type }) => {
 });
 
 document.addEventListener('click', e => {
-  const t = e.target.closest('[data-palette],[data-people],[data-results],[data-decide],[data-swipe],[data-cmd],[data-spin],[data-tab],[data-hunger],[data-cat],[data-money],[data-add],[data-fav],[data-fav-plan],[data-plan],[data-rest],[data-close],[data-hide],[data-unhide],[data-confirm],[data-remove],[data-toptab],[data-step],[data-enable],[data-exclude],[data-suggest],[data-assist-toggle],[data-assist-enable],[data-item],[data-iqty],[data-when],[data-eta],[data-km],#sheet-wrap');
+  const t = e.target.closest('[data-palette],[data-people],[data-results],[data-decide],[data-swipe],[data-cmd],[data-spin],[data-tab],[data-hunger],[data-cat],[data-money],[data-add],[data-fav],[data-fav-plan],[data-plan],[data-rest],[data-close],[data-hide],[data-unhide],[data-confirm],[data-remove],[data-toptab],[data-step],[data-enable],[data-exclude],[data-suggest],[data-assist-toggle],[data-assist-enable],[data-item],[data-iqty],[data-when],[data-eta],[data-km],[data-fitness],[data-kcal],[data-goal],#sheet-wrap');
   if (!t) return;
   const d = t.dataset;
 
@@ -878,6 +886,9 @@ document.addEventListener('click', e => {
   if (d.hunger) { ui.hunger = d.hunger; saveUi(); render(); return; }
   if (d.cat) { ui.category = d.cat; saveUi(); render(); return; }
   if ('money' in d) { ui.money = d.money ? +d.money : null; saveUi(); render(); return; }
+  if ('fitness' in d) { ui.fitness = !ui.fitness; saveUi(); render(); return; }
+  if ('kcal' in d) { ui.maxKcal = d.kcal === '' ? null : +d.kcal; saveUi(); render(); return; }
+  if (d.goal) { ui.goal = d.goal; saveUi(); render(); return; }
   if ('when' in d) { ui.when = d.when === '' ? null : +d.when; render(); return; }
   if ('eta' in d) { ui.maxEta = d.eta === '' ? null : +d.eta; saveUi(); render(); return; }
   if ('km' in d) { ui.maxKm = d.km === '' ? null : +d.km; saveUi(); render(); return; }
@@ -2018,3 +2029,57 @@ function spendingHtml() {
     </section>`;
 }
 
+
+// =====================================================================
+// Modo fitness: calorías ESTIMADAS y qué tan sano (engine/nutrition.js)
+// =====================================================================
+// Función (no const): la pantalla se dibuja antes de llegar a esta parte del archivo.
+function healthClass(h) { return h >= 70 ? 'good' : h >= 50 ? 'ok' : h >= 30 ? 'heavy' : 'bad'; }
+function dailyNeed() { return dailyKcal(ui.bodyWeight, ui.goal || 'mantener'); }
+
+function fitnessBarHtml() {
+  const need = dailyNeed();
+  return `<div class="fit-bar">
+    <div class="filter-row"><span class="filter-label">Máximo por persona</span>
+      <div class="quick">${[[null, 'Sin límite'], [600, '600 kcal'], [800, '800 kcal'], [1000, '1000 kcal']].map(([k, lb]) => `<button class="${(ui.maxKcal ?? null) === k ? 'on' : ''}" data-kcal="${k ?? ''}">${lb}</button>`).join('')}</div>
+    </div>
+    <div class="filter-row fit-me"><span class="filter-label">Vos</span>
+      <label class="fit-weight"><input id="body-weight" inputmode="numeric" value="${ui.bodyWeight || ''}" placeholder="peso"> kg</label>
+      <div class="quick">${[['bajar', 'Bajar'], ['mantener', 'Mantener'], ['subir', 'Subir']].map(([g, lb]) => `<button class="${(ui.goal || 'mantener') === g ? 'on' : ''}" data-goal="${g}">${lb}</button>`).join('')}</div>
+      <small>${need ? `Necesitás unas ${need.toLocaleString('es-AR')} kcal por día.` : 'Poné tu peso y te digo qué parte del día es cada pedido.'}</small>
+    </div>
+    <p class="fit-note">Las calorías son estimadas a partir del nombre, la descripción y el peso que publica el local: Rappi no da información nutricional.</p>
+  </div>`;
+}
+
+function cardNutritionHtml(p) {
+  const n = p.nutrition;
+  const need = dailyNeed();
+  return `<div class="nut-line">
+    <span>🔥 ${n.kcalPerPerson.toLocaleString('es-AR')} kcal${(lastResult?.people || 1) > 1 ? ' c/u' : ''}${need ? ` · ${Math.round((n.kcalPerPerson / need) * 100)}% del día` : ''}</span>
+    <span class="health ${healthClass(n.health)}">${n.label} · ${n.health}</span>
+  </div>`;
+}
+
+function nutritionBoxHtml({ kcal, perPerson, people = 1, perUnit, health, label, reasons = [], range, qty = 1 }) {
+  const need = dailyNeed();
+  const mine = perPerson ?? kcal;
+  return `<div class="nut-box">
+    <div class="nut-head">
+      <div><small>Calorías (estimado)</small><b>${kcal.toLocaleString('es-AR')} kcal</b>
+        <span>${[range ? `entre ${range[0].toLocaleString('es-AR')} y ${range[1].toLocaleString('es-AR')}` : '', perUnit ? `≈${perUnit} kcal c/u` : '', people > 1 ? `${mine.toLocaleString('es-AR')} por persona` : '', need ? `${Math.round((mine / need) * 100)}% de tu día` : ''].filter(Boolean).join(' · ')}</span></div>
+      <div class="health-score ${healthClass(health)}"><b>${health}</b><small>${label}</small></div>
+    </div>
+    <i class="health-bar"><b class="${healthClass(health)}" style="width:${health}%"></b></i>
+    ${reasons.length ? `<div class="nut-reasons">${reasons.map(r => `<span class="${r.startsWith('✓') ? 'pos' : r.startsWith('✗') ? 'neg' : ''}">${esc(r)}</span>`).join('')}</div>` : ''}
+    ${qty > 1 ? `<p class="fit-note">Para ${qty} unidades.</p>` : ''}
+  </div>`;
+}
+
+document.addEventListener('change', e => {
+  if (e.target.id !== 'body-weight') return;
+  const kg = Math.round(+String(e.target.value).replace(/[^\d.]/g, ''));
+  ui.bodyWeight = kg >= 30 && kg <= 250 ? kg : null;
+  saveUi();
+  render();
+});

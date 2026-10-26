@@ -10,7 +10,7 @@ const CATEGORY_RULES = [
   ['nuggets',     /\bmc ?nugg?ets?\b|\bnugg?ets?\b|bocaditos? de pollo/],
   ['empanadas',   /\bempanadas?\b|\bampanadas?\b|\bempanadazas?\b/],
   ['sushi',       /\bsushi\b|\brolls?\b|\bnigu?iris?\b|\bsashimis?\b|\bmakis?\b|\buramakis?\b|\bgeishas?\b|\bhossomakis?\b/],
-  ['milanesa',    /\bmilanes|\bmila\b|\bmilas\b|\bsuprema/],
+  ['milanesa',    /\bmilanes|\bmila\b|\bmilas\b|\bmilangas?\b|\bsuprema/],
   ['pizza',       /\bpizz|\bpizet|\bfugazz|\bpala\b/],
   ['hamburguesa', /\bhamburgues|\bburgers?\b|\bwhopper|\bcuarto de libra|\bbig mac|\bsmash|\bcheeseburger|\bstacker|\bmc ?combo/],
   ['pollo',       /\bpresas?\b|\bbucket\b|\bpollo entero\b|\b1\/2 pollo\b|\bmedio pollo\b/],
@@ -32,6 +32,7 @@ const CATEGORY_EXCLUDE = {
   pizza:    /\bfainuzza\b|\bpastelito|\bcanastita|\ba la pizza\b|\bmatambre|\bpan de\b/, // "Matambre a la pizza", "Pan de provolone"
   hamburguesa: /\bpanchos?\b|\bhot ?dogs?\b|\bsalchicha/,                // "Pancho Cuarto de Libra" tampoco
   carnes: /\ba la pizza\b|\bempanadas?\b|\btartas?\b/,
+  ensaladas: /\bensaladas? de frutas?\b|\bmacedonia\b/,                // es un postre
 };
 
 // Categorías que solo cuentan si las dice el nombre o la sección, nunca la descripción.

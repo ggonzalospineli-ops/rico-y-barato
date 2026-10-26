@@ -413,3 +413,40 @@ code { font-size: 12px; background: var(--bg); padding: 1px 5px; border-radius: 
 .cs-bar { height: 8px; border-radius: 4px; background: var(--bg); overflow: hidden; }
 .cs-bar i { display: block; height: 100%; border-radius: 4px; background: var(--red); }
 .cs-row b { font-weight: 800; }
+
+/* Modo fitness */
+.fit-btn.on { background: var(--green); color: #fff; }
+.fit-bar { margin: 10px 0 12px; padding: 12px 14px; border-radius: var(--radius); background: var(--card); box-shadow: var(--shadow-sm); }
+.fit-bar .filter-row:first-child { margin-top: 0; }
+.fit-me { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 10px; }
+.fit-me .filter-label { margin: 0; }
+.fit-me small { flex-basis: 100%; font-size: 12px; font-weight: 600; color: var(--muted); }
+.fit-weight { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 700; color: var(--muted); }
+.fit-weight input { width: 58px; padding: 7px 8px; border-radius: 10px; border: 0; background: var(--bg); font: inherit; font-weight: 800; color: var(--ink); outline: 0; }
+.fit-note { margin-top: 8px; font-size: 11.5px; color: var(--muted); font-weight: 600; line-height: 1.4; }
+.nut-line { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; margin-top: 6px; font-size: 12px; font-weight: 700; color: var(--ink-2); }
+.health { padding: 3px 8px; border-radius: 8px; font-size: 11.5px; font-weight: 800; }
+.health.good { background: #E7F7EE; color: #0B6B36; }
+.health.ok { background: #FFF6D6; color: #6B4E00; }
+.health.heavy { background: #FFE9D6; color: #8A4300; }
+.health.bad { background: var(--red-soft); color: var(--red-deep); }
+.nut-box { margin-top: 14px; padding: 14px; border-radius: 16px; background: var(--card); box-shadow: var(--shadow-sm); }
+.nut-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.nut-head small { display: block; font-size: 11px; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.nut-head b { display: block; margin-top: 2px; font-size: 22px; font-weight: 800; }
+.nut-head span { display: block; margin-top: 2px; font-size: 12px; font-weight: 600; color: var(--muted); }
+.health-score { text-align: center; min-width: 74px; padding: 6px 8px; border-radius: 12px; }
+.health-score b { font-size: 22px; margin: 0; }
+.health-score small { text-transform: none; letter-spacing: 0; font-size: 11px; color: inherit; }
+.health-score.good { background: #E7F7EE; color: #0B6B36; }
+.health-score.ok { background: #FFF6D6; color: #6B4E00; }
+.health-score.heavy { background: #FFE9D6; color: #8A4300; }
+.health-score.bad { background: var(--red-soft); color: var(--red-deep); }
+.health-bar { display: block; height: 8px; margin-top: 12px; border-radius: 4px; background: var(--bg); overflow: hidden; }
+.health-bar b { display: block; height: 100%; border-radius: 4px; }
+.health-bar b.good { background: #1F9D55; } .health-bar b.ok { background: #E0A800; }
+.health-bar b.heavy { background: #E07A1F; } .health-bar b.bad { background: var(--red); }
+.nut-reasons { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.nut-reasons span { padding: 4px 8px; border-radius: 8px; background: var(--bg); font-size: 11.5px; font-weight: 700; color: var(--ink-2); }
+.nut-reasons span.pos { background: #E7F7EE; color: #0B6B36; }
+.nut-reasons span.neg { background: var(--red-soft); color: var(--red-deep); }
