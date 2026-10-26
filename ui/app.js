@@ -352,7 +352,6 @@ function renderTabbar() {
       <button class="tab ${ui.tab === id ? 'on' : ''}" data-tab="${id}">
         ${icon(ic)}<span>${label}</span>${id === 'cart' && cartCount ? `<span class="dot">${cartCount}</span>` : ''}
       </button>`).join('')}</div>
-    <button class="kbd-hint" data-palette><kbd>Ctrl</kbd><kbd>K</kbd> Comandos y atajos</button>
     <div class="side-budget">
       <small>Este mes</small>
       <b>${ars(s.spent)}</b>
