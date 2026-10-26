@@ -1,4 +1,368 @@
-{ "store": "Mostaza Alto Palermo Shopping", "brand": "mostaza", "fetchedAt": "2026-10-26T06:02:08Z",
-  "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/mostaza-alto-palermo-shopping-menu",
-  "partial": "Local cerrado al relevarlo: solo productos con descuento y algunos más",
-  "products": [["2 Tostados XL Queso & Jamón",7990,13400],["Triple Cheese Bacon Jr + Papas Regulares",12490,19700],["2 Triple Cheese Bacon Jr + 2 Papas",25990,39400],["Combo Black Kalis Halloween",16990,21500],["2 Combos Mega Cuarto",30990,38600],["Combo Mega Cuarto Bacon",15990,19700],["Mega Doble Black Kalis + Papas Regulares",18990,22300],["Balde de Papas",9500,null],["Papas Grandes",4500,null],["Papas Regulares",4200,null],["Nuggets x10",11700,null],["Doble Cheddar Junior + Papas Regulares",13900,null]] }
+{
+ "store": "Mostaza Alto Palermo Shopping",
+ "brand": "mostaza",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/mostaza-alto-palermo-shopping-menu",
+ "fetchedAt": "2026-10-26T17:54:29.174Z",
+ "products": [
+  [
+   "2 Tostados XL Queso & Jamón",
+   7990,
+   13400
+  ],
+  [
+   "Doble Cheddar Junior + Papas Regulares",
+   8790,
+   13900
+  ],
+  [
+   "Triple Cheese Bacon Jr + Papas Regulares",
+   12490,
+   19700
+  ],
+  [
+   "2 Triple Cheese Bacon Jr + 2 Papas",
+   25990,
+   39400
+  ],
+  [
+   "Mega Cuarto + Papas Regulares",
+   11990,
+   16700
+  ],
+  [
+   "Combo Doble Cheddar Junior",
+   10000,
+   13490
+  ],
+  [
+   "Combo Black Kalis Halloween",
+   16990,
+   21500
+  ],
+  [
+   "2 Combos Mega Cuarto",
+   30990,
+   38600
+  ],
+  [
+   "Combo Mega Cuarto Bacon",
+   15990,
+   19700
+  ],
+  [
+   "Mega Doble Black Kalis + Papas Regulares",
+   18990,
+   22300
+  ],
+  [
+   "21 % OFF",
+   16990,
+   21500
+  ],
+  [
+   "15 % OFF",
+   18990,
+   22300
+  ],
+  [
+   "Mega Cuarto Doble + Papas Regulares",
+   20300,
+   null
+  ],
+  [
+   "28 % OFF",
+   11990,
+   16700
+  ],
+  [
+   "26 % OFF",
+   10000,
+   13490
+  ],
+  [
+   "37 % OFF",
+   8790,
+   13900
+  ],
+  [
+   "20 % OFF",
+   30990,
+   38600
+  ],
+  [
+   "34 % OFF",
+   25990,
+   39400
+  ],
+  [
+   "Mega Ahumada 5ta a Fondo+Mega Provolone",
+   37000,
+   null
+  ],
+  [
+   "40 % OFF",
+   7990,
+   13400
+  ],
+  [
+   "19 % OFF",
+   15990,
+   19700
+  ],
+  [
+   "Combo Mega Doble Cuarto + Nuggets x5",
+   27800,
+   null
+  ],
+  [
+   "Combo Doble  Mega Provolone & Bacon",
+   24300,
+   null
+  ],
+  [
+   "Combo Doble Black Kalis Halloween",
+   24300,
+   null
+  ],
+  [
+   "Combo Mega Ahumada 5ta a Fondo",
+   20500,
+   null
+  ],
+  [
+   "Combo Mega Provolone & Bacon",
+   20500,
+   null
+  ],
+  [
+   "Combo Mega Doble Ahumada 5ta a Fondo",
+   24500,
+   null
+  ],
+  [
+   "Combo Mega Cuarto",
+   18700,
+   null
+  ],
+  [
+   "Combo Mega Doble Cuarto",
+   22300,
+   null
+  ],
+  [
+   "Combo Mega Doble Cuarto Bacon",
+   23500,
+   null
+  ],
+  [
+   "Combo Mega FanTASTIc",
+   18900,
+   null
+  ],
+  [
+   "Combo Mega Doble FanTASTIc",
+   22700,
+   null
+  ],
+  [
+   "Combo Mega Patagónica",
+   19700,
+   null
+  ],
+  [
+   "Sundae Dubái",
+   3900,
+   null
+  ],
+  [
+   "Sundae",
+   3500,
+   null
+  ],
+  [
+   "Cajita Mostaza Nuggets",
+   19900,
+   null
+  ],
+  [
+   "Cajita Mostaza Tostado",
+   19900,
+   null
+  ],
+  [
+   "Cajita Mostaza Hamburguesa",
+   19900,
+   null
+  ],
+  [
+   "Cajita Mostaza Hamburguesa con Queso",
+   20300,
+   null
+  ],
+  [
+   "Combo Pollo Cheddar",
+   16900,
+   null
+  ],
+  [
+   "Combo Pollo Bacon",
+   17900,
+   null
+  ],
+  [
+   "Combo Pollo Crispy",
+   16500,
+   null
+  ],
+  [
+   "Combo Pollo FanTASTIc",
+   17900,
+   null
+  ],
+  [
+   "Combo Nuggets x10",
+   17900,
+   null
+  ],
+  [
+   "Balde de Nuggets",
+   17500,
+   null
+  ],
+  [
+   "Ensalada Caesar con Pollo + Bebida",
+   19200,
+   null
+  ],
+  [
+   "Wrap Pollo Cheddar + Bebida",
+   17500,
+   null
+  ],
+  [
+   "Wrap Pollo Cheddar",
+   10700,
+   null
+  ],
+  [
+   "Combo Cero Carne Cheddar",
+   19900,
+   null
+  ],
+  [
+   "Combo Mega Cuarto SIN TACC",
+   18700,
+   null
+  ],
+  [
+   "Combo Mega Doble Cuarto SIN TACC",
+   22300,
+   null
+  ],
+  [
+   "Mega Provolone & Bacon",
+   14300,
+   null
+  ],
+  [
+   "Mega Doble Provolone & Bacon",
+   18300,
+   null
+  ],
+  [
+   "Mega Ahumada 5ta a Fondo",
+   14300,
+   null
+  ],
+  [
+   "Mega Doble Ahumada 5ta a Fondo",
+   18100,
+   null
+  ],
+  [
+   "Mega Doble Cuarto 5ta a Fondo",
+   17100,
+   null
+  ],
+  [
+   "Mega Cuarto",
+   12500,
+   null
+  ],
+  [
+   "Mega Doble Cuarto",
+   16100,
+   null
+  ],
+  [
+   "Mega Cuarto Bacon",
+   13500,
+   null
+  ],
+  [
+   "Mega Doble Cuarto Bacon",
+   17300,
+   null
+  ],
+  [
+   "Mega FanTASTIc",
+   12700,
+   null
+  ],
+  [
+   "Mega Doble FanTASTIc",
+   16500,
+   null
+  ],
+  [
+   "Balde de Papas",
+   9500,
+   null
+  ],
+  [
+   "Papas Grandes",
+   4500,
+   null
+  ],
+  [
+   "Papas Regulares",
+   4200,
+   null
+  ],
+  [
+   "Nuggets x10",
+   11700,
+   null
+  ],
+  [
+   "Coca-Cola",
+   3800,
+   null
+  ],
+  [
+   "Coca-Cola Zero",
+   3800,
+   null
+  ],
+  [
+   "Smart Water 591cc",
+   3500,
+   null
+  ],
+  [
+   "Latte",
+   4250,
+   null
+  ],
+  [
+   "Chocolate",
+   4250,
+   null
+  ],
+  [
+   "Espresso",
+   3350,
+   null
+  ]
+ ]
+}

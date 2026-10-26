@@ -1,23 +1,628 @@
 {
-  "store": "McDonald's Mad",
-  "brand": "mcdonalds",
-  "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/mcdonalds-mad-7cd06dd3-e701-4ba3-be8c-993a46bb5741-menu",
-  "fetchedAt": "2026-10-26T05:54:47.990Z",
-  "partial": "Local cerrado al relevarlo: solo se ven los productos con descuento y bebidas",
-  "products": [
-    ["Doble carne Doble queso + Papas medianas", 7100, 15700],
-    ["McNuggets x 6", 4500, 8700],
-    ["1 Hamburguesa con Queso + 1 Papas Medianas + 1 Pileta de Cheddar", 10499, 16700],
-    ["McPollo + Papas Pequeñas", 8599, 12500],
-    ["1 Grand Tostado + Papas Medianas", 8599, 12300],
-    ["McFlurry Oreo", 3570, 5100],
-    ["Big Mac Mediano", 13610, 19100],
-    ["McNuggets X10 Mediano", 12999, 18400],
-    ["Tasty Feat Cuarto Simple Mediano", 15820, 22300],
-    ["McCrispy Deluxe +Side Salad", 11599, 15400],
-    ["Big Mac + Papas Medianas", 12000, 15200],
-    ["2 Cajitas Felices", 23120, 28900],
-    ["2 McCombos Medianos BigMac", 30880, 38200],
-    ["McShake Frutilla", 5015, 5900]
+ "store": "McDonald's Mad",
+ "brand": "mcdonalds",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/mcdonalds-mad-7cd06dd3-e701-4ba3-be8c-993a46bb5741-menu",
+ "fetchedAt": "2026-10-26T17:52:56.168Z",
+ "products": [
+  [
+   "Doble carne Doble queso + Papas medianas",
+   7100,
+   15700
+  ],
+  [
+   "Café + 2 Facturas",
+   3300,
+   6400
+  ],
+  [
+   "McNuggets x 6",
+   4500,
+   8700
+  ],
+  [
+   "1 Hamburguesa con Queso + 1 Papas Medianas + 1 Pileta de Cheddar",
+   10499,
+   16700
+  ],
+  [
+   "McPollo + Papas Pequeñas",
+   8599,
+   12500
+  ],
+  [
+   "1 Grand Tostado + Papas Medianas",
+   8599,
+   12300
+  ],
+  [
+   "McFlurry Oreo",
+   3570,
+   5100
+  ],
+  [
+   "Big Mac Mediano",
+   13610,
+   19100
+  ],
+  [
+   "McNuggets X10 Mediano",
+   12999,
+   18400
+  ],
+  [
+   "Tasty Feat Cuarto Simple Mediano",
+   15820,
+   22300
+  ],
+  [
+   "McCrispy Deluxe +Side Salad",
+   11599,
+   15400
+  ],
+  [
+   "Café  + Grand Tostado",
+   7950,
+   10600
+  ],
+  [
+   "Big Mac + Papas Medianas",
+   12000,
+   15200
+  ],
+  [
+   "2 Cajitas Felices",
+   23120,
+   28900
+  ],
+  [
+   "Café + Tostado Lomo y Queso",
+   6720,
+   8400
+  ],
+  [
+   "2 McCombos Medianos BigMac",
+   30880,
+   38200
+  ],
+  [
+   "McShake Frutilla",
+   5015,
+   5900
+  ],
+  [
+   "McCombo Mediano McAllister Simple",
+   22000,
+   null
+  ],
+  [
+   "McCombo Mediano McAlvarez Simple",
+   22000,
+   null
+  ],
+  [
+   "McCombo Mediano McAllister Doble",
+   24300,
+   null
+  ],
+  [
+   "McCombo Mediano McAlvarez Doble",
+   24300,
+   null
+  ],
+  [
+   "McCombo Mediano McFernández Pollo",
+   20300,
+   null
+  ],
+  [
+   "Más vendido",
+   24000,
+   null
+  ],
+  [
+   "2 Hamburguesas Clasicas + 2 Papas Medianas + 2 McFlurry",
+   49500,
+   null
+  ],
+  [
+   "29 % OFF",
+   13610,
+   19100
+  ],
+  [
+   "55 % OFF",
+   7100,
+   15700
+  ],
+  [
+   "31 % OFF",
+   8599,
+   12500
+  ],
+  [
+   "37 % OFF",
+   10499,
+   16700
+  ],
+  [
+   "McCombo Mediano Doble Carne Royal",
+   15600,
+   null
+  ],
+  [
+   "21 % OFF",
+   12000,
+   15200
+  ],
+  [
+   "McCombo Pequeño Doble Carne Doble Queso",
+   11000,
+   null
+  ],
+  [
+   "19 % OFF",
+   30880,
+   38200
+  ],
+  [
+   "20 % OFF",
+   23120,
+   28900
+  ],
+  [
+   "McCombo Grande McAllister Doble",
+   27200,
+   null
+  ],
+  [
+   "McCombo Grande McAlvarez Doble",
+   27200,
+   null
+  ],
+  [
+   "McCombo Grande McAllister Simple",
+   25000,
+   null
+  ],
+  [
+   "McCombo Grande McAlvarez Simple",
+   25000,
+   null
+  ],
+  [
+   "McCombo Grande McFernández Pollo",
+   23300,
+   null
+  ],
+  [
+   "Doble Bacon Cheddar McMelt Grande",
+   26700,
+   null
+  ],
+  [
+   "Bacon Cheddar McMelt Mediano",
+   21900,
+   null
+  ],
+  [
+   "Bacon Cheddar McMelt Grande",
+   24800,
+   null
+  ],
+  [
+   "Big Mac Grande",
+   22000,
+   null
+  ],
+  [
+   "Tasty Feat Cuarto Doble Mediano",
+   23800,
+   null
+  ],
+  [
+   "Tasty Feat Cuarto Doble Grande",
+   26700,
+   null
+  ],
+  [
+   "Tasty Feat Cuarto Simple Grande",
+   25200,
+   null
+  ],
+  [
+   "Grand Doble Tasty Grande",
+   26900,
+   null
+  ],
+  [
+   "Doble Cuarto de Libra Grande",
+   25700,
+   null
+  ],
+  [
+   "Cuarto de Libra Grande",
+   22300,
+   null
+  ],
+  [
+   "McPollo Mediano",
+   11100,
+   null
+  ],
+  [
+   "McPollo Grande",
+   12100,
+   null
+  ],
+  [
+   "McNuggets X10 Grande",
+   21300,
+   null
+  ],
+  [
+   "McNuggets X20 Mediano",
+   22900,
+   null
+  ],
+  [
+   "McNuggets X20 Grande",
+   25800,
+   null
+  ],
+  [
+   "McCombo Mediano Triple Hamburguesa con Queso Mediano",
+   19500,
+   null
+  ],
+  [
+   "McCombo Grande Triple Hamburguesa con Queso",
+   22400,
+   null
+  ],
+  [
+   "Grand Doble McBacon Mediano",
+   24300,
+   null
+  ],
+  [
+   "Grand Doble McBacon Grande",
+   27200,
+   null
+  ],
+  [
+   "Grand Doble Tasty Turbo Bacon Mediano",
+   25700,
+   null
+  ],
+  [
+   "Grand Doble Tasty Turbo Bacon Grande",
+   28600,
+   null
+  ],
+  [
+   "McNífica Mediano",
+   19700,
+   null
+  ],
+  [
+   "McNífica Grande",
+   22600,
+   null
+  ],
+  [
+   "McCrispy Chicken Deluxe Mediano",
+   16700,
+   null
+  ],
+  [
+   "McCrispy Chicken Deluxe Grande",
+   19600,
+   null
+  ],
+  [
+   "McAllister Doble",
+   18400,
+   null
+  ],
+  [
+   "McAlvarez Doble",
+   18400,
+   null
+  ],
+  [
+   "McAllister Simple",
+   16700,
+   null
+  ],
+  [
+   "McAlvarez Simple",
+   16700,
+   null
+  ],
+  [
+   "Doble Bacon Cheddar McMelt",
+   18300,
+   null
+  ],
+  [
+   "Bacon Cheddar McMelt",
+   16800,
+   null
+  ],
+  [
+   "Tasty Feat Cuarto Doble",
+   18100,
+   null
+  ],
+  [
+   "Tasty Feat Cuarto Simple",
+   17000,
+   null
+  ],
+  [
+   "Hamburguesa Con Queso",
+   7200,
+   null
+  ],
+  [
+   "Big Mac",
+   10300,
+   null
+  ],
+  [
+   "Triple Hamburguesa Con Queso",
+   14700,
+   null
+  ],
+  [
+   "Grand Tasty Doble",
+   18200,
+   null
+  ],
+  [
+   "Grand Doble McBacon",
+   18400,
+   null
+  ],
+  [
+   "Grand Tasty Turbo Bacon Doble",
+   19500,
+   null
+  ],
+  [
+   "Doble Cuarto De Libra Con Queso",
+   17200,
+   null
+  ],
+  [
+   "Cuarto De Libra Con Queso",
+   14500,
+   null
+  ],
+  [
+   "Mcnífica",
+   14800,
+   null
+  ],
+  [
+   "30 % OFF",
+   8599,
+   12300
+  ],
+  [
+   "25 % OFF",
+   11599,
+   15400
+  ],
+  [
+   "2 Tostados de Lomo y Queso",
+   9900,
+   null
+  ],
+  [
+   "48 % OFF",
+   3300,
+   6400
+  ],
+  [
+   "25OFF 6 Facturas",
+   8800,
+   null
+  ],
+  [
+   "Cajita Feliz- Hamburguesa con Queso",
+   14700,
+   null
+  ],
+  [
+   "Cajita Feliz - Hamburguesa",
+   14500,
+   null
+  ],
+  [
+   "Cajita Feliz - McFiesta Jr",
+   14500,
+   null
+  ],
+  [
+   "Cajita Feliz - McNuggets x4",
+   14700,
+   null
+  ],
+  [
+   "Cajita Feliz McNuggets x 6",
+   15800,
+   null
+  ],
+  [
+   "McNuggets x20",
+   18300,
+   null
+  ],
+  [
+   "McNuggets x10",
+   13200,
+   null
+  ],
+  [
+   "McNuggets x4",
+   7300,
+   null
+  ],
+  [
+   "McPollo",
+   7900,
+   null
+  ],
+  [
+   "McCrispy Chicken Deluxe",
+   11100,
+   null
+  ],
+  [
+   "Papas para compartir",
+   10200,
+   null
+  ],
+  [
+   "Pileta de Cheddar",
+   4600,
+   null
+  ],
+  [
+   "Papas Fritas Grandes",
+   5300,
+   null
+  ],
+  [
+   "Papas Fritas Medianas",
+   4900,
+   null
+  ],
+  [
+   "Papas Fritas Pequeñas",
+   4600,
+   null
+  ],
+  [
+   "Papas Tasty y Bacon",
+   6800,
+   null
+  ],
+  [
+   "Side Salad",
+   4100,
+   null
+  ],
+  [
+   "Ensalada Caesar",
+   14600,
+   null
+  ],
+  [
+   "Menú Ensalada Caesar",
+   18500,
+   null
+  ],
+  [
+   "McShake Chocolate",
+   5900,
+   null
+  ],
+  [
+   "15 % OFF",
+   5015,
+   5900
+  ],
+  [
+   "McShake Dulce de leche",
+   5900,
+   null
+  ],
+  [
+   "Apple Pie",
+   4500,
+   null
+  ],
+  [
+   "McFlurry m&m’s",
+   6200,
+   null
+  ],
+  [
+   "Coca-Cola Mediana",
+   4300,
+   null
+  ],
+  [
+   "Coca-Cola Grande",
+   4600,
+   null
+  ],
+  [
+   "Coca Cola Chica",
+   4000,
+   null
+  ],
+  [
+   "Coca-Cola Zero Mediana",
+   4300,
+   null
+  ],
+  [
+   "Coca-Cola Zero Grande",
+   4600,
+   null
+  ],
+  [
+   "Coca Cola Zero Chica",
+   4000,
+   null
+  ],
+  [
+   "Sprite Zero Mediana",
+   4300,
+   null
+  ],
+  [
+   "Sprite Zero Grande",
+   4600,
+   null
+  ],
+  [
+   "Sprite Zero Chica",
+   4000,
+   null
+  ],
+  [
+   "Agua",
+   4700,
+   null
+  ],
+  [
+   "Jugo de Naranja Cepita",
+   3400,
+   null
+  ],
+  [
+   "Jugo De Manzana",
+   3400,
+   null
+  ],
+  [
+   "Fanta Zero Mediana",
+   4300,
+   null
+  ],
+  [
+   "Fanta Zero Grande",
+   4600,
+   null
+  ],
+  [
+   "Fanta Zero Chica",
+   4000,
+   null
   ]
+ ]
 }

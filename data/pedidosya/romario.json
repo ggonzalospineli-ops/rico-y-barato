@@ -1,4 +1,208 @@
-{ "store": "Romario - Belgrano", "brand": "romario", "fetchedAt": "2026-10-26T06:02:08Z",
-  "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/romario-belgrano-891a8d39-f95c-44ba-9904-c7041c3542cb-menu",
-  "partial": "Local cerrado al relevarlo: solo postres y bebidas",
-  "products": [["Tarta de banana con ddl",9900,null],["Chocotorta",8800,null],["Lemon pie",9900,null]] }
+{
+ "store": "Romario - Belgrano",
+ "brand": "romario",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/romario-belgrano-891a8d39-f95c-44ba-9904-c7041c3542cb-menu",
+ "fetchedAt": "2026-10-26T17:55:22.326Z",
+ "products": [
+  [
+   "Pizza mozzarella + 6 empanadas",
+   54300,
+   null
+  ],
+  [
+   "15 % OFF",
+   18105,
+   21300
+  ],
+  [
+   "2 pizzas grandes mozzarella",
+   57000,
+   null
+  ],
+  [
+   "Docena de empanadas",
+   51600,
+   null
+  ],
+  [
+   "Más vendido",
+   13900,
+   null
+  ],
+  [
+   "Pizza napolitana con jamón",
+   19900,
+   null
+  ],
+  [
+   "Pizza napolitana",
+   17200,
+   null
+  ],
+  [
+   "Pizza americana de cebolla",
+   17200,
+   null
+  ],
+  [
+   "Pizza pepperoni",
+   18600,
+   null
+  ],
+  [
+   "Pizza de mozzarella y panceta",
+   18600,
+   null
+  ],
+  [
+   "Pizza de mozzarella y jamón",
+   18600,
+   null
+  ],
+  [
+   "Pizza de jamón y morrones",
+   19900,
+   null
+  ],
+  [
+   "Pizza de provolone",
+   19900,
+   null
+  ],
+  [
+   "Pizza de panceta y morrones",
+   19900,
+   null
+  ],
+  [
+   "Pizza pepperoni y morrones",
+   19900,
+   null
+  ],
+  [
+   "Pizza de provolone y jamón",
+   21800,
+   null
+  ],
+  [
+   "Pizza de fugazzetta rellena",
+   48000,
+   null
+  ],
+  [
+   "Porción fugazzeta c/ salsa",
+   6300,
+   null
+  ],
+  [
+   "Porción fainá con verdeo",
+   2700,
+   null
+  ],
+  [
+   "Porción fainá napolitana",
+   3600,
+   null
+  ],
+  [
+   "Porción fugazzeta con panceta",
+   6900,
+   null
+  ],
+  [
+   "Empanada de queso cebolla",
+   4300,
+   null
+  ],
+  [
+   "Empanada de roquefort y jamón",
+   4300,
+   null
+  ],
+  [
+   "Empanada de verdura",
+   4300,
+   null
+  ],
+  [
+   "Pan de pizza",
+   5300,
+   null
+  ],
+  [
+   "Pan de pizza con provolone",
+   6600,
+   null
+  ],
+  [
+   "Tarta de banana con ddl",
+   9900,
+   null
+  ],
+  [
+   "Chocotorta",
+   8800,
+   null
+  ],
+  [
+   "Lemon pie",
+   9900,
+   null
+  ],
+  [
+   "Coca-cola sabor original 1,75 l",
+   6300,
+   null
+  ],
+  [
+   "Coca-cola sin azúcar 1,75 l",
+   6300,
+   null
+  ],
+  [
+   "Seven up 1,5 l",
+   6300,
+   null
+  ],
+  [
+   "Agua Mineralizada Aguanuestra Con Gas Pet 500 ml",
+   3800,
+   null
+  ],
+  [
+   "Brahma 473 ml",
+   5500,
+   null
+  ],
+  [
+   "Seven up sin azúcar 1,5 l",
+   5800,
+   null
+  ],
+  [
+   "Coca-cola light 500 ml",
+   4100,
+   null
+  ],
+  [
+   "Coca-cola sabor original 500 ml",
+   4100,
+   null
+  ],
+  [
+   "Coca-cola sin azúcar 500 ml",
+   4100,
+   null
+  ],
+  [
+   "Stella lata 473 ml",
+   6900,
+   null
+  ],
+  [
+   "Agua Con Gas",
+   3800,
+   null
+  ]
+ ]
+}

@@ -1,4 +1,408 @@
-{ "store": "Burger King Facultad", "brand": "burgerking", "fetchedAt": "2026-10-26T06:02:08Z",
-  "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/burger-king-facultad-menu",
-  "partial": "Local cerrado al relevarlo: solo productos con descuento y algunos más",
-  "products": [["Combo Whopper 50% OFF",11300,22600],["Combo Extraburger 2x1",23800,47600],["Combo Jamon y Queso XL 40% OFF",13920,23200],["Combo Nuggets x 10 40% OFF",13500,22500],["Doble Carne Doble Queso + Papas Regulares 40 OFF",9999,16665],["C. King de Pollo 40% OFF",12300,20500],["2 Doble Hamburguesas con Queso + Box de papas 40% OFF",17142,28570],["2 King de Pollo + 2 papas regulares 40% OFF",18999,31665],["2 Doble Cheese Onion + 2 Papas Regulares 40 OFF",16113,26856],["2 Cuarto XL + 2 Papas Regulares 40 OFF",19714,32857],["Whopper Extreme + Papas regulares 40 OFF",15999,26665],["Napolitano XL + Papas Regulares 40% OFF",15799,26333],["Bacon King + papas regulares 40% OFF",19000,31667],["Doble Whopper Extreme + Papas regulares 30% OFF",18486,30429],["2 dobles cuarto XL +  2 papas regulares 35% OFF",27500,42308],["Cheese Onion XL + Papas 35% OFF",11999,18460],["BBQ BaconXL + papas Regulares 35% OFF",17999,27692],["2 Doble Carne Doble Queso + Box de Papas 30% OFF",21000,30000],["2 Doble Cheese Onion + 2 Papas Regulares 30% OFF",20400,29143],["2 Hamburguesas con Queso + Box de papas + Franui 30% OFF",22000,31429],["Combo King Sr. Whopper",26400,null],["Combo King Sr. Stacker Doble XL",29400,null],["Combo King Sr. Whopper Vegetal",26400,null],["Combo pollo clásica con queso",9900,null],["Combo pollo con queso",9900,null],["King de Pollo Frances + papas regulares 40 OFF",22143,null],["King de Pollo + papas regulares 40 OFF",17498,null],["Nuggets X10 + papas regulares 35% OFF",23538,null]] }
+{
+ "store": "Burger King Facultad",
+ "brand": "burgerking",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/burger-king-facultad-menu",
+ "fetchedAt": "2026-10-26T17:54:43.775Z",
+ "products": [
+  [
+   "Combo King Vegetal 50% OFF",
+   10250,
+   20500
+  ],
+  [
+   "Combo Nuggets x 10 40% OFF",
+   13500,
+   22500
+  ],
+  [
+   "Doble Carne Doble Queso + Papas Regulares 40 OFF",
+   9999,
+   16665
+  ],
+  [
+   "Combo Irresistible King Doble 40 OFF",
+   16920,
+   28200
+  ],
+  [
+   "C. King de Pollo 40% OFF",
+   12300,
+   20500
+  ],
+  [
+   "Combo Jamon y Queso XL 40% OFF",
+   13920,
+   23200
+  ],
+  [
+   "2 Cuarto XL + 2 Papas Regulares 40 OFF",
+   19714,
+   32857
+  ],
+  [
+   "2 Doble Hamburguesas con Queso + Box de papas 40% OFF",
+   17142,
+   28570
+  ],
+  [
+   "2 King de Pollo + 2 papas regulares 40% OFF",
+   18999,
+   31665
+  ],
+  [
+   "2 Doble Cheese Onion + 2 Papas Regulares 40 OFF",
+   16113,
+   26856
+  ],
+  [
+   "Whopper Extreme + Papas regulares 40 OFF",
+   15999,
+   26665
+  ],
+  [
+   "Napolitano XL + Papas Regulares 40% OFF",
+   15799,
+   26333
+  ],
+  [
+   "Bacon King + papas regulares 40% OFF",
+   19000,
+   31667
+  ],
+  [
+   "Doble Whopper Extreme + Papas regulares 30% OFF",
+   18486,
+   30429
+  ],
+  [
+   "Whopper con Queso + Papas Regulares 35 OFF",
+   15900,
+   24462
+  ],
+  [
+   "2 dobles cuarto XL +  2 papas regulares 35% OFF",
+   27500,
+   42308
+  ],
+  [
+   "BBQ BaconXL + papas Regulares 35% OFF",
+   17999,
+   27692
+  ],
+  [
+   "Cheese Onion XL + Papas 35% OFF",
+   11999,
+   18460
+  ],
+  [
+   "Nuggets X10 + papas regulares 35% OFF",
+   15299,
+   23538
+  ],
+  [
+   "Doble Cuarto XL + papas regulares 30 OFF",
+   14980,
+   21400
+  ],
+  [
+   "Combo Whopper RedBull",
+   22600,
+   null
+  ],
+  [
+   "Combo BBQ Bacon 30% OFF",
+   24000,
+   null
+  ],
+  [
+   "Combo Stacker Doble 40% OFF",
+   25400,
+   null
+  ],
+  [
+   "Combo Napolitano XL 40% OFF",
+   24000,
+   null
+  ],
+  [
+   "40 % OFF",
+   13500,
+   22500
+  ],
+  [
+   "C. Cheese Onion XL 40%",
+   21000,
+   null
+  ],
+  [
+   "Combo Napolitano XL 50% OFF",
+   24000,
+   null
+  ],
+  [
+   "Más vendido",
+   42000,
+   null
+  ],
+  [
+   "30 % OFF",
+   14980,
+   21400
+  ],
+  [
+   "35 % OFF",
+   15900,
+   24462
+  ],
+  [
+   "2 Stacker Doble + 2 Papas Regulares 30% OFF",
+   35714,
+   null
+  ],
+  [
+   "20 % OFF",
+   18400,
+   23000
+  ],
+  [
+   "39 % OFF",
+   18486,
+   30429
+  ],
+  [
+   "Papas cheddar",
+   5800,
+   null
+  ],
+  [
+   "Nuggets Vegetales x10",
+   11300,
+   null
+  ],
+  [
+   "Balde Nuggets",
+   20400,
+   null
+  ],
+  [
+   "Aros de cebolla King",
+   8500,
+   null
+  ],
+  [
+   "Combo Chicken Fries x6",
+   18000,
+   null
+  ],
+  [
+   "Combo King de Pollo Club",
+   20400,
+   null
+  ],
+  [
+   "Combo King de Pollo BBQ",
+   19600,
+   null
+  ],
+  [
+   "Combo pollo doble con queso",
+   9900,
+   null
+  ],
+  [
+   "Combo King de Pollo",
+   20500,
+   null
+  ],
+  [
+   "Snackea2 Muzarellas Sticks + Bebida",
+   14990,
+   null
+  ],
+  [
+   "Snackea2 Nuggets + Bebida",
+   14990,
+   null
+  ],
+  [
+   "Snackea2 Nuggets",
+   11990,
+   null
+  ],
+  [
+   "Snackea2 Empanaditas + Bebida",
+   14990,
+   null
+  ],
+  [
+   "Snackea2 Muzarellas Sticks",
+   11990,
+   null
+  ],
+  [
+   "Snackea2 Empanaditas",
+   11990,
+   null
+  ],
+  [
+   "Combo Irresistible King Doble",
+   28200,
+   null
+  ],
+  [
+   "Combo Triple Onion Cheddar",
+   16400,
+   null
+  ],
+  [
+   "Combo Irresistible King Simple",
+   25200,
+   null
+  ],
+  [
+   "Combo Cheddar Queen Doble",
+   24500,
+   null
+  ],
+  [
+   "Combo Sweet Bacon King Simple",
+   25200,
+   null
+  ],
+  [
+   "Combo Whopper Extreme + Red Bull",
+   21500,
+   null
+  ],
+  [
+   "Combo Whopper + Franui",
+   22500,
+   null
+  ],
+  [
+   "Combo Stacker Doble XL Muzarella",
+   30300,
+   null
+  ],
+  [
+   "Combo Stacker Queen XL Doble",
+   30700,
+   null
+  ],
+  [
+   "Combo Hamburguesa con Queso XL",
+   21099,
+   null
+  ],
+  [
+   "Combo Sweet Bacon King Doble",
+   28200,
+   null
+  ],
+  [
+   "Combo Deluxe King Doble",
+   28200,
+   null
+  ],
+  [
+   "Combo Deluxe King Simple",
+   25200,
+   null
+  ],
+  [
+   "Combo Doble BBQ bacon XL",
+   27900,
+   null
+  ],
+  [
+   "Combo Stacker Doble XL",
+   28800,
+   null
+  ],
+  [
+   "Combo Stacker Triple XL",
+   31400,
+   null
+  ],
+  [
+   "Combo Stacker triple",
+   27200,
+   null
+  ],
+  [
+   "Combo Stacker cuadruple",
+   27900,
+   null
+  ],
+  [
+   "Wrap Pollo + Bebida",
+   15700,
+   null
+  ],
+  [
+   "Combo Whopper Vegetal",
+   22600,
+   null
+  ],
+  [
+   "Combo King Vegetal",
+   20500,
+   null
+  ],
+  [
+   "Combo Ensalada Caesar con pollo",
+   14500,
+   null
+  ],
+  [
+   "Combo Nuggets Vegetal x20",
+   24400,
+   null
+  ],
+  [
+   "Wrap Atun + Bebida",
+   15700,
+   null
+  ],
+  [
+   "Combo King Sr. Whopper",
+   26400,
+   null
+  ],
+  [
+   "Combo King Sr. Whopper Vegetal",
+   26400,
+   null
+  ],
+  [
+   "Combo King Sr. Stacker Doble XL",
+   29400,
+   null
+  ],
+  [
+   "Combo pollo clásica con queso",
+   9900,
+   null
+  ],
+  [
+   "Combo pollo con queso",
+   9900,
+   null
+  ],
+  [
+   "50 % OFF",
+   10250,
+   20500
+  ],
+  [
+   "King de Pollo + papas regulares 40 OFF",
+   17498,
+   null
+  ],
+  [
+   "King de Pollo Frances + papas regulares 40 OFF",
+   22143,
+   null
+  ]
+ ]
+}

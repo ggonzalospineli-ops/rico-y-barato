@@ -1,0 +1,363 @@
+{
+ "store": "Sushi Pop - Belgrano",
+ "brand": "sushipop",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/sushi-pop-belgrano-menu",
+ "fetchedAt": "2026-10-26T17:58:18.883Z",
+ "products": [
+  [
+   "Nuevo Alaska 15 Full salmón",
+   11999,
+   22499
+  ],
+  [
+   "Tokyo 12 - Salmón, Lango, y Kani",
+   11999,
+   19998
+  ],
+  [
+   "Nuevo Tokyo 15",
+   13999,
+   23332
+  ],
+  [
+   "Combo Juntadas 60",
+   54999,
+   91663
+  ],
+  [
+   "Alaska Limited 40 - Full Salmón",
+   42999,
+   69998
+  ],
+  [
+   "Nuevo Alaska 40 full salmón",
+   37999,
+   61665
+  ],
+  [
+   "Nuevo Tokyo 40 - Salmón, Lango, y Kani",
+   32999,
+   53332
+  ],
+  [
+   "Nuevo Alaska 12 full salmón",
+   13499,
+   21665
+  ],
+  [
+   "Combo Juntadas 80",
+   67999,
+   108330
+  ],
+  [
+   "Nuevo Alaska 30 full salmón",
+   31999,
+   49998
+  ],
+  [
+   "Alaska Limited 15 - Full Salmón",
+   16999,
+   26665
+  ],
+  [
+   "Poke Salad Mex",
+   12999,
+   19998
+  ],
+  [
+   "Black 30",
+   39999,
+   60832
+  ],
+  [
+   "Nuevo Tokyo 30 - Salmón, Lango, y Kani",
+   29999,
+   44998
+  ],
+  [
+   "Black 15",
+   19999,
+   29998
+  ],
+  [
+   "Poke Langos",
+   13649,
+   19998
+  ],
+  [
+   "Veggie 15",
+   12999,
+   18570
+  ],
+  [
+   "Poke Salmón",
+   13964,
+   18665
+  ],
+  [
+   "Pad Thai",
+   24999,
+   31332
+  ],
+  [
+   "Roll Hot New York Philadelphia",
+   6999,
+   8000
+  ],
+  [
+   "38 % OFF",
+   37999,
+   61665
+  ],
+  [
+   "36 % OFF",
+   31999,
+   49998
+  ],
+  [
+   "47 % OFF",
+   11999,
+   22499
+  ],
+  [
+   "39 % OFF",
+   42999,
+   69998
+  ],
+  [
+   "40 % OFF",
+   11999,
+   19998
+  ],
+  [
+   "33 % OFF",
+   29999,
+   44998
+  ],
+  [
+   "34 % OFF",
+   39999,
+   60832
+  ],
+  [
+   "37 % OFF",
+   67999,
+   108330
+  ],
+  [
+   "Cooked 10",
+   13999,
+   null
+  ],
+  [
+   "Más vendido",
+   6499,
+   null
+  ],
+  [
+   "Langostinos Rebozados",
+   10999,
+   null
+  ],
+  [
+   "Pollo Tandori",
+   9999,
+   null
+  ],
+  [
+   "Empanaditas china de verdura",
+   6499,
+   null
+  ],
+  [
+   "Nigiri",
+   8000,
+   null
+  ],
+  [
+   "Roll Hot Bologna",
+   8000,
+   null
+  ],
+  [
+   "13 % OFF",
+   6999,
+   8000
+  ],
+  [
+   "$6.999,5",
+   6499,
+   null
+  ],
+  [
+   "Sashimi",
+   10000,
+   null
+  ],
+  [
+   "Geishas",
+   8000,
+   null
+  ],
+  [
+   "Bomba Afrodita",
+   8000,
+   null
+  ],
+  [
+   "Nigiri Fusión",
+   8000,
+   null
+  ],
+  [
+   "Roll Dos Salmones",
+   9000,
+   null
+  ],
+  [
+   "Roll Calafate",
+   9000,
+   null
+  ],
+  [
+   "32 % OFF",
+   13649,
+   19998
+  ],
+  [
+   "35 % OFF",
+   12999,
+   19998
+  ],
+  [
+   "25 % OFF",
+   13964,
+   18665
+  ],
+  [
+   "Poke Langostino & Vegetales",
+   11999,
+   null
+  ],
+  [
+   "Poke Salad Pollo Teri",
+   14500,
+   null
+  ],
+  [
+   "Poke Veggie",
+   10999,
+   null
+  ],
+  [
+   "Salmón Teriyaki con Arroz",
+   23999,
+   null
+  ],
+  [
+   "Salmón Teriyaki con Quinoa",
+   26999,
+   null
+  ],
+  [
+   "10 % OFF",
+   16799,
+   18665
+  ],
+  [
+   "20 % OFF",
+   24999,
+   31332
+  ],
+  [
+   "Lomo Xao",
+   26110,
+   null
+  ],
+  [
+   "Cerdo Shōgayaki",
+   20888,
+   null
+  ],
+  [
+   "Chop Suey Veggie",
+   15999,
+   null
+  ],
+  [
+   "Roll Spring",
+   6000,
+   null
+  ],
+  [
+   "Roll Chimi Nikkei",
+   6000,
+   null
+  ],
+  [
+   "Roll Fresh",
+   6000,
+   null
+  ],
+  [
+   "Roll Andino",
+   6000,
+   null
+  ],
+  [
+   "Roll Valencia",
+   6000,
+   null
+  ],
+  [
+   "30 % OFF",
+   12999,
+   18570
+  ],
+  [
+   "Salsa soja",
+   850,
+   null
+  ],
+  [
+   "Wasabi",
+   150,
+   null
+  ],
+  [
+   "Salsa jack",
+   900,
+   null
+  ],
+  [
+   "Salsa teriyaki",
+   1000,
+   null
+  ],
+  [
+   "Jengibre",
+   500,
+   null
+  ],
+  [
+   "Guacamole",
+   1000,
+   null
+  ],
+  [
+   "Palitos chinos",
+   150,
+   null
+  ],
+  [
+   "Franui choco c/leche & blanco",
+   18499,
+   null
+  ],
+  [
+   "Franui choco amargo & blanco",
+   18499,
+   null
+  ]
+ ]
+}

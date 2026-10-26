@@ -26,7 +26,7 @@ for (const [id, list] of Object.entries(other.items)) {
 }
 
 const restaurantsById = Object.fromEntries(catalog.restaurants.map(r => [r.id, r]));
-let matched = 0, files = 0;
+let matched = 0, files = 0, skipped = 0;
 for (const file of existsSync(pyaDir) ? readdirSync(pyaDir).filter(f => f.endsWith('.json')) : []) {
   const store = JSON.parse(readFileSync(new URL(file, pyaDir), 'utf8'));
   files++;
@@ -38,9 +38,16 @@ for (const file of existsSync(pyaDir) ? readdirSync(pyaDir).filter(f => f.endsWi
   const day = store.fetchedAt.slice(0, 10);
   for (const it of catalog.items) {
     const r = restaurantsById[it.restaurantId];
-    if (!r || (r.brand || brandOf(r.name)) !== store.brand) continue;
+    // "che sushi." y "che sushi" son la misma marca: se comparan sin signos.
+    const plain = s => String(s).toLowerCase().replace(/[^a-z0-9]/g, '');
+    if (!r || plain(r.brand || brandOf(r.name)) !== plain(store.brand)) continue;
+    if (other.items[it.id]?.some(o => o.app === 'pedidosya')) continue; // una sola sucursal por producto
     const hit = byKey.get(photoKey(it.name));
     if (!hit) continue;
+    // Con el mismo nombre, un precio que casi duplica al otro es otra porción (Che Sushi: 5 vs 10 piezas),
+    // no el mismo producto: no se compara.
+    const ratio = hit.price / it.price;
+    if (ratio > 1.8 || ratio < 0.55) { skipped++; continue; }
     (other.items[it.id] ||= []).push({
       app: 'pedidosya', name: hit.name, price: hit.price, same: true,
       note: `${store.store}${hit.original ? `, con descuento (sin descuento ${hit.original.toLocaleString('es-AR')})` : ''}; relevado el ${day}`,
@@ -49,4 +56,4 @@ for (const file of existsSync(pyaDir) ? readdirSync(pyaDir).filter(f => f.endsWi
   }
 }
 writeFileSync(otherPath, JSON.stringify(other, null, 2) + '\n');
-console.log(`PedidosYa: ${files} local(es) · ${matched} productos del catálogo con precio en PedidosYa`);
+console.log(`PedidosYa: ${files} local(es) · ${matched} productos del catálogo con precio en PedidosYa · ${skipped} descartados (precio muy distinto: otra porción)`);

@@ -1,0 +1,133 @@
+{
+ "store": "Pizza Data - Caballito",
+ "brand": "pizza data",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/pizza-data-caballito-c0c8dbc6-3d68-4516-aa70-be9baac1c60c-menu",
+ "fetchedAt": "2026-10-26T17:57:10.365Z",
+ "products": [
+  [
+   "Pizza Margarita",
+   16415,
+   23450
+  ],
+  [
+   "Pizza Garlic",
+   16360,
+   20450
+  ],
+  [
+   "BIG DATA Pollo",
+   13983,
+   16450
+  ],
+  [
+   "$19.082,5",
+   22450,
+   null
+  ],
+  [
+   "Combo Bites",
+   7450,
+   null
+  ],
+  [
+   "15 % OFF",
+   13983,
+   16450
+  ],
+  [
+   "BIG DATA Kebab",
+   18750,
+   null
+  ],
+  [
+   "Pizza Pepperoni",
+   24450,
+   null
+  ],
+  [
+   "Combo BIG DATA",
+   22750,
+   null
+  ],
+  [
+   "Combo Pizza",
+   28450,
+   null
+  ],
+  [
+   "Fainá Bites - Clásica",
+   8750,
+   null
+  ],
+  [
+   "Fainá Bites - Provolone Crispy",
+   5850,
+   null
+  ],
+  [
+   "Fainá Bites - Panceta y Huevo",
+   5750,
+   null
+  ],
+  [
+   "Fainá Bites - Verdeo y Ajo",
+   5750,
+   null
+  ],
+  [
+   "Pizza Muzza",
+   22450,
+   null
+  ],
+  [
+   "30 % OFF",
+   16415,
+   23450
+  ],
+  [
+   "Pizza 6 Quesos",
+   24450,
+   null
+  ],
+  [
+   "Pizza Pollo",
+   24450,
+   null
+  ],
+  [
+   "20 % OFF",
+   16360,
+   20450
+  ],
+  [
+   "Pizza Jamón Crudo y Morrones",
+   24450,
+   null
+  ],
+  [
+   "BIG DATA Prosciutto y Pesto",
+   20450,
+   null
+  ],
+  [
+   "BIG DATA Pulled Pork",
+   16750,
+   null
+  ],
+  [
+   "DATA Bowl Pollo",
+   17750,
+   null
+  ],
+  [
+   "DATA Cream Clásico",
+   7750,
+   null
+  ],
+  [
+   "DATA Cream DDL",
+   7750,
+   null
+  ]
+ ]
+}
