@@ -136,6 +136,13 @@ const LOOK = {
   milanesa:    { e: '🥩', bg: 'linear-gradient(135deg,#F9CF8E,#C8642E)' },
   pollo:       { e: '🐔', bg: 'linear-gradient(135deg,#FFE6A6,#F29C1F)' },
   pasta:       { e: '🍝', bg: 'linear-gradient(135deg,#FFEFB8,#F4B400)' },
+  tacos:       { e: '🌮', bg: 'linear-gradient(135deg,#FFE078,#F28C28)' },
+  wraps:       { e: '🌯', bg: 'linear-gradient(135deg,#F5D7A1,#C97B32)' },
+  carnes:      { e: '🥩', bg: 'linear-gradient(135deg,#E8A078,#9E2A2B)' },
+  ensaladas:   { e: '🥗', bg: 'linear-gradient(135deg,#CDEB8B,#54A96B)' },
+  sandwiches:  { e: '🥪', bg: 'linear-gradient(135deg,#FFE2A8,#D98A3A)' },
+  tartas:      { e: '🥧', bg: 'linear-gradient(135deg,#F6D7A7,#BE7A42)' },
+  wok:         { e: '🍜', bg: 'linear-gradient(135deg,#FFD29B,#E76F51)' },
   otro:        { e: '🍽️', bg: 'linear-gradient(135deg,#F1ECE4,#CFC6BA)' },
 };
 const HUNGER_EMOJI = { poco: '🤏', normal: '🙂', mucho: '😋', bestia: '🦖' };

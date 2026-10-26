@@ -19,6 +19,13 @@ const CATEGORY_WORDS = {
   milanesa: /\bmilanes|\bmila(s)?\b/,
   pollo: /\bpollo frito\b|\bpresas\b|\bpollo entero\b/,
   pasta: /\bpastas?\b|\bfideos\b|\bravioles\b|\bsorrentinos\b|\bnoquis\b/,
+  tacos: /\btacos?\b|\btaquitos?\b|\bquesadillas?\b/,
+  wraps: /\bwraps?\b|\bburritos?\b|\bfajitas?\b/,
+  carnes: /\bparrilla\b|\basado\b|\bbife\b|\bentrana\b|\bvacio\b|\bmatambre\b/,
+  ensaladas: /\bensaladas?\b|\bcaesar\b|\bcesar\b/,
+  sandwiches: /\bsandwich(?:es)?\b|\bsanguche?s?\b|\blomitos?\b/,
+  tartas: /\btartas?\b|\bquiches?\b/,
+  wok: /\bwoks?\b|\bbowls?\b|\bpokes?\b/,
 };
 
 export function parseIntent(text) {
@@ -54,7 +61,11 @@ export function parseIntent(text) {
 
   // Qué comida
   for (const [cat, re] of Object.entries(CATEGORY_WORDS)) {
-    if (re.test(t) && !new RegExp(`(no|sin|ni)\\s+(\\w+\\s+){0,2}${re.source}`).test(t)) { out.category = cat; out.understood.push(cat); break; }
+    const match = t.match(re);
+    const prefix = match ? t.slice(Math.max(0, match.index - 28), match.index) : '';
+    if (match && !/\b(?:no|sin|ni|menos|excepto)\s+(?:\w+\s+){0,2}$/.test(prefix)) {
+      out.category = cat; out.understood.push(cat); break;
+    }
   }
 
   // Qué no come
@@ -77,7 +88,7 @@ export function parseIntent(text) {
   if (out.ricoWeight != null) out.understood.push(out.ricoWeight < 0.5 ? 'priorizar barato' : 'priorizar rico');
 
   // Lo que no se usó (aproximado): palabras largas que ninguna regla tocó.
-  const used = /somos|para|tenemos|tengo|lucas|luca|mil|hambre|plata|precio|sin|no|como|come|comemos|barat|rico|bueno|gusto|vegetarian|vegan|cerdo|carne|pescado|lacteos|picante|frito|pollo|bestia|picar|poca|mucha|nugg|sushi|hambur|burger|empanad|pizz|milanes|mila|pasta|fideos|ravioles|sorrentinos|noquis|limite|tope|algo|queremos|quiero|pedir|uno|una|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|mas|menos|que|con|los|las|del|una|unos|unas|esta|este|estamos|vamos/;
+  const used = /somos|para|tenemos|tengo|lucas|luca|mil|hambre|plata|precio|sin|no|como|come|comemos|barat|rico|bueno|gusto|vegetarian|vegan|cerdo|carne|pescado|lacteos|picante|frito|pollo|bestia|picar|poca|mucha|nugg|sushi|hambur|burger|empanad|pizz|milanes|mila|pasta|fideos|ravioles|sorrentinos|noquis|taco|quesadilla|wrap|burrito|fajita|parrilla|asado|bife|entrana|vacio|matambre|ensalada|caesar|cesar|sandwich|sanguche|lomito|tarta|quiche|wok|bowl|poke|limite|tope|algo|queremos|quiero|pedir|uno|una|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|mas|menos|que|con|los|las|del|una|unos|unas|esta|este|estamos|vamos/;
   out.unknown = t.split(/[^a-z0-9ñ]+/).filter(w => w.length > 4 && !used.test(w) && !/^\d+$/.test(w));
   return out;
 }

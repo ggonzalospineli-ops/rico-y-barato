@@ -18,13 +18,20 @@ const DEFAULT_APPETITE = {
   nuggets: { normal: 10, max: 20 }, sushi: { normal: 20, max: 30 }, hamburguesa: { normal: 1, max: 2 },
   empanadas: { normal: 4, max: 8 }, pizza: { normal: 4, max: 8 }, milanesa: { normal: 1, max: 1 },
   pollo: { normal: 3, max: 6 }, pasta: { normal: 1, max: 2 },
+  tacos: { normal: 3, max: 5 }, wraps: { normal: 1, max: 2 }, carnes: { normal: 1, max: 2 },
+  ensaladas: { normal: 1, max: 2 }, sandwiches: { normal: 1, max: 2 }, tartas: { normal: 2, max: 4 },
+  wok: { normal: 1, max: 2 },
 };
+
+const CATEGORY_SCHEMA_VERSION = 2;
+const ADDED_CATEGORIES = ['tacos', 'wraps', 'carnes', 'ensaladas', 'sandwiches', 'tartas', 'wok'];
 
 function defaultState() {
   return {
     profile: {
       appetite: structuredClone(DEFAULT_APPETITE),
       enabledCategories: Object.keys(CATEGORIES),
+      categorySchemaVersion: CATEGORY_SCHEMA_VERSION,
       excludedTags: [],            // ej: ['cerdo', 'tacc', 'lacteos']
     },
     hiddenItems: [],               // productos que el usuario marcó como mal medidos o que no quiere ver
@@ -39,7 +46,21 @@ function defaultState() {
 
 export function createEngine({ source, storage = memoryStorage(), now = () => Date.now() } = {}) {
   const listeners = new Set();
-  let state = { ...defaultState(), ...(storage.get('state') || {}) };
+  const saved = storage.get('state') || {};
+  const base = defaultState();
+  const savedProfile = saved.profile || {};
+  const enabledCategories = savedProfile.categorySchemaVersion === CATEGORY_SCHEMA_VERSION
+    ? (savedProfile.enabledCategories || base.profile.enabledCategories)
+    : [...new Set([...(savedProfile.enabledCategories || base.profile.enabledCategories), ...ADDED_CATEGORIES])];
+  let state = {
+    ...base, ...saved,
+    profile: {
+      ...base.profile, ...savedProfile,
+      appetite: { ...base.profile.appetite, ...(savedProfile.appetite || {}) },
+      enabledCategories,
+      categorySchemaVersion: CATEGORY_SCHEMA_VERSION,
+    },
+  };
   let meta = {};
   let restaurants = [], items = [], byRestaurant = {}, restaurantsById = {}, medianUnitPrice = {};
 

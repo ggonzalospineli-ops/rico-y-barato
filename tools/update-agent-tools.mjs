@@ -42,7 +42,7 @@ const TOOL = {
   parameters: {
     type: 'object',
     properties: {
-      categoria: { type: 'string', description: 'Comida: nuggets, sushi, hamburguesa, empanadas, pizza, milanesa, pollo, pasta, o "todo" si no dijo.' },
+      categoria: { type: 'string', description: 'Comida: nuggets, sushi, hamburguesa, empanadas, pizza, milanesa, pollo, pasta, tacos, wraps, carnes, ensaladas, sandwiches, tartas, wok, o "todo" si no dijo.' },
       plata: { type: 'number', description: 'Plata total disponible en pesos argentinos. 0 si no dijo o no le importa.' },
       hambre: { type: 'string', description: 'poco, normal, mucho o bestia. Vacío si no dijo.' },
       personas: { type: 'number', description: 'Cuántas personas comen. 0 si no dijo.' },

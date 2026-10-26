@@ -97,6 +97,20 @@ test('persistencia: el estado sobrevive a recrear el motor', async () => {
   assert.deepEqual(b.getState().profile.appetite.sushi, { normal: 30, max: 45 });
 });
 
+test('migración: perfiles guardados reciben los filtros y apetitos nuevos', () => {
+  const storage = {
+    get: key => key === 'state' ? { profile: { appetite: { sushi: { normal: 30, max: 45 } }, enabledCategories: ['sushi'] } } : null,
+    set() {},
+  };
+  const e = createEngine({ source: demoSource(), storage });
+  const profile = e.getState().profile;
+  for (const category of ['tacos', 'wraps', 'carnes', 'ensaladas']) {
+    assert.ok(profile.enabledCategories.includes(category));
+    assert.ok(e.targetFor(category, 'normal') > 0);
+  }
+  assert.deepEqual(profile.appetite.sushi, { normal: 30, max: 45 });
+});
+
 test('calidad con reseñas de Rappi: 4.6 con 300 reseñas le gana a 5.0 con 4', async () => {
   const { quality, isHiddenGem } = await import('../engine/scoring.js');
   const solid = { rappiScore: 4.6, rappiReviews: 300 };

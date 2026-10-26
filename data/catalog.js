@@ -14,6 +14,13 @@ export const CATEGORIES = {
   milanesa:    { label: 'Milanesa',     unit: 'unidades' },
   pollo:       { label: 'Pollo frito',  unit: 'presas' },
   pasta:       { label: 'Pastas',       unit: 'porciones' },
+  tacos:       { label: 'Tacos',        unit: 'unidades' },
+  wraps:       { label: 'Wraps',        unit: 'unidades' },
+  carnes:      { label: 'Carnes',       unit: 'porciones' },
+  ensaladas:   { label: 'Ensaladas',    unit: 'unidades' },
+  sandwiches:  { label: 'Sándwiches',   unit: 'unidades' },
+  tartas:      { label: 'Tartas',       unit: 'porciones' },
+  wok:         { label: 'Wok y Bowls',  unit: 'unidades' },
 };
 
 export const BIG_FOUR = ['mcdonalds', 'burgerking', 'kfc', 'mostaza'];
@@ -31,6 +38,7 @@ export const restaurants = [
   { id: 'fortin',     name: 'Pizzería El Fortín',    chain: false, demo: true, tags: ['pizza', 'horno', 'lacteos'],       rappiRating: 4.4, googleRating: 4.4, googleReviews: 1500, deliveryFee: 700,  etaMin: 35 },
   { id: 'gaucho',     name: 'Pollos El Gaucho',      chain: false, demo: true, tags: ['pollo', 'casera', 'frito'],        rappiRating: 4.6, googleRating: 4.6, googleReviews: 410,  deliveryFee: 600,  etaMin: 35 },
   { id: 'ladob',      name: 'Lado B Burgers',        chain: false, demo: true, tags: ['carne', 'artesanal'],              rappiRating: 4.8, googleRating: 4.8, googleReviews: 210,  deliveryFee: 900,  etaMin: 40 },
+  { id: 'taqueria',   name: 'La Taquería Mexicana',  chain: false, demo: true, tags: ['mexicana', 'tacos', 'carne'],       rappiRating: 4.6, googleRating: 4.5, googleReviews: 530,  deliveryFee: 850,  etaMin: 30 },
 ];
 
 export const items = [
@@ -41,6 +49,7 @@ export const items = [
   { id: 'mc-cbo',    restaurantId: 'mcdonalds', name: 'Cuarto de Libra',       price: 7900,  yields: { hamburguesa: 1 }, tags: ['carne', 'lacteos'], salesRank: 3 },
   { id: 'mc-dobcbo', restaurantId: 'mcdonalds', name: 'Doble Cuarto de Libra', price: 10400, yields: { hamburguesa: 1 }, tags: ['carne', 'lacteos'], salesRank: 12 },
   { id: 'mc-cheese', restaurantId: 'mcdonalds', name: 'Cheeseburger',          price: 3900,  yields: { hamburguesa: 1 }, tags: ['carne', 'lacteos'], salesRank: 20 },
+  { id: 'mc-wrap',   restaurantId: 'mcdonalds', name: 'McWrap Pollo Crispy',   price: 8200,  yields: { wraps: 1 },    tags: ['pollo', 'frito'], salesRank: 21 },
   // Burger King
   { id: 'bk-nug6',   restaurantId: 'burgerking', name: 'King Nuggets x6',      price: 5200,  yields: { nuggets: 6 },  tags: ['pollo', 'frito'], salesRank: 35 },
   { id: 'bk-nug20',  restaurantId: 'burgerking', name: 'King Nuggets x20',     price: 14200, yields: { nuggets: 20 }, tags: ['pollo', 'frito'], salesRank: 18 },

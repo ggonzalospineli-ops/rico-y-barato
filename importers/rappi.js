@@ -15,6 +15,14 @@ const CATEGORY_RULES = [
   ['hamburguesa', /\bhamburgues|\bburgers?\b|\bwhopper|\bcuarto de libra|\bbig mac|\bsmash|\bcheeseburger|\bstacker|\bmc ?combo/],
   ['pollo',       /\bpresas?\b|\bbucket\b|\bpollo entero\b|\b1\/2 pollo\b|\bmedio pollo\b/],
   ['pasta',       /\bravioles|\bsorrentinos|\bñoquis|\bnoquis|\btallarines|\bspaghetti|\bfett?uccin|\blasa[gñ]n|\bcanelones|\bpenne|\bfideos|\bagnolotti|\bcappellett|\bpappardelle|\brigatoni/],
+  ['tacos',       /\btacos?\b|\btaquitos?\b|\bquesadillas?\b/],
+  ['wraps',       /\bwraps?\b|\bburritos?\b|\bfajitas?\b/],
+  ['ensaladas',   /\bensaladas?\b|\bcaesar\b|\bcesar\b/],
+  ['sandwiches',  /\bsandwich(?:es)?\b|\bsanguche?s?\b|\blomitos?\b|\bchoripanes?\b|\bchoripan\b|\bbaguettes?\b/],
+  ['tartas',      /\btartas?\b|\bquiches?\b/],
+  ['wok',         /\bwoks?\b|\bbowls?\b|\bpokes?\b/],
+  // Debe ir al final: muchos platos de carne también nombran su formato (taco, sándwich, etc.).
+  ['carnes',      /\bparrill(?:as?|adas?)\b|\basados?\b|\bbifes?\b|\bojo de bife\b|\bentra[nñ]as?\b|\bvacio\b|\bmatambres?\b|\bchurrascos?\b|\bribs?\b|\bcostillas?\b|\bbondiolas?\b/],
 ];
 
 // Cosas que caen en una categoría por una palabra pero no son eso (sobre el nombre normalizado).
@@ -23,7 +31,11 @@ const CATEGORY_EXCLUDE = {
   milanesa: /\bbites\b|\bbocaditos\b|\bentradita\b|\bpastelito/,
   pizza:    /\bfainuzza\b|\bpastelito|\bcanastita|\ba la pizza\b|\bmatambre|\bpan de\b/, // "Matambre a la pizza", "Pan de provolone"
   hamburguesa: /\bpanchos?\b|\bhot ?dogs?\b|\bsalchicha/,                // "Pancho Cuarto de Libra" tampoco
+  carnes: /\ba la pizza\b|\bempanadas?\b|\btartas?\b/,
 };
+
+// Categorías que solo cuentan si las dice el nombre o la sección, nunca la descripción.
+const DESC_UNRELIABLE = ['carnes', 'ensaladas', 'wok', 'sandwiches', 'tartas', 'wraps', 'tacos'];
 
 // Secciones donde todo lo que hay es de esa categoría, diga lo que diga el nombre.
 const SECTION_DECIDES = ['empanadas', 'pizza'];
@@ -74,7 +86,7 @@ function explicitCount(text, category) {
   if (/\bdocena\b/.test(t)) return 12;
   const unit = category === 'pizza' ? 'porciones?|porc\\.?'
     : category === 'pollo' ? 'presas?'
-    : 'piezas?|pzas?|pz|unidades|unid\\.?|uni|u\\b|bocaditos?|nugg?ets?|rolls?|makis?|nigu?iris?|empanadas?';
+    : 'piezas?|pzas?|pz|unidades|unid\\.?|uni|u\\b|bocaditos?|nugg?ets?|rolls?|makis?|nigu?iris?|empanadas?|tacos?|taquitos?|wraps?|burritos?|sandwich(?:es)?';
   const m = t.match(new RegExp(`\\b(\\d{1,3})\\s?(?:${unit})\\b`))
     || t.match(/\bx\s?(\d{1,3})\b/)
     || t.match(/\bpor\s(\d{1,3})\b/);
@@ -128,7 +140,11 @@ function countFor(category, part, desc, sectionName) {
       if (/1\/2 pollo|medio pollo/.test(name)) return 4;
       return fromName ?? explicitCount(desc, 'pollo');
     }
-    default: { // hamburguesa, milanesa, pasta: unidades/porciones; "doble" son medallones, no 2.
+    case 'tacos':
+    case 'wraps':
+    case 'sandwiches':
+      return fromName ?? leadN;
+    default: { // hamburguesa, milanesa, pasta, carnes, ensaladas, tartas y wok: una porción.
       if (lead) return leadN;
       // "Dos hamburguesas de carne..." sí; "Tres medallones..." es una sola hamburguesa.
       const word = normalize(desc).match(/^(dos|tres|cuatro)\s(?:hamburguesas|burgers|milanesas|supremas|porciones)\b/);
@@ -171,7 +187,10 @@ function rawYields(product, restaurantName = '') {
 
   // El nombre no dice qué es ("Combo promo 15 pz"): probar con descripción, sección y rubro del local.
   // Del rubro solo si el nombre habla de piezas: "Palitos Chinos X2" en un sushi no es sushi.
-  const cat = detectCategory(desc) || sectionCat
+  // Las categorías amplias no se deducen de la descripción: "morrones asados" o "con ensalada" no hacen
+  // de un shawarma una parrillada ni de una milanesa una ensalada. Esas salen del nombre o la sección.
+  const descCat = detectCategory(desc);
+  const cat = (DESC_UNRELIABLE.includes(descCat) ? null : descCat) || sectionCat
     || (/sushi/i.test(restaurantName) && /\b\d{1,3}\s?(?:piezas?|pzas?|pz)\b/i.test(product.name) ? 'sushi' : null);
   if (!cat) return {};
   const n = countFor(cat, product.name, desc, product.category);

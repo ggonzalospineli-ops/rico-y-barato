@@ -137,7 +137,7 @@ const INTENT_SCHEMA = {
     people: orNull({ type: 'integer', description: 'Cuántas personas comen' }),
     money: orNull({ type: 'integer', description: 'Plata total disponible en pesos argentinos' }),
     hunger: orNull({ type: 'string', enum: ['poco', 'normal', 'mucho', 'bestia'] }),
-    category: orNull({ type: 'string', enum: ['nuggets', 'sushi', 'hamburguesa', 'empanadas', 'pizza', 'milanesa', 'pollo', 'pasta'] }),
+    category: orNull({ type: 'string', enum: ['nuggets', 'sushi', 'hamburguesa', 'empanadas', 'pizza', 'milanesa', 'pollo', 'pasta', 'tacos', 'wraps', 'carnes', 'ensaladas', 'sandwiches', 'tartas', 'wok'] }),
     exclude: { type: 'array', items: { type: 'string', enum: ['carne', 'cerdo', 'pollo', 'pescado', 'lacteos', 'picante', 'frito'] } },
     ricoWeight: orNull({ type: 'number', description: '0 = lo más barato, 1 = lo más rico' }),
     summary: { type: 'string', description: 'Una frase corta en castellano rioplatense con lo que entendiste' },

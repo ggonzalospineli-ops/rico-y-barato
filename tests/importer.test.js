@@ -171,3 +171,21 @@ test('parser: un fatay de 4 quesos no es una pizza aunque la descripción la nom
 test('parser: un pan de provolone no es una pizza', () => {
   assert.deepEqual(y('Pan de Provolone', '', 'Pizzas'), {});
 });
+
+test('parser: tacos, wraps, carnes, ensaladas y otros filtros amplios', () => {
+  assert.deepEqual(y('3 Tacos de birria'), { tacos: 3 });
+  assert.deepEqual(y('Burrito de pollo'), { wraps: 1 });
+  assert.deepEqual(y('Ensalada Caesar con pollo'), { ensaladas: 1 });
+  assert.deepEqual(y('Ojo de bife con papas'), { carnes: 1 });
+  assert.deepEqual(y('Lomito completo'), { sandwiches: 1 });
+  assert.deepEqual(y('Tarta de calabaza', '', 'Tartas'), { tartas: 1 });
+  assert.deepEqual(y('Poke de salmón'), { wok: 1 });
+  assert.deepEqual(y('Matambre a la pizza'), {});
+});
+
+test('categorías nuevas: la descripción no alcanza para "carnes" ni "ensaladas"', () => {
+  assert.deepEqual(parseYields({ name: 'Shawarma de pollo', category: 'Port In Pita', description: 'pan pita con tomate y cebolla asados' }), {});
+  assert.deepEqual(parseYields({ name: 'Garlic Focaccia', category: 'Platitos', description: 'con ajo asado' }), {});
+  assert.deepEqual(parseYields({ name: 'Ojo de bife', category: 'Populares', description: '' }), { carnes: 1 });
+  assert.deepEqual(parseYields({ name: 'Brochette de pollo', category: 'Parrilla', description: '' }), { carnes: 1 });
+});

@@ -102,6 +102,13 @@ test('frases: comida, hambre y rico/barato', () => {
   assert.deepEqual(parseIntent('vegano').exclude.sort(), ['carne', 'cerdo', 'lacteos', 'pescado', 'pollo']);
 });
 
+test('frases: reconoce los filtros nuevos de comida', () => {
+  assert.equal(parseIntent('quiero tacos').category, 'tacos');
+  assert.equal(parseIntent('un wrap o burrito').category, 'wraps');
+  assert.equal(parseIntent('algo de parrilla, un bife').category, 'carnes');
+  assert.equal(parseIntent('una ensalada caesar').category, 'ensaladas');
+});
+
 import { convert, parseTags, priceHistory, isInflatedOriginal } from '../importers/rappi.js';
 import { createEngine } from '../engine/engine.js';
 import { jsonSource } from '../sources/json.js';
