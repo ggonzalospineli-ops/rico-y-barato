@@ -27,6 +27,11 @@ export function openStatus(schedule, date = new Date()) {
   // Hoy, o una franja de ayer que cruzó la medianoche.
   const today = windowsFor(schedule, day).find(w => minute >= w.open && minute < w.close);
   const yesterday = windowsFor(schedule, (day + 6) % 7).find(w => w.close > 24 * 60 && minute < w.close - 24 * 60);
+  // Si hoy solo se conoce el tramo de madrugada (Rappi no dio el resto), no se lo da por cerrado.
+  const todayEntries = (schedule || []).filter(s => norm(s.day) === DAYS[day] && s.time);
+  if (!today && !yesterday && todayEntries.length && todayEntries.every(s => s.partial)) {
+    return { known: false, open: true, label: 'Horario de hoy sin confirmar' };
+  }
   if (today || yesterday) {
     const closeMin = today ? today.close : yesterday.close - 24 * 60;
     const left = closeMin - minute;

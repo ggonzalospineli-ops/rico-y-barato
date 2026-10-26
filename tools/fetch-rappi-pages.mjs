@@ -45,7 +45,13 @@ function extract(html) {
     v: VERSION, fetchedAt: new Date().toISOString(),
     storeId: r.id, name: r.name, brandName: r.brandName || null, address: r.address || null,
     location: r.location || null,                    // [lng, lat] del local
-    status: r.status || null, schedule: pageProps.scheduleData || null, // horario de toda la semana
+    status: r.status || null, schedule: pageProps.scheduleData || null, // un tramo por día (a veces solo el de la madrugada)
+    // Los tramos completos solo vienen para el día de la consulta ("schedules": [{ day: 'mon', open_time, close_time }]).
+    // Se van juntando día a día en weekSchedules (ver la mezcla al guardar).
+    weekSchedules: Object.fromEntries(Object.entries((r.schedules || []).reduce((acc, s) => {
+      (acc[s.day] ||= []).push([String(s.open_time).slice(0, 5), String(s.close_time).slice(0, 5)]);
+      return acc;
+    }, {}))),
     deliveryPrice: r.deliveryPrice ?? null, eta: r.eta || null,
     logo: r.logo || null, background: r.backgroundImage || null,
     score: r.ratingData?.score ?? r.rating ?? null, reviews: r.ratingData?.total_reviews ?? null,
@@ -77,6 +83,7 @@ for (const [i, url] of urls.entries()) {
       const old = JSON.parse(readFileSync(file, 'utf8'));
       page.products = { ...(old.products || {}), ...page.products };
       page.names = { ...(old.names || {}), ...page.names };
+      page.weekSchedules = { ...(old.weekSchedules || {}), ...page.weekSchedules };
     } catch {}
     writeFileSync(file, JSON.stringify(page));
     fetched++;

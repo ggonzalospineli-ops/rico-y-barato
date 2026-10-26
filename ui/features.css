@@ -17,12 +17,12 @@
 @media (prefers-reduced-motion: reduce) { .card.is-sweet::before { animation: none; } }
 
 /* Plato visual */
-.plate { margin-top: 10px; }
+.plate { margin-top: 10px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; } /* puntos y texto en la misma línea */
 .plate-dots { display: flex; flex-wrap: wrap; gap: 3px; }
 .plate-dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--red); }
 .plate-dots i.y { background: var(--yellow); box-shadow: inset 0 0 0 1.5px var(--yellow-deep); }
 .plate-dots i.m { background: transparent; box-shadow: inset 0 0 0 1.5px #CFC6BA; }
-.plate-txt { margin-top: 6px; font-size: 11.5px; font-weight: 600; color: var(--muted); }
+.plate-txt { font-size: 11.5px; font-weight: 600; color: var(--muted); }
 .plate-txt b { color: var(--ink); font-weight: 800; }
 .plate-txt b.up { color: var(--green); }
 .plate-txt b.down { color: var(--red); }

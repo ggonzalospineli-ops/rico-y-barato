@@ -264,3 +264,16 @@ test('decidí por mí: un plan por local y sin repetir la primera carta', () => 
   assert.notEqual(decideDeck(plans, { rand: () => 0.5, lastFirstId: first })[0].id, first);
   assert.deepEqual(weightedShuffle([], () => 1), []);
 });
+
+import { fullSchedule } from '../importers/rappi.js';
+import { openStatus as openAt } from '../engine/hours.js';
+
+test('horarios: el tramo de madrugada solo no deja al local cerrado de día, y los tramos completos mandan', () => {
+  const page = { schedule: [{ day: 'Lunes', time: { openTime: '00:00', closeTime: '03:30' } }, { day: 'Martes', time: { openTime: '11:00', closeTime: '23:00' } }] };
+  const lunes17 = new Date('2026-10-26T17:00:00'); // lunes
+  assert.equal(openAt(fullSchedule(page), lunes17).open, true);
+  assert.equal(openAt(fullSchedule(page), lunes17).known, false);
+  const full = { ...page, weekSchedules: { mon: [['00:00', '03:30'], ['11:00', '16:00']] } };
+  assert.equal(openAt(fullSchedule(full), lunes17).open, false);              // con el horario completo, sí cerró
+  assert.equal(openAt(fullSchedule(full), new Date('2026-10-26T12:00:00')).open, true);
+});

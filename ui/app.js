@@ -743,7 +743,7 @@ function openPlan(id) {
       </div>
       ${placeHtml(p.restaurant)}
       ${deliveryText(p.restaurant) || p.restaurant.rappiReviews ? `<p class="blurb">${[deliveryText(p.restaurant), p.restaurant.rappiReviews ? `${p.restaurant.rappiReviews} reseñas en Rappi` : ''].filter(Boolean).join(' · ')}${p.restaurant.deliveryFee != null ? ' · envío aproximado' : ''}</p>` : ''}
-      ${p.restaurant.address ? `<p class="blurb">📍 ${esc(p.restaurant.address)}</p>` : ''}
+      ${p.restaurant.address ? `<p class="blurb">📍 ${esc(prettyAddress(p.restaurant.address))}</p>` : ''}
       ${reputationHtml(p.restaurant)}
       ${p.variant === 'un-poco-menos' ? `<p class="blurb">Comés un poco menos de lo que querías (${p.quantity} de ${p.target}) pero te ahorrás bastante.</p>` : ''}
       ${plateHtml(p, true)}
@@ -783,7 +783,7 @@ function openMenu(restaurantId) {
       ${rest.url ? `<a class="icon-btn" href="${esc(rest.url)}" target="_blank" rel="noopener" aria-label="Abrir en Rappi">${icon('out')}</a>` : '<span></span>'}
     </div>
     <div class="sheet-body">
-      <div class="kicker">${rest.chain ? 'Cadena' : 'Local'}${rest.address ? ` · ${esc(rest.address)}` : ''}</div>
+      <div class="kicker">${rest.chain ? 'Cadena' : 'Local'}${rest.address ? ` · ${esc(prettyAddress(rest.address))}` : ''}</div>
       <h2>${esc(rest.name)}</h2>
       <div class="stats">
         <div><small>Rappi${rest.rappiReviews ? ` · ${rest.rappiReviews}` : ''}</small><b>${icon('star', 'fill')} ${stars(rest)}</b></div>
@@ -1081,6 +1081,25 @@ function forecast(s) {
 // Plato visual: cada punto es una pieza. Lleno = lo que pediste, dorado = de yapa,
 // hueco = lo que te falta (variante "un poco menos").
 // =====================================================================
+// Rappi manda algunas direcciones en minúscula y sin comas ("av cordoba 2402 c1120 aat buenos aires
+// argentina"): mayúscula inicial, "Av.", código postal junto ("C1120AAT") y comas antes de la ciudad.
+function prettyAddress(raw) {
+  let s = String(raw || '').trim().replace(/\s+/g, ' ');
+  if (!s) return '';
+  s = s.replace(/\b([a-z])\s?(\d{4})\s?([a-z]{3})\b/gi, (_, a, n, b) => `, ${a.toUpperCase()}${n}${b.toUpperCase()}`); // CPA
+  const small = new Set(['de', 'del', 'la', 'las', 'los', 'y', 'e', 'el']);
+  s = s.split(' ').map((w, i) => {
+    if (/^,?[A-Z]\d{4}[A-Z]{3}$/.test(w) || /\d/.test(w)) return w;
+    const lower = w.toLowerCase();
+    if (lower === 'av' || lower === 'av.' || lower === 'avenida') return 'Av.';
+    if (/^caba,?$/.test(lower)) return w.replace(/caba/i, 'CABA');
+    if (i > 0 && small.has(lower)) return lower;
+    return lower.charAt(0).toUpperCase() + lower.slice(1);
+  }).join(' ');
+  s = s.replace(/\s+,/g, ',').replace(/,?\s*(Buenos Aires|Ciudad Autónoma De Buenos Aires|Caba)\b/i, ', $1').replace(/\s+Argentina$/i, ', Argentina');
+  return s.replace(/,\s*,/g, ',').replace(/^,\s*/, '');
+}
+
 function plateHtml(p, big = false) {
   const max = big ? 60 : 36;
   const step = Math.max(1, Math.ceil(Math.max(p.quantity, p.target) / max)); // un punto = `step` piezas

@@ -274,7 +274,7 @@ export function convert(scrape, { google = {}, preferences = null, minPrice = 30
       etaMin: page.eta ? parseInt(page.eta, 10) || null : null,
       logoUrl: page.logo ? `${page.logo.split('?')[0]}?d=200x200&e=webp&q=80` : null,
       coverUrl: page.background ? `${page.background.split('?')[0]}?d=1600x1200&e=webp&q=82` : null, // la CDN no agranda: si el original es menor, llega el original
-      schedule: page.schedule || null,
+      schedule: fullSchedule(page),
       distanceKm: home && page.location ? +distanceKm([home.lat, home.lng], [page.location[1], page.location[0]]).toFixed(2) : null,
     });
     if (!r.address && page.address) restaurants[restaurants.length - 1].address = page.address.trim();
@@ -359,6 +359,25 @@ function applySignals(signals, restaurants, items) {
     }
   }
   return missing;
+}
+
+// Horario de la semana para engine/hours.js. Rappi da un solo tramo por día en scheduleData (a veces solo
+// el de la madrugada, "00:00-03:30") y los tramos completos solo del día consultado (weekSchedules, que la
+// descarga diaria va juntando). Un día con solo el tramo de madrugada queda como partial: no se sabe si
+// abre de día, y la app no lo da por cerrado.
+const DAY_KEYS = { mon: 'Lunes', tue: 'Martes', wed: 'Miércoles', thu: 'Jueves', fri: 'Viernes', sat: 'Sábado', sun: 'Domingo' };
+export function fullSchedule(page) {
+  if (!page?.schedule && !page?.weekSchedules) return null;
+  const full = page.weekSchedules || {};
+  const out = [];
+  for (const [key, day] of Object.entries(DAY_KEYS)) {
+    if (full[key]?.length) { for (const [o, c] of full[key]) out.push({ day, time: { openTime: o, closeTime: c } }); continue; }
+    for (const s of (page.schedule || []).filter(x => normalize(x.day) === normalize(day) && x.time)) {
+      const tail = s.time.openTime === '00:00' && s.time.closeTime <= '06:00';
+      out.push(tail ? { ...s, partial: true } : s);
+    }
+  }
+  return out.length ? out : null;
 }
 
 // Nombre de producto para cruzar fotos: "Cajita Feliz McNuggets x 6" = "cajita feliz mcnuggets x6".
