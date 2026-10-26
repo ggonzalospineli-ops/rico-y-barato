@@ -67,7 +67,12 @@ export function createEngine({ source, storage = memoryStorage(), now = () => Da
   let meta = {};
   let restaurants = [], items = [], byRestaurant = {}, restaurantsById = {}, medianUnitPrice = {};
 
+  // Memo de recommend() (los últimos 4 pedidos: la app pide los resultados y los favoritos con parámetros
+  // distintos en cada dibujo). Cualquier cambio de estado lo invalida.
+  let planVersion = 0;
+  const planMemo = new Map();
   function emit(type) {
+    planVersion++;
     storage.set('state', state);
     for (const fn of listeners) fn({ type, state: snapshot() });
   }
@@ -82,6 +87,7 @@ export function createEngine({ source, storage = memoryStorage(), now = () => Da
     for (const it of items) (byRestaurant[it.restaurantId] ||= []).push(it);
     medianUnitPrice = computeMedians(items);
     nutritionCache.clear();
+    planVersion++;
     for (const id of data.suggestedFavorites || []) {
       if (state.seededFavorites.includes(id)) continue;
       state.seededFavorites.push(id);
@@ -116,39 +122,52 @@ export function createEngine({ source, storage = memoryStorage(), now = () => Da
     const cats = categories?.length ? categories : state.profile.enabledCategories;
     const t = taste();
     const available = Math.min(money, budgetSummary().remaining);
-    const plans = [];
+    // Armar las combinaciones es lo caro (~120 ms con 550 locales). Si solo cambia la barra rico/barato
+    // (o cuántas mostrar), se reusan las del pedido anterior y solo se vuelve a puntuar.
+    const memoKey = JSON.stringify([planVersion, hunger, money, cats, n, openOnly, Math.floor(when / 60000), exclude, maxEta, maxKm]);
+    let plans, farCountCached;
+    const memo = planMemo.get(memoKey);
+    if (memo) {
+      plans = memo.plans.map(p => ({ ...p, scores: { ...p.scores }, badges: [...p.badges], nutrition: { ...p.nutrition } }));
+      farCountCached = memo.far;
+    } else {
+      plans = [];
 
-    for (const category of cats) {
-      const target = targetFor(category, hunger) * n;
-      for (const r of restaurants) {
-        if (openOnly && closed.has(r.id)) continue;
-        if (tooFar(r)) { if (category === cats[0]) farCount++; continue; }
-        const products = (byRestaurant[r.id] || []).filter(it => allowed(it, exclude));
-        const cover = cheapestCover(products, category, target);
-        if (!cover?.best) continue;
-        const mk = (c, variant) => makePlan(r, category, target, c, variant, t, status[r.id]);
-        plans.push(mk(cover.best, 'completo'));
-        if (cover.short) plans.push(mk(cover.short, 'un-poco-menos'));
-        // Lo más barato del local no siempre es lo que vale la pena. Se arma además un plan con tus
-        // favoritos y otro con lo respaldado afuera (Morfy, Google), si son distintos al más barato.
-        const seen = [cover.best];
-        for (const [variant, keep] of [
-          ['tu-favorito', p => state.favorites.includes(p.id) && !state.disliked.includes(p.id)],
-          ['recomendado', p => p.signals?.length],
-        ]) {
-          const backed = products.filter(keep);
-          const best = backed.length ? cheapestCover(backed, category, target)?.best : null;
-          if (best && !seen.some(s => sameLines(s, best))) { seen.push(best); plans.push(mk(best, variant)); }
+      for (const category of cats) {
+        const target = targetFor(category, hunger) * n;
+        for (const r of restaurants) {
+          if (openOnly && closed.has(r.id)) continue;
+          if (tooFar(r)) { if (category === cats[0]) farCount++; continue; }
+          const products = (byRestaurant[r.id] || []).filter(it => allowed(it, exclude));
+          const cover = cheapestCover(products, category, target);
+          if (!cover?.best) continue;
+          const mk = (c, variant) => makePlan(r, category, target, c, variant, t, status[r.id]);
+          plans.push(mk(cover.best, 'completo'));
+          if (cover.short) plans.push(mk(cover.short, 'un-poco-menos'));
+          // Lo más barato del local no siempre es lo que vale la pena. Se arma además un plan con tus
+          // favoritos y otro con lo respaldado afuera (Morfy, Google), si son distintos al más barato.
+          const seen = [cover.best];
+          for (const [variant, keep] of [
+            ['tu-favorito', p => state.favorites.includes(p.id) && !state.disliked.includes(p.id)],
+            ['recomendado', p => p.signals?.length],
+          ]) {
+            const backed = products.filter(keep);
+            const best = backed.length ? cheapestCover(backed, category, target)?.best : null;
+            if (best && !seen.some(s => sameLines(s, best))) { seen.push(best); plans.push(mk(best, variant)); }
+          }
         }
       }
-    }
 
-    // "Barato" se mide dentro de cada categoría: 30 piezas de sushi no compiten con 4 empanadas.
-    for (const category of cats) {
-      const group = plans.filter(p => p.category === category);
-      cheapnessByRank(group.map(p => p.unitCost)).forEach((c, i) => { group[i].scores.barato = c; });
+      // "Barato" se mide dentro de cada categoría: 30 piezas de sushi no compiten con 4 empanadas.
+      for (const category of cats) {
+        const group = plans.filter(p => p.category === category);
+        cheapnessByRank(group.map(p => p.unitCost)).forEach((c, i) => { group[i].scores.barato = c; });
+      }
+      markCheapestChainPerCategory(plans);
+      if (planMemo.size >= 4) planMemo.delete(planMemo.keys().next().value);
+      planMemo.set(memoKey, { far: farCount, plans: plans.map(p => ({ ...p, scores: { ...p.scores }, badges: [...p.badges], nutrition: { ...p.nutrition } })) });
     }
-    markCheapestChainPerCategory(plans);
+    if (farCountCached != null) farCount = farCountCached;
 
     for (const p of plans) {
       p.scores.total = ricoWeight * p.scores.rico + (1 - ricoWeight) * p.scores.barato;

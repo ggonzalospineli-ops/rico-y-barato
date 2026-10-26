@@ -448,7 +448,7 @@ function viewHome() {
       </div>
       <div class="divider"></div>
       <div class="balance-labels"><span>💸 Barato</span><span>Rico 😋</span></div>
-      <input id="balance" class="balance" type="range" min="0" max="1" step="0.05" value="${ui.ricoWeight}" aria-label="Barato o rico">
+      <input id="balance" class="balance" type="range" min="0" max="1" step="any" value="${ui.ricoWeight}" aria-label="Barato o rico">
       <div class="balance-hint" id="balance-hint">${balanceHint()}</div>
       ${whenControlsHtml()}
     </section>
@@ -1016,13 +1016,28 @@ if ('assistToggle' in d) {
 // Controles continuos: solo actualizan resultados, para no romper el arrastre ni el tipeo.
 let raf = 0;
 const schedule = fn => { cancelAnimationFrame(raf); raf = requestAnimationFrame(fn); };
+let lastResults = 0, pendingResults = 0;
+function throttledResults() {
+  clearTimeout(pendingResults);
+  const wait = 150 - (Date.now() - lastResults);
+  if (wait <= 0) { lastResults = Date.now(); schedule(renderResults); }
+  else pendingResults = setTimeout(() => { lastResults = Date.now(); schedule(renderResults); }, wait);
+}
+document.addEventListener('change', e => {
+  if (e.target.id !== 'balance') return;
+  clearTimeout(pendingResults);
+  saveUi();
+  schedule(renderResults);
+});
 const parseMoney = v => { const n = +String(v).replace(/\D/g, ''); return n > 0 ? n : null; };
 
 document.addEventListener('input', e => {
   if (e.target.id === 'balance') {
-    ui.ricoWeight = +e.target.value; saveUi();
+    // La barra se mueve libre; el texto cambia al instante y las tarjetas se recalculan como mucho cada
+    // 150 ms mientras se arrastra (redibujarlas en cada movimiento trababa el dedo) y una vez al soltar.
+    ui.ricoWeight = Math.round(+e.target.value * 100) / 100;
     $('#balance-hint').textContent = balanceHint();
-    schedule(renderResults);
+    throttledResults();
   }
   if (e.target.id === 'money') {
     ui.money = parseMoney(e.target.value); saveUi();
