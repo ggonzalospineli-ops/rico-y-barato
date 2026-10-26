@@ -392,3 +392,24 @@ code { font-size: 12px; background: var(--bg); padding: 1px 5px; border-radius: 
 .filter-label { display: block; margin-bottom: 6px; font-size: 12px; font-weight: 800; color: var(--ink-2); }
 .when-other { padding: 7px 10px; border-radius: 10px; border: 0; background: var(--bg); font: inherit; font-size: 12px; font-weight: 700; color: var(--ink-2); }
 .when-other.on { background: var(--yellow); color: var(--ink); }
+
+/* Resumen de gastos */
+.spending { margin-top: 22px; }
+.saved { margin-top: 10px; padding: 14px 16px; border-radius: var(--radius); background: #E7F7EE; color: #0B6B36; }
+.saved.neg { background: var(--red-soft); color: var(--red-deep); }
+.saved small { display: block; font-size: 12px; font-weight: 800; }
+.saved b { display: block; font-size: 26px; font-weight: 800; margin-top: 2px; }
+.saved span { display: block; margin-top: 4px; font-size: 12px; font-weight: 600; opacity: .85; }
+.spend-title { margin: 18px 0 8px; font-size: 14px; font-weight: 800; }
+.weeks { display: grid; grid-template-columns: repeat(8, 1fr); gap: 6px; height: 150px; padding: 12px 10px 8px; border-radius: var(--radius); background: var(--card); box-shadow: var(--shadow-sm); }
+.wk { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; min-width: 0; cursor: default; }
+.wk i { width: 60%; max-width: 26px; border-radius: 4px 4px 0 0; background: var(--red); }
+.wk:hover i { background: var(--red-deep); }
+.wk-val { font-size: 10px; font-weight: 800; color: var(--ink-2); white-space: nowrap; margin-bottom: 3px; }
+.wk small { margin-top: 5px; font-size: 10px; font-weight: 700; color: var(--muted); white-space: nowrap; }
+.cats-spend { display: grid; gap: 8px; padding: 12px 14px; border-radius: var(--radius); background: var(--card); box-shadow: var(--shadow-sm); }
+.cs-row { display: grid; grid-template-columns: minmax(90px, 140px) 1fr auto; align-items: center; gap: 10px; font-size: 13px; }
+.cs-name { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cs-bar { height: 8px; border-radius: 4px; background: var(--bg); overflow: hidden; }
+.cs-bar i { display: block; height: 100%; border-radius: 4px; background: var(--red); }
+.cs-row b { font-weight: 800; }

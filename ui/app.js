@@ -641,6 +641,7 @@ function viewCart() {
     </div>
     <p class="note">Los totales incluyen el envío cuando Rappi lo publica (es aproximado: depende de tu dirección). No incluyen la tarifa de servicio.</p>
 
+    ${spendingHtml()}
     ${historyHtml(st.orders)}`;
 }
 
@@ -1978,3 +1979,41 @@ document.addEventListener('change', e => {
   ui.when = e.target.value === '' ? null : +e.target.value;
   render();
 });
+
+// =====================================================================
+// Resumen de gastos: por semana (barras), por comida y cuánto te ahorraste
+// =====================================================================
+function spendingHtml() {
+  const s = engine.spendingSummary({ weeks: 8 });
+  if (!s.orders) return '';
+  const max = Math.max(...s.weeks.map(w => w.total), 1);
+  const day = t => new Date(t).toLocaleDateString('es-AR', { day: 'numeric', month: 'numeric' });
+  const last = s.weeks.length - 1;
+  const catMax = Math.max(...s.categories.map(c => c.total), 1);
+  return `
+    <section class="spending">
+      <div class="section-head"><h2>Tus gastos</h2><span>${s.orders} pedido${s.orders === 1 ? '' : 's'} · promedio ${ars(s.average)}</span></div>
+      ${s.comparable ? `<div class="saved ${s.saved >= 0 ? '' : 'neg'}">
+        <small>${s.saved >= 0 ? 'Te ahorraste' : 'Gastaste de más'}</small><b>${ars(Math.abs(s.saved))}</b>
+        <span>contra lo que cuesta lo mismo en un local típico de tu zona (${s.comparable} pedido${s.comparable === 1 ? '' : 's'} comparable${s.comparable === 1 ? '' : 's'}, sin envío)</span>
+      </div>` : ''}
+      <h3 class="spend-title">Por semana</h3>
+      <div class="weeks" role="img" aria-label="Gasto de las últimas 8 semanas">
+        ${s.weeks.map((w, i) => `
+          <div class="wk" title="Semana del ${day(w.start)}: ${ars(w.total)} · ${w.orders} pedido${w.orders === 1 ? '' : 's'}">
+            <span class="wk-val">${i === last || w.total === max ? (w.total ? ars(w.total) : '') : ''}</span>
+            <i style="height:${w.total ? Math.max(3, Math.round((w.total / max) * 100)) : 0}%"></i>
+            <small>${i === last ? 'Esta' : day(w.start)}</small>
+          </div>`).join('')}
+      </div>
+      <h3 class="spend-title">Por comida</h3>
+      <div class="cats-spend">
+        ${s.categories.map(c => `
+          <div class="cs-row">
+            <span class="cs-name">${look(c.category).e} ${esc(CATS[c.category]?.label || 'Otros')}</span>
+            <span class="cs-bar"><i style="width:${Math.max(2, Math.round((c.total / catMax) * 100))}%"></i></span>
+            <b>${ars(c.total)}</b>
+          </div>`).join('')}
+      </div>
+    </section>`;
+}

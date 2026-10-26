@@ -149,3 +149,29 @@ test('recommend: filtro de demora deja solo locales que llegan a tiempo (y saca 
   // Sin distancia en los datos de ejemplo: con filtro de km no queda nada.
   assert.equal(e.recommend({ categories: ['sushi'], maxKm: 3 }).options.length, 0);
 });
+
+test('gastos: por semana y por comida, y ahorro contra la mediana de la zona', async () => {
+  let t = Date.parse('2026-10-21T15:00:00-03:00'); // miércoles
+  const e = createEngine({ source: demoSource(), now: () => t });
+  await e.load();
+  const plan = e.recommend({ categories: ['sushi'], ricoWeight: 0 }).options[0];
+  e.addToCart(plan); e.confirmOrder(plan.id);
+  t = Date.parse('2026-10-26T13:00:00-03:00'); // lunes siguiente
+  e.addExternalOrder({ restaurantName: 'Kiosco', total: 3000 });
+  const s = e.spendingSummary({ weeks: 4 });
+  assert.equal(s.orders, 2);
+  assert.equal(s.weeks.at(-1).total, 3000);              // esta semana: solo el pedido a mano
+  assert.equal(s.weeks.at(-2).total, plan.total);        // la semana pasada: el sushi
+  assert.deepEqual(s.categories.map(c => c.category).sort(), ['otro', 'sushi']);
+  assert.equal(s.comparable, 1);                         // el pedido a mano no se compara
+  assert.ok(s.saved > 0);                                // el más barato de sushi ahorra contra la mediana
+});
+
+test('pedido de un producto suelto del menú: "Ya lo pedí" no falla aunque no tenga categoría', async () => {
+  const e = await engine();
+  const it = e.menu(e.restaurants()[0].id).find(i => !Object.keys(i.yields).length) || e.menu(e.restaurants()[0].id)[0];
+  const plan = e.planForItem(it.id, 2);
+  e.addToCart(plan);
+  e.confirmOrder(plan.id);
+  assert.equal(e.getState().orders.at(-1).total, plan.total);
+});

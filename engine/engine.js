@@ -228,6 +228,35 @@ export function createEngine({ source, storage = memoryStorage(), now = () => Da
     };
   }
 
+  // Gastos por semana (lunes a domingo, hora local) y por comida, y cuánto se ahorró contra el precio por
+  // unidad típico de la zona (mediana del catálogo, sin envío). El ahorro solo se cuenta en pedidos de la
+  // app con categoría medible; los cargados a mano no tienen con qué compararse.
+  function spendingSummary({ weeks = 8 } = {}) {
+    const monday = t => { const d = new Date(t); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - ((d.getDay() + 6) % 7)); return d.getTime(); };
+    const thisWeek = monday(now());
+    const byWeek = Array.from({ length: weeks }, (_, i) => {
+      const start = new Date(thisWeek); start.setDate(start.getDate() - 7 * (weeks - 1 - i));
+      return { start: start.getTime(), total: 0, orders: 0 };
+    });
+    const byCategory = {};
+    let saved = 0, comparable = 0;
+    for (const o of state.orders) {
+      const w = byWeek.find(x => x.start === monday(o.at));
+      if (w) { w.total += o.total; w.orders++; }
+      const cat = o.category && CATEGORIES[o.category] ? o.category : 'otro';
+      (byCategory[cat] ||= { category: cat, total: 0, orders: 0 });
+      byCategory[cat].total += o.total; byCategory[cat].orders++;
+      const median = medianUnitPrice[o.category];
+      if (median && o.quantity > 0 && o.subtotal != null) { saved += Math.round(median * o.quantity - o.subtotal); comparable++; }
+    }
+    const total = state.orders.reduce((s, o) => s + o.total, 0);
+    return {
+      weeks: byWeek, categories: Object.values(byCategory).sort((a, b) => b.total - a.total),
+      total, orders: state.orders.length, average: state.orders.length ? Math.round(total / state.orders.length) : 0,
+      saved, comparable,
+    };
+  }
+
   function budgetSummary() {
     const month = new Date(now()).toISOString().slice(0, 7);
     const spent = state.orders.filter(o => new Date(o.at).toISOString().slice(0, 7) === month)
@@ -299,6 +328,7 @@ export function createEngine({ source, storage = memoryStorage(), now = () => Da
     recommend,
     rankings,
     budgetSummary,
+    spendingSummary,
     tasteProfile: () => describeTaste(taste()),
 
     setAppetite(category, { normal, max }) {
@@ -331,8 +361,9 @@ export function createEngine({ source, storage = memoryStorage(), now = () => Da
       state.cart = state.cart.filter(p => p.id !== planId);
       state.orders.push({
         id: `o${now()}`, planId, restaurantId: plan.restaurant.id, restaurantName: plan.restaurant.name,
-        title: `${plan.quantity} ${plan.unit} de ${CATEGORIES[plan.category].label} · ${plan.restaurant.name}`,
+        title: `${plan.quantity} ${plan.unit} de ${CATEGORIES[plan.category]?.label || plan.lines[0]?.name || 'comida'} · ${plan.restaurant.name}`,
         total: plan.total, at: now(), rating: null, source: 'app',
+        category: plan.category, quantity: plan.quantity, subtotal: plan.subtotal ?? null,
         lines: plan.lines.map(l => ({ itemId: l.itemId, name: l.name, qty: l.qty, price: l.price })),
       });
       emit('orders');
