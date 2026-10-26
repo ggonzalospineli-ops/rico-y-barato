@@ -694,6 +694,8 @@ function viewSettings() {
       <div class="list" style="margin-top:12px">${hidden.length ? hidden.map(it => `
         <div class="row">${thumb(catOfItem(it), it.imageUrl, 'sm')}<div class="row-main"><h4>${esc(it.name)}</h4><p>${esc(it.restaurant.name)}</p></div>
         <button class="btn ghost sm" data-unhide="${esc(it.id)}">Restaurar</button></div>`).join('') : '<p class="note">No ocultaste nada.</p>'}</div>
+      ${(st.blockedRestaurants || []).length ? `<h3 style="margin-top:16px">🚫 Locales que no querés ver</h3><div class="list" style="margin-top:8px">${st.blockedRestaurants.map(id => engine.restaurants().find(r => r.id === id)).filter(Boolean).map(r => `
+        <div class="row"><div class="row-main"><h4>${esc(r.name)}</h4></div><button class="btn ghost sm" data-unblock-rest="${esc(r.id)}">Restaurar</button></div>`).join('')}</div>` : ''}
     </div>
 
     <div class="setting">
@@ -802,6 +804,7 @@ function openMenu(restaurantId) {
           </div>`).join('')}</div>`).join('')}
     </div>
     <div class="sheet-bar">
+      <button class="btn ghost" data-block-rest="${esc(rest.id)}" title="No mostrar este local en las recomendaciones">🚫</button>
       <button class="btn ghost" data-group-start="${esc(rest.id)}">👥 Pedido grupal</button>
       ${rest.url ? `<a class="btn red" href="${esc(rest.url)}" target="_blank" rel="noopener">Abrir en Rappi ${icon('out')}</a>` : ''}
     </div>`);
@@ -873,7 +876,7 @@ engine.on(({ type }) => {
 });
 
 document.addEventListener('click', e => {
-  const t = e.target.closest('[data-palette],[data-people],[data-results],[data-decide],[data-swipe],[data-cmd],[data-spin],[data-tab],[data-hunger],[data-cat],[data-money],[data-add],[data-fav],[data-fav-plan],[data-plan],[data-rest],[data-close],[data-hide],[data-unhide],[data-confirm],[data-remove],[data-toptab],[data-step],[data-enable],[data-exclude],[data-suggest],[data-assist-toggle],[data-assist-enable],[data-item],[data-iqty],[data-when],[data-eta],[data-km],[data-fitness],[data-kcal],[data-goal],[data-group-start],[data-gq],[data-group-share],[data-group-cart],[data-group-back],#sheet-wrap');
+  const t = e.target.closest('[data-palette],[data-people],[data-results],[data-decide],[data-swipe],[data-cmd],[data-spin],[data-tab],[data-hunger],[data-cat],[data-money],[data-add],[data-fav],[data-fav-plan],[data-plan],[data-rest],[data-close],[data-hide],[data-unhide],[data-confirm],[data-remove],[data-toptab],[data-step],[data-enable],[data-exclude],[data-suggest],[data-assist-toggle],[data-assist-enable],[data-item],[data-iqty],[data-when],[data-eta],[data-km],[data-fitness],[data-kcal],[data-goal],[data-group-start],[data-gq],[data-group-share],[data-group-cart],[data-group-back],[data-block-rest],[data-unblock-rest],#sheet-wrap');
   if (!t) return;
   const d = t.dataset;
 
@@ -890,6 +893,13 @@ document.addEventListener('click', e => {
   if (d.hunger) { ui.hunger = d.hunger; saveUi(); render(); return; }
   if (d.cat) { ui.category = d.cat; saveUi(); render(); return; }
   if ('money' in d) { ui.money = d.money ? +d.money : null; saveUi(); render(); return; }
+  if (d.blockRest) {
+    engine.blockRestaurant(d.blockRest);
+    closeSheet(); reopen = null;
+    toast('🚫 No te lo muestro más. Lo podés restaurar en Ajustes.');
+    return;
+  }
+  if (d.unblockRest) { engine.unblockRestaurant(d.unblockRest); toast('Restaurado'); return; }
   if (d.groupStart) { startGroup(d.groupStart); return; }
   if (d.gq) { changeGroupQty(d.gq, +d.delta); return; }
   if ('groupShare' in d) { shareGroup(); return; }

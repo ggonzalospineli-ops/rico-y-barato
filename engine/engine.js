@@ -36,6 +36,7 @@ function defaultState() {
       excludedTags: [],            // ej: ['cerdo', 'tacc', 'lacteos']
     },
     hiddenItems: [],               // productos que el usuario marcó como mal medidos o que no quiere ver
+    blockedRestaurants: [],        // locales que el usuario no quiere ver (por la razón que sea)
     watches: {},                   // avisos de precio: itemId → { target, since, priceAtStart }
     favorites: [],                 // ids de productos
     disliked: [],                  // productos calificados 👎: bajan en "rico" y nunca salen como favoritos
@@ -90,7 +91,7 @@ export function createEngine({ source, storage = memoryStorage(), now = () => Da
   }
 
   // extra: exclusiones solo para este pedido ("uno no come carne"), sin tocar el perfil.
-  const allowed = (it, extra = []) => !state.hiddenItems.includes(it.id)
+  const allowed = (it, extra = []) => !state.hiddenItems.includes(it.id) && !(state.blockedRestaurants || []).includes(it.restaurantId)
     && !it.tags.some(t => state.profile.excludedTags.includes(t) || extra.includes(t));
   const taste = () => buildTaste(items.filter(i => state.favorites.includes(i.id)), restaurantsById, medianUnitPrice);
 
@@ -248,8 +249,8 @@ export function createEngine({ source, storage = memoryStorage(), now = () => Da
     const q = it => quality(restaurantsById[it.restaurantId]);
     return {
       bestSellers: visible.sort((a, b) => a.salesRank - b.salesRank || q(b) - q(a)).slice(0, limit).map(publicItem),
-      topRated: [...restaurants].sort((a, b) => quality(b) - quality(a)).slice(0, limit).map(publicRestaurant),
-      hiddenGems: restaurants.filter(isHiddenGem).sort((a, b) => quality(b) - quality(a)).map(publicRestaurant),
+      topRated: restaurants.filter(r => !(state.blockedRestaurants || []).includes(r.id)).sort((a, b) => quality(b) - quality(a)).slice(0, limit).map(publicRestaurant),
+      hiddenGems: restaurants.filter(r => isHiddenGem(r) && !(state.blockedRestaurants || []).includes(r.id)).sort((a, b) => quality(b) - quality(a)).map(publicRestaurant),
     };
   }
 
@@ -380,6 +381,8 @@ export function createEngine({ source, storage = memoryStorage(), now = () => Da
       emit('favorites');
     },
     // "Esto está mal": el importador deduce cantidades del texto y a veces se equivoca.
+    blockRestaurant(id) { if (!(state.blockedRestaurants ||= []).includes(id)) state.blockedRestaurants.push(id); emit('hidden'); },
+    unblockRestaurant(id) { state.blockedRestaurants = (state.blockedRestaurants || []).filter(x => x !== id); emit('hidden'); },
     hideItem(itemId) { if (!state.hiddenItems.includes(itemId)) state.hiddenItems.push(itemId); emit('hidden'); },
     unhideItem(itemId) { state.hiddenItems = state.hiddenItems.filter(id => id !== itemId); emit('hidden'); },
     setMonthlyBudget(amount) { state.budget.monthly = Math.max(0, Math.round(amount || 0)); emit('budget'); },

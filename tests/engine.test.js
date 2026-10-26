@@ -199,3 +199,13 @@ test('modo fitness: los planes traen calorías, el máximo por persona filtra y 
   assert.ok(light.options.length > 0 && light.options.every(p => p.nutrition.kcalPerPerson <= 700));
   assert.ok(e.menu(e.restaurants()[0].id)[0].nutrition.kcal > 0);
 });
+
+test('locales bloqueados: no aparecen en recomendaciones ni rankings, y se pueden restaurar', async () => {
+  const e = await engine();
+  const first = e.recommend({ limit: 50 }).options[0].restaurant.id;
+  e.blockRestaurant(first);
+  assert.ok(e.recommend({ limit: 200 }).options.every(p => p.restaurant.id !== first));
+  assert.ok(e.rankings({ limit: 50 }).topRated.every(r => r.id !== first));
+  e.unblockRestaurant(first);
+  assert.ok(e.recommend({ limit: 200 }).options.some(p => p.restaurant.id === first));
+});
