@@ -149,12 +149,14 @@ export function createEngine({ source, storage = memoryStorage(), now = () => Da
     const affordable = plans.filter(p => !p.overBudgetBy);
     markSweetSpots(affordable);
     const byScore = (a, b) => b.scores.total - a.scores.total;
+    const ranked = maxPerRestaurant(affordable.sort(byScore), 2);
     return {
       target: Object.fromEntries(cats.map(c => [c, targetFor(c, hunger) * n])),
       people: n,
       closed: openOnly ? closed.size : 0,   // locales que se saltearon por estar cerrados
       available: Number.isFinite(available) ? available : null,
-      options: maxPerRestaurant(affordable.sort(byScore), 2).slice(0, limit),
+      options: ranked.slice(0, limit),
+      total: ranked.length,                 // cuántas hay en total (options trae solo las primeras `limit`)
       overBudget: plans.filter(p => p.overBudgetBy).sort((a, b) => a.overBudgetBy - b.overBudgetBy).slice(0, 5),
       ...(map ? { all: affordable } : {}),
     };

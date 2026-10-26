@@ -597,3 +597,5 @@ input[type=range].balance::-moz-range-thumb { width: 22px; height: 22px; border-
 
 /* Mensajes vacíos a todo el ancho de la grilla de tarjetas */
 .cards > .empty-state { grid-column: 1 / -1; }
+
+.cards > .more-results { grid-column: 1 / -1; }

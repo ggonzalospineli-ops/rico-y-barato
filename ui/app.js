@@ -252,6 +252,19 @@ const unitLabel = (n, unit) => (n === 1 ? unit.replace(/es$|s$/, '') : unit);
 
 // ---------- Recomendaciones (cacheadas por render) ----------
 let lastResult = null;
+// Se muestran de a 20; "Ver más" suma otras 20. Si cambia cualquier filtro, vuelve a 20.
+const PAGE = 20;
+let shown = { key: '', n: PAGE };
+function shownLimit() {
+  const key = JSON.stringify([ui.hunger, ui.money, ui.category, ui.ricoWeight, ui.people, ui.tempExclude, ui.showClosed]);
+  if (key !== shown.key) shown = { key, n: PAGE };
+  return shown.n;
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('[data-more]')) return;
+  shown.n += PAGE;
+  renderResults();
+});
 function currentResult() {
   lastResult = engine.recommend({
     hunger: ui.hunger,
@@ -261,7 +274,7 @@ function currentResult() {
     people: ui.people,
     exclude: ui.tempExclude || [],
     openOnly: !ui.showClosed,
-    limit: 20,
+    limit: shownLimit(),
     map: true,
   });
   return lastResult;
@@ -427,10 +440,13 @@ function renderResults() {
   const r = currentResult();
   const box = $('#results');
   if (!box) return;
-  $('#result-count').textContent = r.options.length ? `${r.options.length} opciones${r.people > 1 ? ` · para ${r.people}` : ''}` : '';
+  $('#result-count').textContent = r.options.length
+    ? `${r.total > r.options.length ? `${r.options.length} de ${r.total}` : r.total} opciones${r.people > 1 ? ` · para ${r.people}` : ''}` : '';
   $('#map-wrap').innerHTML = ui.results === 'map' && r.all.length ? mapHtml(r) : '';
   box.classList.toggle('below-map', ui.results === 'map');
-  box.innerHTML = r.options.length ? r.options.map(planCard).join('') : `
+  const more = r.total - r.options.length;
+  box.innerHTML = r.options.length ? r.options.map(planCard).join('')
+    + (more > 0 ? `<button class="btn ghost block more-results" data-more>Ver ${Math.min(more, PAGE)} más (quedan ${more})</button>` : '') : `
     <div class="empty-state"><div class="e">🥲</div><h3>Con esa plata no llego</h3>
     <p>Probá con menos hambre, otra comida o subí el monto.${r.overBudget.length ? ' Abajo te muestro lo que se pasa por poco.' : ''}</p></div>`;
   renderFavRail(r);
