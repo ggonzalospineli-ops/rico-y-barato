@@ -8,6 +8,7 @@ import { decideDeck } from '../engine/shuffle.js';
 import { dailyKcal } from '../engine/nutrition.js';
 import { emptyGroup, encodeGroup, decodeGroup, setPersonLines, groupTotals, mergedLines, cleanName } from '../engine/group.js';
 import { mountAssistant } from './assistant.js';
+import { restoreBackup, backup, storageHealth } from './persist.js';
 import { hasKey, setKey, hasAI, aiLabel, activeProvider, detectLocal, warmLocal, localStatus, getProvider, setProvider, testAI, interpretWithAI, readTicket } from './ai.js';
 
 // ---------- Datos y motor ----------
@@ -15,9 +16,11 @@ const real = await fetch('../data/rappi-catalog.json').then(r => (r.ok ? r.json(
 const source = real ? jsonSource(async () => real) : demoSource();
 const address = real?.meta?.address?.split(',')[0] || 'Tu dirección';
 
+// Si el navegador borró los ajustes pero quedó la copia de respaldo (IndexedDB), se restauran antes de arrancar.
+const restoredKeys = await restoreBackup();
 const store = {
   get: k => { try { return JSON.parse(localStorage.getItem('ryb:' + k)) ?? undefined; } catch { return undefined; } },
-  set: (k, v) => { try { localStorage.setItem('ryb:' + k, JSON.stringify(v)); } catch {} },
+  set: (k, v) => { const raw = JSON.stringify(v); try { localStorage.setItem('ryb:' + k, raw); } catch {} backup(k, raw); },
 };
 const engine = createEngine({ source, storage: store });
 await engine.load();
@@ -2178,7 +2181,7 @@ document.addEventListener('change', e => {
 // =====================================================================
 let groupState = null; // { group, me, filter }
 function myName() { try { return localStorage.getItem('ryb:me') || ''; } catch { return ''; } }
-function saveMyName(n) { try { localStorage.setItem('ryb:me', n); } catch {} }
+function saveMyName(n) { try { localStorage.setItem('ryb:me', n); } catch {} backup('me', n); }
 function itemById(id) { return engine.menu(id.slice(0, id.lastIndexOf(':'))).find(x => x.id === id); }
 function groupLink() { return `${location.origin}${location.pathname}#grupo=${encodeGroup(groupState.group)}`; }
 
@@ -2308,3 +2311,13 @@ function openGroupFromHash() {
 }
 window.addEventListener('hashchange', openGroupFromHash);
 openGroupFromHash();
+
+// Si el navegador no está guardando (incógnito, datos que se borran al cerrar), se avisa una vez por sesión.
+storageHealth().then(h => {
+  if (restoredKeys.length) toast('Recuperé tus ajustes de la copia de respaldo');
+  if (h === 'ok') return;
+  try { if (sessionStorage.getItem('ryb:storage-warned')) return; sessionStorage.setItem('ryb:storage-warned', '1'); } catch {}
+  toast(h === 'bloqueado'
+    ? '⚠️ Este navegador no deja guardar: tus ajustes se pierden al cerrar'
+    : '⚠️ Parece modo incógnito: tus ajustes se borran al cerrar el navegador');
+});
