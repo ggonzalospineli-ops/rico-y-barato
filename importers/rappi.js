@@ -247,13 +247,15 @@ const sized = url => url && `${url.split('?')[0]}?d=600x600&e=webp&q=80`;
 // priceSnapshots: [{ date: 'AAAA-MM-DD', prices: { url: { productId: precio } } }] en cualquier orden.
 // otherApps: { itemId: [{ app, name, price, same, note }] } — precios del mismo producto en otras apps.
 export function convert(scrape, { google = {}, preferences = null, minPrice = 300, pages = {}, signals = null,
-  home = null, priceSnapshots = [], otherApps = {} } = {}) {
+  home = null, priceSnapshots = [], otherApps = {}, extraPhotos = {} } = {}) {
   const snapshots = [...priceSnapshots].sort((a, b) => a.date.localeCompare(b.date));
   const scrapeDay = scrape.scraped_at ? scrape.scraped_at.slice(0, 10) : null;
   const brandCount = {};
   for (const r of scrape.restaurants) { const b = brandOf(r.restaurant); brandCount[b] = (brandCount[b] || 0) + 1; }
   const genericImages = findGenericImages(scrape, pages);
   const brandPhotos = photosByBrand(scrape, pages, genericImages);
+  const officialPhotos = new Map(Object.entries(extraPhotos)
+    .map(([brand, list]) => [brand, new Map(list.map(x => [photoKey(x.name), x.url]))]));
 
   const restaurants = [], items = [], seenItemIds = new Set();
   for (const r of scrape.restaurants) {
@@ -284,14 +286,19 @@ export function convert(scrape, { google = {}, preferences = null, minPrice = 30
       if (seenItemIds.has(itemId)) continue; // Rappi repite productos entre secciones
       seenItemIds.add(itemId);
       // Solo la foto que Rappi asigna a ESTE product_id, y nunca una genérica del local.
-      const file = page.products?.[p.product_id];
-      const scraped = p.image_url && !p.image_url.startsWith('data:') ? p.image_url : null;
+      // Una foto genérica cuenta como si no hubiera: así se prueba el cruce por nombre.
+      const ownFile = page.products?.[p.product_id];
+      const file = ownFile && !genericImages.has(ownFile) ? ownFile : null;
+      const rawScraped = p.image_url && !p.image_url.startsWith('data:') ? p.image_url : null;
+      const scraped = rawScraped && !genericImages.has(rawScraped.split('/').pop().split('?')[0]) ? rawScraped : null;
       // Si el id no está en la página (las cadenas grandes usan otro id), se cruza por nombre: primero en
       // la misma página y después en otra sucursal de la misma marca.
       const byName = !file && !scraped ? bestPhoto(pageIndex, p.name) || bestPhoto(brandPhotos.get(brand), p.name) : null;
-      const imageUrl = file && !genericImages.has(file) ? sized(PRODUCT_IMG + file)
-        : !file && scraped && !genericImages.has(scraped.split('/').pop().split('?')[0]) ? sized(scraped)
-        : byName ? sized(PRODUCT_IMG + byName) : null;
+      // Último recurso: foto oficial de la marca (data/extra-photos.json), para cadenas que Rappi deja sin foto.
+      const official = !file && !scraped && !byName ? bestPhoto(officialPhotos.get(brand), p.name) : null;
+      const imageUrl = file ? sized(PRODUCT_IMG + file)
+        : !ownFile && scraped ? sized(scraped)
+        : byName ? sized(PRODUCT_IMG + byName) : official;
       // El precio de la página del local es más nuevo que el del scrapeo: si está, manda.
       const fresh = page.prices?.[p.product_id];
       const price = Math.round(fresh ? fresh[0] : p.price_ars);
@@ -363,6 +370,7 @@ export function photoKey(name) {
 // Palabras que no cambian la foto: tamaño del combo y "sin TACC" (misma comida, otra cocina).
 // "simple" y "doble" sí cuentan: un Cuarto doble no es la foto de uno simple.
 const SIZE_WORDS = new Set(['mediano', 'mediana', 'grande', 'chico', 'chica', 'pequeno', 'pequena', 'combo', 'mccombo', 'promo', 'sin', 'tacc', 'gluten']);
+const STACK = ['doble', 'triple', 'cuadruple'];
 export function bestPhoto(byKey, name) {
   if (!byKey?.size) return null;
   const key = photoKey(name);
@@ -375,12 +383,21 @@ export function bestPhoto(byKey, name) {
   for (const [k, file] of byKey) {
     const theirs = words(k);
     if (nums(theirs) !== nums(mine)) continue;
+    if (STACK.some(w => mine.includes(w) !== theirs.includes(w))) continue; // un doble no es la foto de un simple
     const common = mine.filter(w => theirs.includes(w)).length;
     const score = common / new Set([...mine, ...theirs]).size;
     if (score > bestScore) { bestScore = score; best = file; }
   }
   // Con una sola palabra ("mcnifica") tiene que ser exacta; con más, parecida.
   return bestScore >= (mine.length === 1 ? 1 : 0.75) ? best : null;
+}
+
+// El producto sin tamaño ni cantidad: "Nuevo Alaska 15 Full Salmón" y "Nuevo Alaska 40" son la misma
+// familia y pueden compartir foto; un logo de plataforma cae en familias distintas.
+const FAMILY_FILLER = new Set(['pz', 'pzs', 'piezas', 'pieza', 'unidades', 'u', 'x', 'extra', 'nuevo', 'nueva', 'de', 'del', 'con', 'y', 'la', 'el']);
+export function familyKey(name) {
+  const key = photoKey(name);
+  return key.split(' ').filter(w => w && !/\d/.test(w) && !SIZE_WORDS.has(w) && !FAMILY_FILLER.has(w)).join(' ') || key;
 }
 
 function photoIndex(page, generic, into = new Map()) {
@@ -414,11 +431,11 @@ function findGenericImages(scrape, pages) {
     for (const [pid, file] of Object.entries(page.products)) {
       const key = `${r.url}|${file}`;
       if (!names.has(key)) names.set(key, new Set());
-      names.get(key).add(byId[pid] ?? pid);
+      names.get(key).add(familyKey(byId[pid] ?? pid));
       // Entre locales se compara por nombre: marcas hermanas (Monti / Monti Milas, SushiPop / Izakaya by
       // Sushi Pop) comparten fotos reales del mismo producto; un logo de plataforma cae en productos distintos.
       if (!global.has(file)) global.set(file, new Set());
-      global.get(file).add(photoKey(byId[pid] ?? pid));
+      global.get(file).add(familyKey(byId[pid] ?? pid));
     }
   }
   const generic = new Set();

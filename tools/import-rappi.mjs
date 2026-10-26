@@ -33,6 +33,8 @@ const catalog = convert(JSON.parse(readFileSync(input, 'utf8')), {
   pages: pagesPath ? JSON.parse(readFileSync(pagesPath, 'utf8')) : {},
   signals: signalsPath ? JSON.parse(readFileSync(signalsPath, 'utf8')) : null,
   home, priceSnapshots, otherApps,
+  // Fotos oficiales de las marcas para lo que Rappi deja sin foto: { marca: [{ name, url, source }] }.
+  extraPhotos: existsSync(dataFile('extra-photos.json')) ? readJson(dataFile('extra-photos.json')).brands : {},
 });
 writeFileSync(out, JSON.stringify(catalog));
 

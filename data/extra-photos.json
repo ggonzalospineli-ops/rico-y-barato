@@ -1,0 +1,8 @@
+{
+  "note": "Fotos oficiales de las marcas para productos que Rappi deja sin foto. Las usa tools/import-rappi.mjs como último recurso, cruzando por nombre con las mismas reglas que las fotos de Rappi.",
+  "brands": {
+    "mcdonalds": [
+      { "name": "Bacon Cheddar McMelt", "url": "https://api-middleware-mcd.mcdonaldscupones.com/media/image/product$kPXPtaX9/600/600/original?country=ar", "source": "https://www.mcdonalds.com.ar/menu/hamburguesas" }
+    ]
+  }
+}

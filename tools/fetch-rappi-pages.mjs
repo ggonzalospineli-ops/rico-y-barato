@@ -11,6 +11,8 @@ const args = process.argv.slice(2);
 const flag = (name, def) => { const i = args.indexOf(name); return i >= 0 ? args.splice(i, 2)[1] : def; };
 const out = flag('--out', new URL('../data/rappi-pages.json', import.meta.url));
 const delay = +flag('--delay', 1000);
+// --refresh <texto>: vuelve a pedir los locales cuya URL lo contenga aunque estén en caché (p. ej. "mcdonalds").
+const refresh = flag('--refresh', null);
 const input = args[0];
 if (!input) { console.error('Falta el JSON de productos de Rappi.'); process.exit(1); }
 
@@ -57,7 +59,7 @@ let fetched = 0, cached = 0, failed = [];
 for (const [i, url] of urls.entries()) {
   const id = url.split('/').pop();
   const file = new URL(`${encodeURIComponent(id)}.json`, cacheDir);
-  if (existsSync(file) && fresh(file)) { cached++; continue; }
+  if (existsSync(file) && fresh(file) && !(refresh && url.includes(refresh))) { cached++; continue; }
   try {
     let res = await fetch(url, { headers: HEADERS });
     if (res.status === 429 || res.status >= 500) { await sleep(10000); res = await fetch(url, { headers: HEADERS }); }
@@ -89,12 +91,14 @@ writeFileSync(out, JSON.stringify(pages));
 const day = new Date().toLocaleDateString('sv'); // AAAA-MM-DD en hora local (Argentina), no UTC
 const pricesDir = new URL('../data/prices/', import.meta.url);
 mkdirSync(pricesDir, { recursive: true });
-const snapshot = {};
+// Se mezcla con lo que ya haya del día: correrlo para algunos locales no borra los precios de los demás.
+const dayFile = new URL(`${day}.json`, pricesDir);
+const snapshot = existsSync(dayFile) ? JSON.parse(readFileSync(dayFile, 'utf8')) : {};
 for (const [url, p] of Object.entries(pages)) {
   if (!p.prices) continue;
   snapshot[url] = Object.fromEntries(Object.entries(p.prices).map(([id, [price]]) => [id, price]));
 }
-writeFileSync(new URL(`${day}.json`, pricesDir), JSON.stringify(snapshot));
+writeFileSync(dayFile, JSON.stringify(snapshot));
 console.log(`precios del ${day}: ${Object.values(snapshot).reduce((n, s) => n + Object.keys(s).length, 0)} productos`);
 console.log(`listo: ${Object.keys(pages).length}/${urls.length} locales · fallidos ${failed.length}`);
 if (failed.length) console.log(failed.slice(0, 20).join('\n'));

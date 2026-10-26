@@ -209,3 +209,17 @@ test('fotos por nombre: sin TACC y tamaño del combo no cambian la foto; simple 
   assert.equal(bestPhoto(page, 'McCombo Mediano Doble Cuarto de Libra Sin TACC'), 'd.png');
   assert.equal(bestPhoto(page, 'McAlvarez Simple'), null);
 });
+
+import { familyKey } from '../importers/rappi.js';
+
+test('familia de producto: los tamaños de un mismo combo son la misma familia', () => {
+  assert.equal(familyKey('Nuevo Alaska 15 Full Salmón'), familyKey('Nuevo Alaska 40 Full Salmón'));
+  assert.notEqual(familyKey('Pizza Grande Provolone'), familyKey('Pizza Grande Cuatro Quesos'));
+  assert.equal(familyKey('Combo promo 15 piezas'), 'combo promo 15 piezas');
+});
+
+test('fotos por nombre: un doble nunca toma la foto del simple', () => {
+  const page = new Map([['bacon cheddar mcmelt', 's.png']]);
+  assert.equal(bestPhoto(page, 'Bacon Cheddar McMelt Grande'), 's.png');
+  assert.equal(bestPhoto(page, 'Doble Bacon Cheddar McMelt'), null);
+});
