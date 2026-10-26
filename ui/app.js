@@ -280,7 +280,8 @@ function currentResult() {
   return lastResult;
 }
 const findPlan = id => lastResult?.options.find(p => p.id === id) || lastResult?.all?.find(p => p.id === id) || favPlans.find(p => p.id === id) || lastResult?.overBudget.find(p => p.id === id)
-  || engine.getState().cart.find(p => p.id === id);
+  || engine.getState().cart.find(p => p.id === id) || itemPlans.get(id);
+const itemPlans = new Map(); // planes de un producto elegido desde el menú completo
 
 // ---------- Vistas ----------
 function render() {
@@ -680,7 +681,7 @@ function openPlan(id) {
       <button class="icon-btn" data-rest="${esc(p.restaurant.id)}" aria-label="Ver menú">${icon('search')}</button>
     </div>
     <div class="sheet-body">
-      <div class="kicker">${CATS[p.category].label}${p.restaurant.chain ? ' · Cadena' : ' · Local'}</div>
+      <div class="kicker">${CATS[p.category]?.label || 'Producto'}${p.restaurant.chain ? ' · Cadena' : ' · Local'}</div>
       <h2>${esc(p.restaurant.name)}</h2>
       <div class="badges" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px">${p.badges.map(b => `<span class="badge ${BADGES[b][1]}">${BADGES[b][0]}</span>`).join('')}</div>
       <div class="stats">
@@ -742,13 +743,62 @@ function openMenu(restaurantId) {
       ${Object.entries(bySection).map(([sec, list]) => `
         <div class="menu-section">${esc(sec)}</div>
         <div class="list" style="margin-top:10px">${list.map(it => `
-          <div class="line-item">
+          <div class="line-item click" data-item="${esc(it.id)}" role="button" tabindex="0" aria-label="Ver ${esc(it.name)}">
             ${thumb(catOfItem(it), it.imageUrl, 'sm')}
             <div class="row-main"><h4>${esc(it.name)}</h4><p>${itemPrice(it)}${it.discount ? ` · ${esc(it.discount)}` : ''}${Object.keys(it.yields).length ? ` · rinde ${Object.entries(it.yields).map(([c, n]) => `${n} ${unitLabel(n, CATS[c].unit)}`).join(' + ')}` : ''}</p>${sourceHtml(it)}${signalsHtml(it.signals)}${priceChangeHtml(it)}${otherAppsHtml(it.otherApps, it.price)}</div>
             <button class="heart ${it.favorite ? 'on' : ''}" data-fav="${esc(it.id)}" aria-label="Favorito">${icon('heart', it.favorite ? 'fill' : '')}</button>
+            <span class="chev" aria-hidden="true">›</span>
           </div>`).join('')}</div>`).join('')}
     </div>
     ${rest.url ? `<div class="sheet-bar"><a class="btn red" href="${esc(rest.url)}" target="_blank" rel="noopener">Abrir en Rappi ${icon('out')}</a></div>` : ''}`);
+}
+
+// Detalle de un producto del menú completo: foto, descripción, cuánto rinde, historial de precio,
+// cantidad y agregar al pedido. "Atrás" vuelve al menú del local.
+function openItem(itemId, qty = 1) {
+  const restId = itemId.slice(0, itemId.lastIndexOf(':'));
+  const rest = engine.restaurants().find(r => r.id === restId);
+  const it = engine.menu(restId).find(x => x.id === itemId);
+  if (!rest || !it) return;
+  const plan = engine.planForItem(itemId, qty);
+  if (plan) itemPlans.set(plan.id, plan);
+  const cat = catOfItem(it);
+  const yields = Object.entries(it.yields || {});
+  const fav = engine.getState().favorites.includes(it.id);
+  openSheet(`
+    <div class="cover sheet-cover" ${coverStyle(cat)}>${sheetCoverHtml(cat, it.imageUrl)}</div>
+    <div class="sheet-top">
+      <button class="icon-btn" data-rest="${esc(restId)}" aria-label="Volver al menú">${icon('back')}</button>
+      <span class="pill">${look(cat).e} ${esc(it.section || 'Menú')}</span>
+      ${rest.url ? `<a class="icon-btn" href="${esc(rest.url)}" target="_blank" rel="noopener" aria-label="Abrir en Rappi">${icon('out')}</a>` : '<span></span>'}
+    </div>
+    <div class="sheet-body">
+      <div class="kicker">${esc(rest.name)}</div>
+      <h2>${esc(it.name)}</h2>
+      ${it.description ? `<p class="blurb item-desc">${esc(it.description)}</p>` : ''}
+      <div class="stats">
+        <div><small>Precio</small><b>${ars(it.price)}</b>${it.originalPrice ? `<s>${ars(it.originalPrice)}</s>` : ''}</div>
+        <div><small>Rinde</small><b>${yields.length ? yields.map(([c, n]) => `${n} ${unitLabel(n, CATS[c].unit)}`).join(' + ') : '—'}</b></div>
+        <div><small>${yields.length ? `Por ${unitLabel(1, CATS[yields[0][0]].unit)}` : 'Rating'}</small><b>${yields.length ? ars(Math.round(it.price / yields[0][1])) : `${icon('star', 'fill')} ${stars(rest)}`}</b></div>
+      </div>
+      ${placeHtml(rest)}
+      ${sourceHtml(it)}${signalsHtml(it.signals)}${priceChangeHtml(it)}${otherAppsHtml(it.otherApps, it.price)}
+      <div class="item-qty">
+        <span>Cantidad</span>
+        <div class="stepper"><div><button data-iqty="-1" aria-label="Menos">−</button><span>${qty}</span><button data-iqty="1" aria-label="Más">+</button></div></div>
+      </div>
+      <div class="item-actions">
+        <button class="btn ghost" data-fav="${esc(it.id)}">${icon('heart', fav ? 'fill' : '')} ${fav ? 'En favoritos' : 'Me gusta'}</button>
+        ${yields.length ? `<button class="btn ghost" data-hide="${esc(it.id)}" title="La cantidad o la comida está mal detectada">Está mal medido</button>` : ''}
+      </div>
+    </div>
+    <div class="sheet-bar">
+      <div class="tot"><small>${qty > 1 ? `${qty} × ${ars(it.price)}` : 'Total'}${rest.deliveryFee == null ? ' + envío' : ' con envío'}</small><b>${ars(plan ? plan.total : it.price * qty)}</b></div>
+      ${plan && inCart(plan.id)
+        ? `<a class="btn red" href="${esc(plan.orderUrl)}" target="_blank" rel="noopener">Pedir en Rappi ${icon('out')}</a>`
+        : plan ? `<button class="btn primary" data-add="${esc(plan.id)}">${icon('bag')} Agregar al pedido</button>` : ''}
+    </div>`);
+  openItem.current = { itemId, qty };
 }
 
 // ---------- Eventos ----------
@@ -768,7 +818,7 @@ engine.on(({ type }) => {
 });
 
 document.addEventListener('click', e => {
-  const t = e.target.closest('[data-palette],[data-people],[data-results],[data-decide],[data-swipe],[data-cmd],[data-spin],[data-tab],[data-hunger],[data-cat],[data-money],[data-add],[data-fav],[data-fav-plan],[data-plan],[data-rest],[data-close],[data-hide],[data-unhide],[data-confirm],[data-remove],[data-toptab],[data-step],[data-enable],[data-exclude],[data-suggest],[data-assist-toggle],[data-assist-enable],#sheet-wrap');
+  const t = e.target.closest('[data-palette],[data-people],[data-results],[data-decide],[data-swipe],[data-cmd],[data-spin],[data-tab],[data-hunger],[data-cat],[data-money],[data-add],[data-fav],[data-fav-plan],[data-plan],[data-rest],[data-close],[data-hide],[data-unhide],[data-confirm],[data-remove],[data-toptab],[data-step],[data-enable],[data-exclude],[data-suggest],[data-assist-toggle],[data-assist-enable],[data-item],[data-iqty],#sheet-wrap');
   if (!t) return;
   const d = t.dataset;
 
@@ -846,6 +896,20 @@ if ('assistToggle' in d) {
     const id = d.plan;
     reopen = () => openPlan(id);
     openPlan(id);
+    return;
+  }
+  if (d.item) {
+    const id = d.item;
+    reopen = () => openItem(id, openItem.current?.itemId === id ? openItem.current.qty : 1);
+    openItem(id);
+    return;
+  }
+  if (d.iqty) {
+    const cur = openItem.current;
+    if (!cur) return;
+    const qty = Math.max(1, Math.min(20, cur.qty + +d.iqty));
+    reopen = () => openItem(cur.itemId, qty);
+    openItem(cur.itemId, qty);
     return;
   }
   if (d.step) {
@@ -1855,3 +1919,9 @@ function askExample() {
   askExample.tab = ui.tab;
   return askExample.current;
 }
+
+// Las filas del menú son botones: Enter o espacio las abren.
+document.addEventListener('keydown', e => {
+  const row = e.target.closest?.('[data-item]');
+  if (row && e.target === row && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); row.click(); }
+});

@@ -373,3 +373,14 @@ code { font-size: 12px; background: var(--bg); padding: 1px 5px; border-radius: 
 .assistant-dock { position: absolute; right: 18px; bottom: calc(var(--tabbar-h) + 92px); }
 @media (min-width: 768px) and (max-width: 1023px) { .assistant-dock { right: 28px; bottom: calc(var(--tabbar-h) + 104px); } }
 @media (min-width: 1024px) { .assistant-dock { right: 28px; bottom: 104px; } }
+
+/* Menú completo: cada producto se puede abrir */
+.line-item.click { cursor: pointer; transition: transform var(--motion-fast) ease, box-shadow var(--motion-fast) ease; }
+.line-item.click:hover { transform: translateY(-1px); box-shadow: 0 10px 22px -14px rgba(29,26,23,.35); }
+.line-item.click:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
+.line-item .chev { color: var(--muted); font-size: 22px; font-weight: 700; line-height: 1; padding-left: 2px; }
+.item-desc { white-space: pre-line; }
+.stats s { display: block; font-size: 12px; color: var(--muted); font-weight: 600; }
+.item-qty { display: flex; align-items: center; justify-content: space-between; margin-top: 18px; padding: 12px 14px; border-radius: 16px; background: var(--card); box-shadow: var(--shadow-sm); font-weight: 700; }
+.item-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.item-actions .btn { flex: 1; min-width: 140px; }

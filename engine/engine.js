@@ -183,7 +183,7 @@ export function createEngine({ source, storage = memoryStorage(), now = () => Da
       restaurant: { ...publicRestaurant(r), open },
       category, variant, target,
       quantity: cover.quantity,
-      unit: CATEGORIES[category].unit,
+      unit: CATEGORIES[category]?.unit || 'unidades',
       lines: cover.lines.map(l => ({
         itemId: l.product.id, name: l.product.name, qty: l.qty, price: l.product.price,
         originalPrice: l.product.originalPrice || null, discount: l.product.discount || null,
@@ -270,6 +270,17 @@ export function createEngine({ source, storage = memoryStorage(), now = () => Da
     notOnRappi: () => structuredClone(meta.notOnRappi || []), // locales recomendados por otras fuentes que Rappi no tiene
     item: id => { const it = items.find(i => i.id === id); return it ? publicItem(it) : null; },
     menu: restaurantId => (byRestaurant[restaurantId] || []).map(publicItem),
+    // Plan de un solo producto elegido a mano desde el menú (para agregarlo al pedido). Si el producto no
+    // es de una categoría que el motor mide (una tortilla, una bebida), queda como "otro" en unidades.
+    planForItem(itemId, qty = 1) {
+      const it = items.find(i => i.id === itemId);
+      const r = it && restaurantsById[it.restaurantId];
+      if (!r) return null;
+      const n = Math.max(1, Math.round(qty));
+      const category = Object.keys(it.yields || {})[0] || 'otro';
+      const quantity = (it.yields?.[category] || 1) * n;
+      return makePlan(r, category, quantity, { lines: [{ product: it, qty: n }], subtotal: it.price * n, quantity }, `item-${it.id}`, taste());
+    },
     restaurants: () => restaurants.map(publicRestaurant),
     catalogSummary: () => ({
       rows: meta.catalogRows ?? items.length,
