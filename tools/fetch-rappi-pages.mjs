@@ -31,9 +31,10 @@ function extract(html) {
   const fallback = pageProps.fallback || {};
   const r = fallback[Object.keys(fallback).find(k => k.includes('restaurant/'))];
   if (!r) throw new Error('sin datos del local');
-  const products = {}, prices = {};
+  const products = {}, prices = {}, names = {};
   for (const c of r.corridors || []) for (const p of c.products || []) {
     if (p.image) products[p.id] = p.image;
+    if (p.name) names[p.id] = p.name; // en las cadenas grandes el id de la página no es el del menú: se cruza por nombre
     if (p.price != null) prices[p.id] = [p.price, p.realPrice ?? p.price];
   }
   return {
@@ -44,12 +45,12 @@ function extract(html) {
     deliveryPrice: r.deliveryPrice ?? null, eta: r.eta || null,
     logo: r.logo || null, background: r.backgroundImage || null,
     score: r.ratingData?.score ?? r.rating ?? null, reviews: r.ratingData?.total_reviews ?? null,
-    products, prices,                                // prices: id → [precio, precio sin descuento]
+    products, prices, names,                         // prices: id → [precio, precio sin descuento]
   };
 }
 
 // Subir VERSION cuando extract() guarde campos nuevos: las entradas viejas de la caché se vuelven a pedir.
-const VERSION = 2;
+const VERSION = 3;
 const fresh = file => { try { return JSON.parse(readFileSync(file, 'utf8')).v === VERSION; } catch { return false; } };
 
 let fetched = 0, cached = 0, failed = [];
@@ -61,7 +62,14 @@ for (const [i, url] of urls.entries()) {
     let res = await fetch(url, { headers: HEADERS });
     if (res.status === 429 || res.status >= 500) { await sleep(10000); res = await fetch(url, { headers: HEADERS }); }
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    writeFileSync(file, JSON.stringify({ url, ...extract(await res.text()) }));
+    const page = { url, ...extract(await res.text()) };
+    // Un local cerrado no muestra su menú: se conservan las fotos y nombres que ya conocíamos.
+    try {
+      const old = JSON.parse(readFileSync(file, 'utf8'));
+      page.products = { ...(old.products || {}), ...page.products };
+      page.names = { ...(old.names || {}), ...page.names };
+    } catch {}
+    writeFileSync(file, JSON.stringify(page));
     fetched++;
   } catch (e) {
     failed.push(`${url} (${e.message})`);

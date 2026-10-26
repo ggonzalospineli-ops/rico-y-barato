@@ -253,6 +253,7 @@ export function convert(scrape, { google = {}, preferences = null, minPrice = 30
   const brandCount = {};
   for (const r of scrape.restaurants) { const b = brandOf(r.restaurant); brandCount[b] = (brandCount[b] || 0) + 1; }
   const genericImages = findGenericImages(scrape, pages);
+  const brandPhotos = photosByBrand(scrape, pages, genericImages);
 
   const restaurants = [], items = [], seenItemIds = new Set();
   for (const r of scrape.restaurants) {
@@ -275,6 +276,7 @@ export function convert(scrape, { google = {}, preferences = null, minPrice = 30
     });
     if (!r.address && page.address) restaurants[restaurants.length - 1].address = page.address.trim();
 
+    const pageIndex = photoIndex(page, genericImages);
     let popular = 0;
     for (const p of r.products) {
       if (!(p.price_ars >= minPrice)) continue;
@@ -284,8 +286,12 @@ export function convert(scrape, { google = {}, preferences = null, minPrice = 30
       // Solo la foto que Rappi asigna a ESTE product_id, y nunca una genérica del local.
       const file = page.products?.[p.product_id];
       const scraped = p.image_url && !p.image_url.startsWith('data:') ? p.image_url : null;
+      // Si el id no está en la página (las cadenas grandes usan otro id), se cruza por nombre: primero en
+      // la misma página y después en otra sucursal de la misma marca.
+      const byName = !file && !scraped ? bestPhoto(pageIndex, p.name) || bestPhoto(brandPhotos.get(brand), p.name) : null;
       const imageUrl = file && !genericImages.has(file) ? sized(PRODUCT_IMG + file)
-        : !file && scraped && !genericImages.has(scraped.split('/').pop().split('?')[0]) ? sized(scraped) : null;
+        : !file && scraped && !genericImages.has(scraped.split('/').pop().split('?')[0]) ? sized(scraped)
+        : byName ? sized(PRODUCT_IMG + byName) : null;
       // El precio de la página del local es más nuevo que el del scrapeo: si está, manda.
       const fresh = page.prices?.[p.product_id];
       const price = Math.round(fresh ? fresh[0] : p.price_ars);
@@ -347,27 +353,77 @@ function applySignals(signals, restaurants, items) {
   return missing;
 }
 
+// Nombre de producto para cruzar fotos: "Cajita Feliz McNuggets x 6" = "cajita feliz mcnuggets x6".
+export function photoKey(name) {
+  return normalize(name).replace(/[^a-z0-9]+/g, ' ').replace(/\bx (\d)/g, 'x$1').trim();
+}
+
+// Foto para un nombre entre { nombre normalizado → archivo }: igual, o parecido con los mismos números
+// ("McNuggets X10 Mediano" ≈ "McNuggets x10", nunca ≈ "McNuggets x20"). null si nada se parece lo suficiente.
+// Palabras que no cambian la foto: tamaño del combo y "sin TACC" (misma comida, otra cocina).
+// "simple" y "doble" sí cuentan: un Cuarto doble no es la foto de uno simple.
+const SIZE_WORDS = new Set(['mediano', 'mediana', 'grande', 'chico', 'chica', 'pequeno', 'pequena', 'combo', 'mccombo', 'promo', 'sin', 'tacc', 'gluten']);
+export function bestPhoto(byKey, name) {
+  if (!byKey?.size) return null;
+  const key = photoKey(name);
+  if (byKey.has(key)) return byKey.get(key);
+  const words = k => k.split(' ').filter(w => w && !SIZE_WORDS.has(w));
+  const nums = ws => ws.filter(w => /\d/.test(w)).sort().join(',');
+  const mine = words(key);
+  if (!mine.length) return null;
+  let best = null, bestScore = 0;
+  for (const [k, file] of byKey) {
+    const theirs = words(k);
+    if (nums(theirs) !== nums(mine)) continue;
+    const common = mine.filter(w => theirs.includes(w)).length;
+    const score = common / new Set([...mine, ...theirs]).size;
+    if (score > bestScore) { bestScore = score; best = file; }
+  }
+  // Con una sola palabra ("mcnifica") tiene que ser exacta; con más, parecida.
+  return bestScore >= (mine.length === 1 ? 1 : 0.75) ? best : null;
+}
+
+function photoIndex(page, generic, into = new Map()) {
+  for (const [pid, n] of Object.entries(page?.names || {})) {
+    const file = page.products?.[pid];
+    if (file && !generic.has(file) && !into.has(photoKey(n))) into.set(photoKey(n), file);
+  }
+  return into;
+}
+
+// marca → { nombre → foto }, juntando todas las sucursales de la marca.
+function photosByBrand(scrape, pages, generic) {
+  const out = new Map();
+  for (const r of scrape.restaurants) {
+    const brand = brandOf(r.restaurant);
+    out.set(brand, photoIndex(pages[r.url], generic, out.get(brand)));
+  }
+  return out;
+}
+
 // Una foto que el local usa para 3+ productos distintos, o que comparten marcas distintas,
 // es un placeholder ("logo", "foto ilustrativa"): mostrarla sería mostrar la foto equivocada.
 function findGenericImages(scrape, pages) {
   const names = new Map();   // archivo → nombres de producto distintos (por local)
-  const brands = new Map();  // archivo → marcas que lo usan
+  const global = new Map();  // archivo → nombres de producto distintos (en todos los locales)
   for (const r of scrape.restaurants) {
     const page = pages[r.url];
     if (!page?.products) continue;
-    const brand = brandOf(r.restaurant);
     const byId = Object.fromEntries(r.products.map(p => [p.product_id, normalize(p.name)]));
+    for (const [pid, n] of Object.entries(page.names || {})) byId[pid] ??= normalize(n);
     for (const [pid, file] of Object.entries(page.products)) {
       const key = `${r.url}|${file}`;
       if (!names.has(key)) names.set(key, new Set());
       names.get(key).add(byId[pid] ?? pid);
-      if (!brands.has(file)) brands.set(file, new Set());
-      brands.get(file).add(brand);
+      // Entre locales se compara por nombre: marcas hermanas (Monti / Monti Milas, SushiPop / Izakaya by
+      // Sushi Pop) comparten fotos reales del mismo producto; un logo de plataforma cae en productos distintos.
+      if (!global.has(file)) global.set(file, new Set());
+      global.get(file).add(photoKey(byId[pid] ?? pid));
     }
   }
   const generic = new Set();
   for (const [key, set] of names) if (set.size >= 3) generic.add(key.split('|')[1]);
-  for (const [file, set] of brands) if (set.size >= 2) generic.add(file);
+  for (const [file, set] of global) if (set.size >= 3) generic.add(file);
   return generic;
 }
 

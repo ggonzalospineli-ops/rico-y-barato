@@ -189,3 +189,23 @@ test('categorías nuevas: la descripción no alcanza para "carnes" ni "ensaladas
   assert.deepEqual(parseYields({ name: 'Ojo de bife', category: 'Populares', description: '' }), { carnes: 1 });
   assert.deepEqual(parseYields({ name: 'Brochette de pollo', category: 'Parrilla', description: '' }), { carnes: 1 });
 });
+
+import { photoKey, bestPhoto } from '../importers/rappi.js';
+
+test('fotos por nombre: mismo producto con otro id, nunca otra cantidad', () => {
+  const page = new Map([['mcnuggets x10', 'a.png'], ['mcnuggets x20', 'b.png'], ['cajita feliz mcnuggets x6', 'c.png'], ['big mac', 'd.png']]);
+  assert.equal(photoKey('Cajita Feliz McNuggets x 6'), 'cajita feliz mcnuggets x6');
+  assert.equal(bestPhoto(page, 'Cajita Feliz McNuggets x 6'), 'c.png');
+  assert.equal(bestPhoto(page, 'McNuggets X10 Mediano'), 'a.png');
+  assert.equal(bestPhoto(page, 'McNuggets X20 Grande'), 'b.png');
+  assert.equal(bestPhoto(page, 'McNuggets x40'), null);
+  assert.equal(bestPhoto(page, 'Big Mac doble con cheddar y bacon'), null);
+});
+
+test('fotos por nombre: sin TACC y tamaño del combo no cambian la foto; simple y doble sí', () => {
+  const page = new Map([['mccombo mediano mcnifica', 'n.png'], ['mccombo mediano cuarto de libra', 'c.png'], ['mccombo mediano doble cuarto de libra', 'd.png']]);
+  assert.equal(bestPhoto(page, 'McNífica Grande'), 'n.png');
+  assert.equal(bestPhoto(page, 'McCombo Grande McNífica Sin Tacc'), 'n.png');
+  assert.equal(bestPhoto(page, 'McCombo Mediano Doble Cuarto de Libra Sin TACC'), 'd.png');
+  assert.equal(bestPhoto(page, 'McAlvarez Simple'), null);
+});
