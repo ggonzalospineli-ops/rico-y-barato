@@ -1079,12 +1079,23 @@ function renderDeck() {
     box.innerHTML = `<div class="deck-end"><div class="e">🤷</div><h3>No te convenció ninguna</h3><p>Cambiá el hambre, la comida o la plata y volvé a probar.</p><button class="btn primary" data-close>Volver</button></div>`;
     return;
   }
-  box.innerHTML = deck.slice(deckIndex, deckIndex + 3).map((p, k) => deckCard(p, deckIndex + k)).reverse().join('');
+  // Se reusan las cartas que ya están (solo cambia su lugar, con transición) y se agrega atrás la que falta.
+  // Redibujar todo hacía saltar la carta siguiente en vez de acomodarse.
+  [...box.children].forEach(el => {
+    const i = +el.dataset.i;
+    if (!el.classList.contains('dcard') || i < deckIndex || i >= deckIndex + 3) el.remove();
+  });
+  for (let i = deckIndex; i < Math.min(deck.length, deckIndex + 3); i++) {
+    const el = box.querySelector(`.dcard[data-i="${i}"]`);
+    if (el) el.style.setProperty('--i', i - deckIndex);
+    else box.insertAdjacentHTML('afterbegin', deckCard(deck[i], i)); // las nuevas van al fondo
+  }
   bindDrag(box.querySelector(`.dcard[data-i="${deckIndex}"]`));
 }
 
 function bindDrag(card) {
-  if (!card) return;
+  if (!card || card.dataset.bound) return;
+  card.dataset.bound = '1';
   let x0 = 0, dx = 0, dragging = false;
   card.addEventListener('pointerdown', e => { dragging = true; x0 = e.clientX; card.setPointerCapture(e.pointerId); card.classList.add('drag'); });
   card.addEventListener('pointermove', e => {
@@ -1148,6 +1159,7 @@ function spin() {
     if (++k < total) { setTimeout(tick, 45 + k * k * 1.6); return; }
     const landed = deckIndex + win;
     [deck[deckIndex], deck[landed]] = [deck[landed], deck[deckIndex]];
+    $('#deck').innerHTML = ''; // el orden cambió: se arma de cero
     renderDeck();
     document.querySelector(`.dcard[data-i="${deckIndex}"]`)?.classList.add('landed');
   };

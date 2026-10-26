@@ -94,7 +94,10 @@
 .deck { position: relative; height: 470px; }
 .dcard {
   position: absolute; inset: 0; background: var(--card); border-radius: 26px; overflow: hidden; box-shadow: 0 30px 60px -24px rgba(0,0,0,.55);
-  transform: translateY(calc(var(--i) * 12px)) scale(calc(1 - var(--i) * .05)); transition: transform var(--motion-base) var(--ease-spring), opacity var(--motion-base) ease, box-shadow var(--motion-base) ease;
+  /* Todas del mismo tamaño: las de atrás solo asoman abajo y un poco más oscuras (antes se achicaban y la
+     siguiente "crecía" de golpe al pasar una). */
+  transform: translateY(calc(var(--i) * 10px)); filter: brightness(calc(1 - var(--i) * .06));
+  transition: transform var(--motion-base) var(--ease-spring), opacity var(--motion-base) ease, box-shadow var(--motion-base) ease, filter var(--motion-base) ease;
   touch-action: none; user-select: none; cursor: grab;
 }
 .dcard.drag { transition: none; cursor: grabbing; }
