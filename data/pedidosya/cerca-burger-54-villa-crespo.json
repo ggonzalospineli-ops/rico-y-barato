@@ -1,0 +1,83 @@
+{
+ "store": "Burger 54 - Villa Crespo",
+ "brand": "burger 54",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/burger-54-villa-crespo-c58475ac-34c1-422e-90f4-5cf805209cf8-menu",
+ "fetchedAt": "2026-10-26T18:53:53.065Z",
+ "products": [
+  [
+   "Chicken Sandwich + Papas Fritas",
+   18200,
+   null
+  ],
+  [
+   "Más vendido",
+   21000,
+   null
+  ],
+  [
+   "Munchies + Papas Fritas",
+   21500,
+   null
+  ],
+  [
+   "Chicken sandwich + papas",
+   18200,
+   null
+  ],
+  [
+   "Double Burger + Papas Fritas",
+   23200,
+   null
+  ],
+  [
+   "Bacon burger",
+   13800,
+   null
+  ],
+  [
+   "Double burger",
+   16000,
+   null
+  ],
+  [
+   "Chicken sándwich",
+   11000,
+   null
+  ],
+  [
+   "Fries & Eggs",
+   8300,
+   null
+  ],
+  [
+   "Chicken munchies",
+   14300,
+   null
+  ],
+  [
+   "Papas rústicas",
+   7200,
+   null
+  ],
+  [
+   "Papas rusticas con provenzal",
+   7700,
+   null
+  ],
+  [
+   "Agua con gas",
+   5000,
+   null
+  ],
+  [
+   "Agua mineral 500 ml",
+   5000,
+   null
+  ],
+  [
+   "Gaseosa linea coca cola 600cc",
+   5500,
+   null
+  ]
+ ]
+}

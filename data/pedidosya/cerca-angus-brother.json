@@ -1,0 +1,73 @@
+{
+ "store": "Angus Brother",
+ "brand": "angus brother",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/angus-brother-8ef3e433-1014-40ea-8baf-18fb5b3a8c0e-menu",
+ "fetchedAt": "2026-10-26T18:43:45.513Z",
+ "products": [
+  [
+   "Más vendido",
+   21700,
+   null
+  ],
+  [
+   "Clasica",
+   21700,
+   null
+  ],
+  [
+   "Burger del mes",
+   27600,
+   null
+  ],
+  [
+   "Ensalada Caesar",
+   18400,
+   null
+  ],
+  [
+   "Agua sin gas",
+   3500,
+   null
+  ],
+  [
+   "Agua con gas",
+   3500,
+   null
+  ],
+  [
+   "Sprite",
+   4700,
+   null
+  ],
+  [
+   "Stella Artois",
+   6200,
+   null
+  ],
+  [
+   "Sprite Zero",
+   4700,
+   null
+  ],
+  [
+   "Coca cola Zero",
+   4700,
+   null
+  ],
+  [
+   "Cerveza Andes Roja 473 Ml",
+   6200,
+   null
+  ],
+  [
+   "Paletas",
+   11000,
+   null
+  ],
+  [
+   "Potes 120cc",
+   7700,
+   null
+  ]
+ ]
+}

@@ -1,0 +1,83 @@
+{
+ "store": "Dean & Dennys - Santa Fe Y C.diaz",
+ "brand": "dean & dennys",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/dean-dennys-santa-fe-y-cdiaz-ce89ee0d-1a7a-4dec-bbea-f0337c218847-menu",
+ "fetchedAt": "2026-10-26T18:28:06.956Z",
+ "products": [
+  [
+   "2x1 Tostado de queso",
+   4500,
+   9000
+  ],
+  [
+   "2x1 Tostado de jamón y queso",
+   5500,
+   11000
+  ],
+  [
+   "2x1 Tostado de panceta, queso y huevo",
+   7900,
+   15800
+  ],
+  [
+   "2x1 Cheeseburgers Urbanas",
+   10999,
+   21998
+  ],
+  [
+   "2x1 Bacon Cheeseburger Urbana",
+   12999,
+   25998
+  ],
+  [
+   "Superpromo Doble Cheeseburger Urbana & Papas Chicas",
+   8999,
+   14999
+  ],
+  [
+   "3 Doble Bacon Cheeseburger Urbana &  2 Papas Grandes",
+   30718,
+   51197
+  ],
+  [
+   "$8.999,4",
+   14999,
+   null
+  ],
+  [
+   "2 Bacon Cheeseburger 120g & 1 Papas Grandes",
+   21179,
+   33500
+  ],
+  [
+   "Promo Nuggets & Papas chicas",
+   6435,
+   9900
+  ],
+  [
+   "Doble Bacon Cheeseburger Urbana & Papas Chicas",
+   10399,
+   15999
+  ],
+  [
+   "Doble Dean Burger Urbana & Papas Chicas.",
+   10399,
+   14999
+  ],
+  [
+   "Triple Bacon Cheeseburger Urbana & Papas Chicas",
+   13999,
+   19999
+  ],
+  [
+   "Superpromo Cheeseburger Urbana & Papas Chicas",
+   7699,
+   9999
+  ],
+  [
+   "Super Bacon Burger Doble 120g & Papas Grandes",
+   17499,
+   22700
+  ]
+ ]
+}

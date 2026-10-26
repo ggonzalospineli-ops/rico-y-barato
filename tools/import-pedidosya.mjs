@@ -27,7 +27,11 @@ for (const [id, list] of Object.entries(other.items)) {
 
 const restaurantsById = Object.fromEntries(catalog.restaurants.map(r => [r.id, r]));
 let matched = 0, files = 0, skipped = 0;
-for (const file of existsSync(pyaDir) ? readdirSync(pyaDir).filter(f => f.endsWith('.json')) : []) {
+// Primero los locales que entregan en la dirección de casa ("cerca-*", relevados con la dirección cargada),
+// después las sucursales de cadena relevadas antes: si un producto está en los dos, gana el cercano.
+const pyaFiles = existsSync(pyaDir) ? readdirSync(pyaDir).filter(f => f.endsWith('.json'))
+  .sort((a, b) => b.startsWith('cerca-') - a.startsWith('cerca-') || a.localeCompare(b)) : [];
+for (const file of pyaFiles) {
   const store = JSON.parse(readFileSync(new URL(file, pyaDir), 'utf8'));
   files++;
   // PedidosYa le pega la promo al nombre ("Combo Whopper 50% OFF", "2x1"): se saca para cruzar.

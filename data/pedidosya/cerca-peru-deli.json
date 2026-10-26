@@ -1,0 +1,418 @@
+{
+ "store": "Perú Deli",
+ "brand": "peru deli",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/peru-deli-756db674-b96b-4920-b2c4-c6955ad5d53a-menu",
+ "fetchedAt": "2026-10-26T19:28:19.695Z",
+ "products": [
+  [
+   "Poke basic",
+   27000,
+   null
+  ],
+  [
+   "Poke premium",
+   30000,
+   null
+  ],
+  [
+   "Harumakis x4",
+   24000,
+   null
+  ],
+  [
+   "Langostinos panko",
+   24000,
+   null
+  ],
+  [
+   "Más vendido",
+   24000,
+   null
+  ],
+  [
+   "Papa a la huancaina chica",
+   24000,
+   null
+  ],
+  [
+   "Anticucho pescado",
+   30000,
+   null
+  ],
+  [
+   "Anticucho lomo",
+   30000,
+   null
+  ],
+  [
+   "Anticucho pollo",
+   30000,
+   null
+  ],
+  [
+   "Leche de tigre",
+   24000,
+   null
+  ],
+  [
+   "Ceviche mariscos",
+   31000,
+   null
+  ],
+  [
+   "Ceviche lenguado y mariscos",
+   31000,
+   null
+  ],
+  [
+   "Ceviche salmón",
+   31000,
+   null
+  ],
+  [
+   "Ceviche salmón y mariscos",
+   34000,
+   null
+  ],
+  [
+   "Ceviche lenguado",
+   31000,
+   null
+  ],
+  [
+   "Ceviche dúo",
+   31000,
+   null
+  ],
+  [
+   "Degustación de ceviches",
+   37000,
+   null
+  ],
+  [
+   "Causa de pollo",
+   27000,
+   null
+  ],
+  [
+   "Causa langostinos",
+   27000,
+   null
+  ],
+  [
+   "Causa de salmón",
+   27000,
+   null
+  ],
+  [
+   "Causa acevichada de salmon",
+   27000,
+   null
+  ],
+  [
+   "Chaufa de pollo",
+   31000,
+   null
+  ],
+  [
+   "Tallarines salteados de pollo",
+   31000,
+   null
+  ],
+  [
+   "Tallarines salteados de lomo",
+   31000,
+   null
+  ],
+  [
+   "Tallarines salteados mariscos",
+   32000,
+   null
+  ],
+  [
+   "Tallarines salteados dúo",
+   32000,
+   null
+  ],
+  [
+   "Quinoa tai tofu",
+   27000,
+   null
+  ],
+  [
+   "Tambor de langostinos",
+   29000,
+   null
+  ],
+  [
+   "Camarones tai",
+   27000,
+   null
+  ],
+  [
+   "Arroz con pollo",
+   29000,
+   null
+  ],
+  [
+   "Jalea de pescado",
+   37000,
+   null
+  ],
+  [
+   "Jalea mixta",
+   39000,
+   null
+  ],
+  [
+   "Salmón imperial",
+   35000,
+   null
+  ],
+  [
+   "Papa huancaína grande",
+   27000,
+   null
+  ],
+  [
+   "Sopa de verduras",
+   22000,
+   null
+  ],
+  [
+   "Tiradito nikkei",
+   27000,
+   null
+  ],
+  [
+   "Tiradito perudeli",
+   26000,
+   null
+  ],
+  [
+   "Arroz con mariscos",
+   31000,
+   null
+  ],
+  [
+   "Escabeche de lenguado",
+   29000,
+   null
+  ],
+  [
+   "Chupe de pescado",
+   30000,
+   null
+  ],
+  [
+   "Lomo cayetano",
+   34000,
+   null
+  ],
+  [
+   "Quinoa tai de pollo (picante)",
+   27000,
+   null
+  ],
+  [
+   "Quinoa tai de mariscos picante",
+   30000,
+   null
+  ],
+  [
+   "Quinoa tai de lomo (picante)",
+   27000,
+   null
+  ],
+  [
+   "Picante de mariscos",
+   30000,
+   null
+  ],
+  [
+   "Ají de gallina",
+   30000,
+   null
+  ],
+  [
+   "Seco De Carne",
+   30000,
+   null
+  ],
+  [
+   "Lenguado Anticuchero",
+   30000,
+   null
+  ],
+  [
+   "Tiradito salmon nikkei",
+   32000,
+   null
+  ],
+  [
+   "Combo 30",
+   60000,
+   null
+  ],
+  [
+   "Combo 15",
+   39000,
+   null
+  ],
+  [
+   "Combo 20",
+   48000,
+   null
+  ],
+  [
+   "Combo mix 20",
+   48000,
+   null
+  ],
+  [
+   "Seleccion 15",
+   39000,
+   null
+  ],
+  [
+   "Degustación de sushi x18",
+   44000,
+   null
+  ],
+  [
+   "Classic 15",
+   39000,
+   null
+  ],
+  [
+   "New York X12",
+   26000,
+   null
+  ],
+  [
+   "Philadelphia X12",
+   26000,
+   null
+  ],
+  [
+   "Cheese X12",
+   26000,
+   null
+  ],
+  [
+   "Flamed Red X12",
+   26000,
+   null
+  ],
+  [
+   "Buenos Aires X12",
+   26000,
+   null
+  ],
+  [
+   "Nilu X12",
+   26000,
+   null
+  ],
+  [
+   "Viena X12",
+   26000,
+   null
+  ],
+  [
+   "Acevichado X12",
+   28000,
+   null
+  ],
+  [
+   "Sake Panko X12",
+   28000,
+   null
+  ],
+  [
+   "Black Fried X12",
+   28000,
+   null
+  ],
+  [
+   "Natzu X12",
+   28000,
+   null
+  ],
+  [
+   "Urapanko X12",
+   28000,
+   null
+  ],
+  [
+   "Triroll X12",
+   28000,
+   null
+  ],
+  [
+   "Perudeli Roll X12",
+   28000,
+   null
+  ],
+  [
+   "Sweet langostinos x12",
+   28000,
+   null
+  ],
+  [
+   "Bombai X12",
+   28000,
+   null
+  ],
+  [
+   "Toga X12",
+   28000,
+   null
+  ],
+  [
+   "Sashimi x6",
+   28000,
+   null
+  ],
+  [
+   "Niguiri sake x6",
+   22000,
+   null
+  ],
+  [
+   "Niguiri flamed",
+   22000,
+   null
+  ],
+  [
+   "Niguiri passion",
+   22000,
+   null
+  ],
+  [
+   "Poke standar",
+   28000,
+   null
+  ],
+  [
+   "Chimbote roll",
+   30000,
+   null
+  ],
+  [
+   "Lomo Saltado Roll",
+   30000,
+   null
+  ],
+  [
+   "Feel Roll",
+   30000,
+   null
+  ],
+  [
+   "Guacamole Roll",
+   30000,
+   null
+  ]
+ ]
+}

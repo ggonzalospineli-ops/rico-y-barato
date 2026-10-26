@@ -1,0 +1,538 @@
+{
+ "store": "La Vicca - Cabrera",
+ "brand": "la vicca",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/la-vicca-cabrera-3db73f9f-86e6-48fd-b88e-4d09d5fbce64-menu",
+ "fetchedAt": "2026-10-26T19:16:35.533Z",
+ "products": [
+  [
+   "Gde muzza + 6 empanadas",
+   45120,
+   56400
+  ],
+  [
+   "Tostado De Chipa",
+   9690,
+   11400
+  ],
+  [
+   "Tostado Mixto",
+   9180,
+   10800
+  ],
+  [
+   "Cookie de nutella",
+   5100,
+   6000
+  ],
+  [
+   "Cookie Red Velvet",
+   5100,
+   6000
+  ],
+  [
+   "Uso nostro gde",
+   44400,
+   null
+  ],
+  [
+   "Jamón y morrones med",
+   39600,
+   null
+  ],
+  [
+   "Caprese med",
+   39600,
+   null
+  ],
+  [
+   "Napolitana con jamón med",
+   34800,
+   null
+  ],
+  [
+   "Vegetales med",
+   39600,
+   null
+  ],
+  [
+   "Crocante De Nutella",
+   20400,
+   null
+  ],
+  [
+   "Budin de pan",
+   7800,
+   null
+  ],
+  [
+   "Tabla de pizza large",
+   51600,
+   null
+  ],
+  [
+   "Cheeseburger gde",
+   46800,
+   null
+  ],
+  [
+   "Stracciatella y mortadela gde",
+   46800,
+   null
+  ],
+  [
+   "La reina gde",
+   46800,
+   null
+  ],
+  [
+   "Prosciutto gde",
+   44400,
+   null
+  ],
+  [
+   "Queso brie gde",
+   44400,
+   null
+  ],
+  [
+   "Cuatro quesos gde",
+   44400,
+   null
+  ],
+  [
+   "Roquefort gde",
+   44400,
+   null
+  ],
+  [
+   "Provolone gde",
+   44400,
+   null
+  ],
+  [
+   "Carbonara gde",
+   44400,
+   null
+  ],
+  [
+   "Napolitana gde",
+   34800,
+   null
+  ],
+  [
+   "Más vendido",
+   44400,
+   null
+  ],
+  [
+   "Pepperoni gde",
+   46800,
+   null
+  ],
+  [
+   "Caprese gde",
+   44400,
+   null
+  ],
+  [
+   "Champiñones gde",
+   44400,
+   null
+  ],
+  [
+   "Jamón cocido gde",
+   39600,
+   null
+  ],
+  [
+   "Napo con jamón gde",
+   39600,
+   null
+  ],
+  [
+   "Palmitos gde",
+   44400,
+   null
+  ],
+  [
+   "Vegetales gde",
+   44400,
+   null
+  ],
+  [
+   "Jamón y ananá gde",
+   44400,
+   null
+  ],
+  [
+   "American chicken gde",
+   46800,
+   null
+  ],
+  [
+   "Fugazzeta gde",
+   34800,
+   null
+  ],
+  [
+   "Fugazzeta rellena gde",
+   44400,
+   null
+  ],
+  [
+   "Pan de pizza gde",
+   26400,
+   null
+  ],
+  [
+   "Cheeseburger med",
+   42000,
+   null
+  ],
+  [
+   "Stracciatella y mortadela med",
+   42000,
+   null
+  ],
+  [
+   "La reina med",
+   42000,
+   null
+  ],
+  [
+   "Prosciutto med",
+   39600,
+   null
+  ],
+  [
+   "Uso nostro med",
+   39600,
+   null
+  ],
+  [
+   "Queso brie med",
+   39600,
+   null
+  ],
+  [
+   "Cuatro quesos med",
+   39600,
+   null
+  ],
+  [
+   "Roquefort med",
+   39600,
+   null
+  ],
+  [
+   "Provolone med",
+   39600,
+   null
+  ],
+  [
+   "Carbonara med",
+   39600,
+   null
+  ],
+  [
+   "Napolitana med",
+   32400,
+   null
+  ],
+  [
+   "Pepperoni med",
+   42000,
+   null
+  ],
+  [
+   "Champiñones med",
+   39600,
+   null
+  ],
+  [
+   "Fugazzeta rellena med",
+   39600,
+   null
+  ],
+  [
+   "Mozzarella med",
+   27000,
+   null
+  ],
+  [
+   "Jamón cocido med",
+   34800,
+   null
+  ],
+  [
+   "Palmitos med",
+   39600,
+   null
+  ],
+  [
+   "Jamón y ananá med",
+   39600,
+   null
+  ],
+  [
+   "American chicken med",
+   42000,
+   null
+  ],
+  [
+   "Fugazzeta med",
+   32400,
+   null
+  ],
+  [
+   "Pan de pizza med",
+   22800,
+   null
+  ],
+  [
+   "Roquefort",
+   4200,
+   null
+  ],
+  [
+   "Cebolla y queso",
+   4200,
+   null
+  ],
+  [
+   "Fainá ¨La Vicca¨",
+   3360,
+   null
+  ],
+  [
+   "Cheeseburger",
+   16800,
+   null
+  ],
+  [
+   "Americana",
+   18000,
+   null
+  ],
+  [
+   "Crispy Onion",
+   18000,
+   null
+  ],
+  [
+   "15 % OFF",
+   9690,
+   11400
+  ],
+  [
+   "Árabe Especial",
+   13200,
+   null
+  ],
+  [
+   "Árabe De Jamón Y Queso",
+   11400,
+   null
+  ],
+  [
+   "Milanesa De Ternera Napolitana",
+   26400,
+   null
+  ],
+  [
+   "Milanesa De Ternera",
+   21600,
+   null
+  ],
+  [
+   "Suprema De Pollo",
+   21600,
+   null
+  ],
+  [
+   "Pollo al Funghi",
+   27600,
+   null
+  ],
+  [
+   "Pollo a la crema de limón",
+   25200,
+   null
+  ],
+  [
+   "Pollo Grillé",
+   21600,
+   null
+  ],
+  [
+   "Filete de Merluza Romana",
+   21600,
+   null
+  ],
+  [
+   "Filete de Merluza",
+   21600,
+   null
+  ],
+  [
+   "Sorrentinos de muzza y jamón",
+   19200,
+   null
+  ],
+  [
+   "Ravioles de Ricota",
+   18000,
+   null
+  ],
+  [
+   "Ravioles de verdura",
+   18000,
+   null
+  ],
+  [
+   "Ñoquis De Papa",
+   18000,
+   null
+  ],
+  [
+   "Spaghettis",
+   16800,
+   null
+  ],
+  [
+   "Papas con Cheddar y Panceta",
+   15600,
+   null
+  ],
+  [
+   "Muzzarellas A La Milanesa",
+   14400,
+   null
+  ],
+  [
+   "Mousse De Chocolate",
+   12000,
+   null
+  ],
+  [
+   "Flan Casero",
+   7800,
+   null
+  ],
+  [
+   "Ensalada de frutas",
+   7800,
+   null
+  ],
+  [
+   "Chocotorta vicca",
+   12000,
+   null
+  ],
+  [
+   "Coca-Cola Sabor Original 1,75 L",
+   8000,
+   null
+  ],
+  [
+   "Coca-Cola Sin Azúcar 1,75 L",
+   8000,
+   null
+  ],
+  [
+   "Sprite Lima Limón 1,75 L",
+   8000,
+   null
+  ],
+  [
+   "Coca-Cola Sin Azúcar 500 Ml",
+   5000,
+   null
+  ],
+  [
+   "Coca-Cola Sabor Original 500 Ml",
+   5000,
+   null
+  ],
+  [
+   "Sprite Lima Limón 500 Ml",
+   5000,
+   null
+  ],
+  [
+   "Sprite Lima Limón Sin Azúcar 500 Ml",
+   5000,
+   null
+  ],
+  [
+   "Aquarius Manzana 500 Ml",
+   5000,
+   null
+  ],
+  [
+   "Aquarius Pomelo 500 Ml",
+   5000,
+   null
+  ],
+  [
+   "Aquarius Pera 500 Ml",
+   5000,
+   null
+  ],
+  [
+   "Fanta Naranja 500 Ml",
+   5000,
+   null
+  ],
+  [
+   "SmartWater Sin Gas 591 Ml",
+   5000,
+   null
+  ],
+  [
+   "SmartWater Con Gas 591 Ml",
+   5000,
+   null
+  ],
+  [
+   "Cookie Pistacho",
+   6000,
+   null
+  ],
+  [
+   "Brownie",
+   4440,
+   null
+  ],
+  [
+   "Alfajor Sablee De Almendras",
+   4200,
+   null
+  ],
+  [
+   "Cuadrado coco y dulce de leche",
+   4440,
+   null
+  ],
+  [
+   "Medialuna De Manteca",
+   1680,
+   null
+  ],
+  [
+   "Medialunas Con Jamón Y Queso",
+   10800,
+   null
+  ],
+  [
+   "20 % OFF",
+   45120,
+   56400
+  ],
+  [
+   "2 empanadas + bebida",
+   13400,
+   null
+  ]
+ ]
+}

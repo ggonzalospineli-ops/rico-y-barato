@@ -1,0 +1,348 @@
+{
+ "store": "Sanchez & Sanchez - Pizzeria Cafeteria",
+ "brand": "sanchez & sanchez",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/sanchez-sanchez-pizzeria-cafeteria-6809ea11-e8ea-4e61-ba31-1dc91a1868e1-menu",
+ "fetchedAt": "2026-10-26T19:13:46.688Z",
+ "products": [
+  [
+   "Pizza muzzarella",
+   3000,
+   null
+  ],
+  [
+   "Más vendido",
+   10700,
+   null
+  ],
+  [
+   "2 empanadas + 1 porcion de fugazzetta",
+   12500,
+   null
+  ],
+  [
+   "Pizza de muzzarella + 6 empanadas",
+   49000,
+   null
+  ],
+  [
+   "Pizza jamon y morron + pizza muzzarella",
+   62000,
+   null
+  ],
+  [
+   "2 muzza grandes + 4 faina + gaseosa",
+   65300,
+   null
+  ],
+  [
+   "Muzza+jamón morron + 4 faina + gaseosa",
+   77300,
+   null
+  ],
+  [
+   "Fugazzetta rellena + 4 faina + 1 gaseosa",
+   59300,
+   null
+  ],
+  [
+   "3 pizzas + 4 fainá + gaseosa",
+   97300,
+   null
+  ],
+  [
+   "Pizza de espinaca con salsa blanca",
+   30000,
+   null
+  ],
+  [
+   "Pizza especial sánchez",
+   33000,
+   null
+  ],
+  [
+   "Pizza parma",
+   30000,
+   null
+  ],
+  [
+   "Pizza al morrón",
+   36000,
+   null
+  ],
+  [
+   "Pizza fugazza",
+   25000,
+   null
+  ],
+  [
+   "Pizza napolitana",
+   36000,
+   null
+  ],
+  [
+   "Pizza vegetariana",
+   25000,
+   null
+  ],
+  [
+   "Pizza provolone",
+   33000,
+   null
+  ],
+  [
+   "Pizza rústica",
+   33000,
+   null
+  ],
+  [
+   "Pizza fugazzetta rellena gourmet",
+   44000,
+   null
+  ],
+  [
+   "Pizza palmitos",
+   33000,
+   null
+  ],
+  [
+   "Pizza caprese",
+   30000,
+   null
+  ],
+  [
+   "Pizza fugazzetta",
+   30000,
+   null
+  ],
+  [
+   "Pizza papas a caballo",
+   32000,
+   null
+  ],
+  [
+   "Pizza peperoni",
+   31000,
+   null
+  ],
+  [
+   "Pizza carbonara",
+   31000,
+   null
+  ],
+  [
+   "Pizza al jamón cocido ibérico",
+   30000,
+   null
+  ],
+  [
+   "Pizza quatro quesos",
+   29000,
+   null
+  ],
+  [
+   "Pizza queso brie",
+   28000,
+   null
+  ],
+  [
+   "Faina rellena",
+   2500,
+   null
+  ],
+  [
+   "Pizza especial jamón y morrones porción",
+   3800,
+   null
+  ],
+  [
+   "20 % OFF",
+   33600,
+   42000
+  ],
+  [
+   "Empanada de verdura",
+   4000,
+   null
+  ],
+  [
+   "Empanada de roquefort",
+   4000,
+   null
+  ],
+  [
+   "Empanada cheeseburger",
+   4000,
+   null
+  ],
+  [
+   "Empanada caprese",
+   4000,
+   null
+  ],
+  [
+   "Empanada de cebolla y queso",
+   4000,
+   null
+  ],
+  [
+   "Empanada de carne picante",
+   4000,
+   null
+  ],
+  [
+   "Empanada humita",
+   4000,
+   null
+  ],
+  [
+   "Empanada choclo y jamón",
+   4000,
+   null
+  ],
+  [
+   "Milanesa napolitana con guarnicion",
+   27000,
+   null
+  ],
+  [
+   "Suprema napolitana con guarnición",
+   25000,
+   null
+  ],
+  [
+   "Suprema con guarnición",
+   22000,
+   null
+  ],
+  [
+   "Milanesa con guarnición",
+   23000,
+   null
+  ],
+  [
+   "Lomito canadiense",
+   28000,
+   null
+  ],
+  [
+   "Lomito al plato para 2",
+   32000,
+   null
+  ],
+  [
+   "Lomito al plato",
+   25000,
+   null
+  ],
+  [
+   "Lomito natural",
+   25000,
+   null
+  ],
+  [
+   "Lomito de la casa",
+   27000,
+   null
+  ],
+  [
+   "Lomito clasico",
+   25000,
+   null
+  ],
+  [
+   "Porcion lomito al plato",
+   26000,
+   null
+  ],
+  [
+   "Ensalada brie",
+   20000,
+   null
+  ],
+  [
+   "Ensalada lucero",
+   20000,
+   null
+  ],
+  [
+   "Ensalada caprese",
+   20000,
+   null
+  ],
+  [
+   "Ensalada amelia",
+   20000,
+   null
+  ],
+  [
+   "Ensalada lucero con atun",
+   20000,
+   null
+  ],
+  [
+   "Tarta de calabaza y muzzarella",
+   15000,
+   null
+  ],
+  [
+   "Tarta de verdura y pollo",
+   15000,
+   null
+  ],
+  [
+   "Refresco Coca-Cola Original 354 ml",
+   4000,
+   null
+  ],
+  [
+   "Gaseosa Sprite Lima-Limón 354 ml",
+   4000,
+   null
+  ],
+  [
+   "Refresco Coca-Cola Zero 354 ml",
+   4000,
+   null
+  ],
+  [
+   "Gaseosa sprite lima-limón sin azúcar 354 ml",
+   4000,
+   null
+  ],
+  [
+   "Gaseosa Coca-Cola 1.75 L",
+   9500,
+   null
+  ],
+  [
+   "Gaseosa Coca-Cola Sin Azúcar Pet 1.75 L",
+   9500,
+   null
+  ],
+  [
+   "Agua Saborizada Aquarius Manzana 600 ml",
+   4000,
+   null
+  ],
+  [
+   "Agua Saborizada Aquarius Pera 600 ml",
+   4000,
+   null
+  ],
+  [
+   "Agua Saborizada Aquarius Pomelo 600 ml",
+   4000,
+   null
+  ],
+  [
+   "Agua Saborizada Aquarius Pomelo Rosado 500 ml",
+   4000,
+   null
+  ],
+  [
+   "Agua Mineralizada Benedictino Sin Gas 500 ml",
+   4000,
+   null
+  ]
+ ]
+}

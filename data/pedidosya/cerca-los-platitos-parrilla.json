@@ -1,0 +1,83 @@
+{
+ "store": "Los Platitos Parrilla.",
+ "brand": "los platitos parrilla",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/los-platitos-parrilla-8b376a22-c5c3-4c76-89f2-63a38f452b40-menu",
+ "fetchedAt": "2026-10-26T19:25:59.788Z",
+ "products": [
+  [
+   "Combo Para 2",
+   46600,
+   null
+  ],
+  [
+   "25 % OFF",
+   32700,
+   43600
+  ],
+  [
+   "Sánguche de pechuga de pollo",
+   22900,
+   null
+  ],
+  [
+   "Más vendido",
+   21800,
+   null
+  ],
+  [
+   "Sánguche de morcilla",
+   16000,
+   null
+  ],
+  [
+   "Papas fritas",
+   10900,
+   null
+  ],
+  [
+   "Ensalada mixta",
+   10700,
+   null
+  ],
+  [
+   "Provoleta A La Parrilla",
+   12700,
+   null
+  ],
+  [
+   "Refresco Coca-Cola Original 354 ml",
+   5450,
+   null
+  ],
+  [
+   "Refresco Coca-Cola Zero 354 ml",
+   5450,
+   null
+  ],
+  [
+   "Cerveza Andes Origen Rubia Lata 473 ml",
+   6650,
+   null
+  ],
+  [
+   "Cerveza Andes Origen Rubia Oro 473 ml",
+   6650,
+   null
+  ],
+  [
+   "Cerveza Andes Origen IPA 473 ml",
+   6650,
+   null
+  ],
+  [
+   "Cerveza Andes Origen Roja 473 ml",
+   6650,
+   null
+  ],
+  [
+   "Cerveza Andes Origen Negra 473ml",
+   6650,
+   null
+  ]
+ ]
+}

@@ -1,0 +1,103 @@
+{
+ "store": "El Viejo Jose Martín",
+ "brand": "el viejo jose martin",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/el-viejo-jose-martin-menu",
+ "fetchedAt": "2026-10-26T19:01:49.106Z",
+ "products": [
+  [
+   "Papas fritas a caballo",
+   7000,
+   null
+  ],
+  [
+   "Porción de papas fritas",
+   4500,
+   null
+  ],
+  [
+   "Tallarines con estofado",
+   11500,
+   null
+  ],
+  [
+   "Ravioles Con Estofado",
+   11500,
+   null
+  ],
+  [
+   "Filet a la romana con pure",
+   12000,
+   null
+  ],
+  [
+   "Napolitana con papas frita",
+   14000,
+   null
+  ],
+  [
+   "Pechuga grillé con pure",
+   12000,
+   null
+  ],
+  [
+   "Chivito uruguayo al plato",
+   16000,
+   null
+  ],
+  [
+   "Bondiola con papas fritas",
+   11500,
+   null
+  ],
+  [
+   "Tapa De Asado Con Papas",
+   14000,
+   null
+  ],
+  [
+   "Sándwich al Viejo José Martín",
+   125000,
+   null
+  ],
+  [
+   "Hamburguesa casera",
+   10500,
+   null
+  ],
+  [
+   "Flan casero",
+   2500,
+   null
+  ],
+  [
+   "Más vendido",
+   11500,
+   null
+  ],
+  [
+   "Suprema napo con papas fritas",
+   14000,
+   null
+  ],
+  [
+   "Revuelto gramajo",
+   8000,
+   null
+  ],
+  [
+   "Papas fritas",
+   4000,
+   null
+  ],
+  [
+   "Gaseosa 500 ml",
+   2500,
+   null
+  ],
+  [
+   "Agua saborizada pomelo 500 ml",
+   2200,
+   null
+  ]
+ ]
+}

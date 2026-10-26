@@ -1,0 +1,453 @@
+{
+ "store": "Manos Peruanas Delivery",
+ "brand": "manos peruanas delivery",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/manos-peruanas-delivery-menu",
+ "fetchedAt": "2026-10-26T19:06:20.658Z",
+ "products": [
+  [
+   "$17.099,1",
+   18999,
+   null
+  ],
+  [
+   "Minimostrito",
+   21510,
+   23900
+  ],
+  [
+   "$55.799,1",
+   61999,
+   null
+  ],
+  [
+   "Ceviche mixto + 2 coronas",
+   37999,
+   null
+  ],
+  [
+   "Arroz con mariscos + corona",
+   29999,
+   null
+  ],
+  [
+   "Pieza de pollo a la brasa",
+   16900,
+   null
+  ],
+  [
+   "Pieza de pollo broaster",
+   17500,
+   null
+  ],
+  [
+   "10 % OFF",
+   21510,
+   23900
+  ],
+  [
+   "Alitas broaster + arroz y f.",
+   16400,
+   null
+  ],
+  [
+   "Filete de merluza+2 guarnici.",
+   17500,
+   null
+  ],
+  [
+   "Fideos con huancaina y lomo",
+   21900,
+   null
+  ],
+  [
+   "Salchipapa + Mini Ensalada",
+   15999,
+   null
+  ],
+  [
+   "Mostrito",
+   27900,
+   null
+  ],
+  [
+   "Mostrito broaster",
+   28900,
+   null
+  ],
+  [
+   "Minimostrito broaster",
+   22900,
+   null
+  ],
+  [
+   "Más vendido",
+   21999,
+   null
+  ],
+  [
+   "Mostrito + coca de 500ml",
+   32999,
+   null
+  ],
+  [
+   "Pollo a la brasa + dorada",
+   54999,
+   null
+  ],
+  [
+   "Pollo broaster + dorada",
+   55999,
+   null
+  ],
+  [
+   "Promo 1 - Pollo A La Brasa",
+   49500,
+   null
+  ],
+  [
+   "Promo 5 - 1/2 Pollo A La Brasa",
+   31999,
+   null
+  ],
+  [
+   "Pollo broaster entero",
+   50500,
+   null
+  ],
+  [
+   "Pollo a la brasa + fritas",
+   38999,
+   null
+  ],
+  [
+   "Pollo broaster+papas fritas",
+   39999,
+   null
+  ],
+  [
+   "Promo 6 - 1/2 Pollo Broaster",
+   32999,
+   null
+  ],
+  [
+   "Super Mostrito Broaster",
+   62999,
+   null
+  ],
+  [
+   "Anticucho",
+   18999,
+   null
+  ],
+  [
+   "Papa A La Huancaína",
+   17900,
+   null
+  ],
+  [
+   "Causa De Pollo",
+   20999,
+   null
+  ],
+  [
+   "Tamal",
+   12999,
+   null
+  ],
+  [
+   "Ají de gallina",
+   17400,
+   null
+  ],
+  [
+   "Tallarín saltado de carne",
+   18500,
+   null
+  ],
+  [
+   "Tallarín Verde Con Churrasco",
+   21800,
+   null
+  ],
+  [
+   "Salteado mar y tierra",
+   23900,
+   null
+  ],
+  [
+   "Arroz Chaufa Especial",
+   20999,
+   null
+  ],
+  [
+   "Arroz chaufán salvaje (veg.)",
+   15999,
+   null
+  ],
+  [
+   "Seco de carne",
+   21600,
+   null
+  ],
+  [
+   "Aeropuerto",
+   21500,
+   null
+  ],
+  [
+   "Combinado chifa",
+   21800,
+   null
+  ],
+  [
+   "Lomo A Lo Pobre",
+   20999,
+   null
+  ],
+  [
+   "Arroz a la cubana",
+   15999,
+   null
+  ],
+  [
+   "1/4 de pollo broaster+ensalada",
+   24900,
+   null
+  ],
+  [
+   "Chicharrón De Pollo + Ensalada",
+   16900,
+   null
+  ],
+  [
+   "Bistec A Lo Pobre + Arroz",
+   21900,
+   null
+  ],
+  [
+   "Tacu-Tacu con lomo",
+   20900,
+   null
+  ],
+  [
+   "Tacu-Tacu con churrasco",
+   21900,
+   null
+  ],
+  [
+   "Tallarin chifa oriental",
+   19500,
+   null
+  ],
+  [
+   "Pollo tipa kay + chaufa mixto",
+   17900,
+   null
+  ],
+  [
+   "Chaufa Manos Peruanas",
+   23900,
+   null
+  ],
+  [
+   "Tallarin saltado vegeteriano",
+   16400,
+   null
+  ],
+  [
+   "Tacu tacu con seco de carne",
+   21600,
+   null
+  ],
+  [
+   "Pechuga De Pollo A La Plancha",
+   19500,
+   null
+  ],
+  [
+   "Chicharrón de cerdo para 2",
+   24900,
+   null
+  ],
+  [
+   "Tortilla de papas",
+   13900,
+   null
+  ],
+  [
+   "Churrasco + Fritas Y Ensalada",
+   18900,
+   null
+  ],
+  [
+   "Pollada",
+   20900,
+   null
+  ],
+  [
+   "Bisteck encebollado",
+   20999,
+   null
+  ],
+  [
+   "Salchipollo + Ensalada",
+   19999,
+   null
+  ],
+  [
+   "Ceviche de pescado",
+   27999,
+   null
+  ],
+  [
+   "Ceviche mixto",
+   29999,
+   null
+  ],
+  [
+   "Chicharrón de pescado",
+   19999,
+   null
+  ],
+  [
+   "Jalea mixta",
+   24999,
+   null
+  ],
+  [
+   "Arroz con mariscos",
+   25999,
+   null
+  ],
+  [
+   "Parihuela",
+   24999,
+   null
+  ],
+  [
+   "Sustancia de pollo",
+   20999,
+   null
+  ],
+  [
+   "Minuta de carne",
+   21999,
+   null
+  ],
+  [
+   "Mini broaster a lo pobre",
+   24900,
+   null
+  ],
+  [
+   "Pieza de brasa a lo pobre",
+   18999,
+   null
+  ],
+  [
+   "1/4 de brasa a lo pobre",
+   25900,
+   null
+  ],
+  [
+   "Mini - Mostrito A Lo Pobre",
+   23900,
+   null
+  ],
+  [
+   "Gaseosa Pepsi lata 354mL",
+   3400,
+   null
+  ],
+  [
+   "Agua Villa Del Sur 2.25L",
+   4900,
+   null
+  ],
+  [
+   "Paso de los toros pomelo 1.5",
+   7900,
+   null
+  ],
+  [
+   "Gaseosa Coca Cola 500 ml",
+   4900,
+   null
+  ],
+  [
+   "Gaseosa Fanta naranja 600 cc.",
+   4900,
+   null
+  ],
+  [
+   "Sprite lima limón 500 cc.",
+   4900,
+   null
+  ],
+  [
+   "Gaseosa Dorada 1.5 L",
+   7200,
+   null
+  ],
+  [
+   "Coca Cola Original 1.75",
+   8999,
+   null
+  ],
+  [
+   "Fanta naranja 1.75",
+   8999,
+   null
+  ],
+  [
+   "Sprite De 1.75",
+   8999,
+   null
+  ],
+  [
+   "Inka kola 600ml",
+   7999,
+   null
+  ],
+  [
+   "Porcion De Cancha",
+   3999,
+   null
+  ],
+  [
+   "Porcion de fritas",
+   9500,
+   null
+  ],
+  [
+   "Ensalada simple",
+   8500,
+   null
+  ],
+  [
+   "Ensalada mixta",
+   9900,
+   null
+  ],
+  [
+   "Ensalada completa",
+   11900,
+   null
+  ],
+  [
+   "Ensalada criolla",
+   6900,
+   null
+  ],
+  [
+   "Cerveza Corona Rubia 330 ml",
+   8000,
+   null
+  ],
+  [
+   "Brahma chopp lata 473ml",
+   6000,
+   null
+  ]
+ ]
+}

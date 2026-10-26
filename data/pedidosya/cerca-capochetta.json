@@ -1,0 +1,108 @@
+{
+ "store": "Capochetta",
+ "brand": "capochetta",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/capochetta-dcb02a97-7824-4160-9cb8-1e6f5d4723fc-menu",
+ "fetchedAt": "2026-10-26T19:12:00.193Z",
+ "products": [
+  [
+   "2 Sandwiches Calientes a Eleccion",
+   36320,
+   45600
+  ],
+  [
+   "2 Sandwiches Frios a Eleccion",
+   36380,
+   45100
+  ],
+  [
+   "19 % OFF",
+   36380,
+   45100
+  ],
+  [
+   "20 % OFF",
+   36320,
+   45600
+  ],
+  [
+   "Más vendido",
+   21600,
+   null
+  ],
+  [
+   "Sandwich Ave Cesare",
+   20600,
+   null
+  ],
+  [
+   "Sandwich Maialino",
+   21100,
+   null
+  ],
+  [
+   "Sandwich Nonno Toto",
+   17700,
+   null
+  ],
+  [
+   "Sandwich Più Elvira",
+   17800,
+   null
+  ],
+  [
+   "Sandwich Bravissimo",
+   20500,
+   null
+  ],
+  [
+   "Sandwich Mamma Elida",
+   23200,
+   null
+  ],
+  [
+   "Sandwich Porcellino",
+   23800,
+   null
+  ],
+  [
+   "Cookie Doble Chocolate",
+   4100,
+   null
+  ],
+  [
+   "Cookie Red Velvet",
+   4100,
+   null
+  ],
+  [
+   "Cookie Chocolate Blanco Y Pistacho",
+   4100,
+   null
+  ],
+  [
+   "Agua sin Gas",
+   3900,
+   null
+  ],
+  [
+   "Sprite Sabor Original 354 ml",
+   3900,
+   null
+  ],
+  [
+   "Coca-Cola Sabor Original 354 ml",
+   3900,
+   null
+  ],
+  [
+   "Coca Cola Zero 354ml",
+   3900,
+   null
+  ],
+  [
+   "Agua con Gas",
+   3900,
+   null
+  ]
+ ]
+}

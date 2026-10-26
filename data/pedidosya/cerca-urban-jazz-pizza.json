@@ -1,0 +1,358 @@
+{
+ "store": "Urban Jazz Pizza",
+ "brand": "urban jazz pizza",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/urban-jazz-pizza-menu",
+ "fetchedAt": "2026-10-26T19:25:00.088Z",
+ "products": [
+  [
+   "$24.649,15",
+   28999,
+   null
+  ],
+  [
+   "$25.499,15",
+   29999,
+   null
+  ],
+  [
+   "$21.249,15",
+   24999,
+   null
+  ],
+  [
+   "Más vendido",
+   1,
+   null
+  ],
+  [
+   "Pizza 488 (6 Porciones)",
+   22999,
+   null
+  ],
+  [
+   "Pizza 4 Quesos (6 Porciones)",
+   21999,
+   null
+  ],
+  [
+   "Pizza vegetariana (6 porc)",
+   22999,
+   null
+  ],
+  [
+   "Pizza Fugazzeta ( 6 Porciones)",
+   20999,
+   null
+  ],
+  [
+   "Pizza Con Jamón (6 Porciones)",
+   20999,
+   null
+  ],
+  [
+   "Pizza Napolitana (6 Porciones)",
+   20999,
+   null
+  ],
+  [
+   "Pizza rúculaparmesano (6 porc)",
+   20999,
+   null
+  ],
+  [
+   "Pizza Mozzarella (6 Porciones)",
+   19999,
+   null
+  ],
+  [
+   "Pizza fugazza y jamón (6 porc)",
+   21999,
+   null
+  ],
+  [
+   "Imperdible pizza margarita ch",
+   17000,
+   null
+  ],
+  [
+   "Pizza Meat (6 Porciones)",
+   23499,
+   null
+  ],
+  [
+   "Pizza Primavera (6 Porciones)",
+   22999,
+   null
+  ],
+  [
+   "Louisiana XT (6 Porciones)",
+   22999,
+   null
+  ],
+  [
+   "Pizza 5 Quesos (6 Porciones)",
+   23499,
+   null
+  ],
+  [
+   "Pizza meat (8 porciones)",
+   32499,
+   null
+  ],
+  [
+   "Pizza 4 quesos (8 porciones)",
+   30999,
+   null
+  ],
+  [
+   "Pizza vegetariana (8 porc)",
+   31999,
+   null
+  ],
+  [
+   "Pizza fugazzeta (8 porciones)",
+   29998,
+   null
+  ],
+  [
+   "Pizza 488 (8 porciones)",
+   31998,
+   null
+  ],
+  [
+   "Pizza primavera (8 porciones)",
+   26999,
+   null
+  ],
+  [
+   "Pizza con jamón (8 porciones)",
+   29999,
+   null
+  ],
+  [
+   "Pizza con rúcula (8 porc)",
+   29999,
+   null
+  ],
+  [
+   "Pizza pulledpork (8 porciones)",
+   32499,
+   null
+  ],
+  [
+   "Pizza Vegana (8 Porciones)",
+   30999,
+   null
+  ],
+  [
+   "PIzza 5 Quesos (8 Porciones)",
+   32499,
+   null
+  ],
+  [
+   "Pizza fuggaza y jamón (8 porc)",
+   30998,
+   null
+  ],
+  [
+   "Pizza Marinara (8 porciones)",
+   19100,
+   null
+  ],
+  [
+   "Margarita vegana - 6 porc",
+   19999,
+   null
+  ],
+  [
+   "Napolitana vegana - 6 porc",
+   18499,
+   null
+  ],
+  [
+   "Muzza vegana - 6 porciones",
+   19999,
+   null
+  ],
+  [
+   "Marinara vegana - 6 porciones",
+   15999,
+   null
+  ],
+  [
+   "Fugazza vegana - 6 porciones",
+   20999,
+   null
+  ],
+  [
+   "488 lado v - 6 porciones",
+   22999,
+   null
+  ],
+  [
+   "Vegan classic - 6 porciones",
+   21998,
+   null
+  ],
+  [
+   "Vegan classicmuzalmendra-6porc",
+   23499,
+   null
+  ],
+  [
+   "Funghi v vegana - 6 porciones",
+   20999,
+   null
+  ],
+  [
+   "Margarita vegana - 8 porciones",
+   28999,
+   null
+  ],
+  [
+   "Napolitana vegana - 8 porc",
+   30999,
+   null
+  ],
+  [
+   "Marinara vegana - 8 porciones",
+   21999,
+   null
+  ],
+  [
+   "Fugazza vegana - 8 porciones",
+   29999,
+   null
+  ],
+  [
+   "488 lado v - 8 porciones",
+   29999,
+   null
+  ],
+  [
+   "Vegan classic - 8 porciones",
+   30999,
+   null
+  ],
+  [
+   "Vegan classicmuzalmendra-8porc",
+   32499,
+   null
+  ],
+  [
+   "Funghi v vegana - 8 porciones",
+   29999,
+   null
+  ],
+  [
+   "Sándwich Pulled Pork",
+   14999,
+   null
+  ],
+  [
+   "Picadita",
+   14499,
+   null
+  ],
+  [
+   "Pan de Masa Madre",
+   2499,
+   null
+  ],
+  [
+   "Pan de Ajo",
+   2499,
+   null
+  ],
+  [
+   "Cachito de jamón",
+   5799,
+   null
+  ],
+  [
+   "Cachito de pizza",
+   5799,
+   null
+  ],
+  [
+   "Dip de pesto",
+   1499,
+   null
+  ],
+  [
+   "Cerveza Patagonia AMBER LAGER Lata 473mL",
+   4000,
+   null
+  ],
+  [
+   "Cerveza Andes Origen RUBIA Lata 473ml",
+   3800,
+   null
+  ],
+  [
+   "Gaseosa Pepsi Cola 354 Cc",
+   3300,
+   null
+  ],
+  [
+   "Gaseosa 7up lima limón 354 cc.",
+   3300,
+   null
+  ],
+  [
+   "Té Frío de Limón 500ml",
+   3300,
+   null
+  ],
+  [
+   "Té Frío de Durazno 500ml",
+   3300,
+   null
+  ],
+  [
+   "Papelón con Limón 500ml",
+   3300,
+   null
+  ],
+  [
+   "Agua mineral con Gas Eco de Los Andes 500 ml",
+   3000,
+   null
+  ],
+  [
+   "Agua mineral sin gas Eco de Los Andes 500 ml",
+   3000,
+   null
+  ],
+  [
+   "Malta +58 Ccs 473 ml",
+   3000,
+   null
+  ],
+  [
+   "Roll De Canela Glaseado",
+   5699,
+   null
+  ],
+  [
+   "Roll De Canela Con Oreo",
+   5699,
+   null
+  ],
+  [
+   "Roll de canela con ddl",
+   5699,
+   null
+  ],
+  [
+   "Roll de canela con oreo y ddl",
+   5699,
+   null
+  ],
+  [
+   "Roll De Canela Con Tiramisú",
+   5699,
+   null
+  ]
+ ]
+}

@@ -1,0 +1,73 @@
+{
+ "store": "La Guitarrita Palermo",
+ "brand": "la guitarrita",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/la-guitarrita-palermo-menu",
+ "fetchedAt": "2026-10-26T18:27:21.447Z",
+ "products": [
+  [
+   "Emp de vacio y provoleta",
+   4550,
+   null
+  ],
+  [
+   "Emp de carne a cuchillo",
+   4550,
+   null
+  ],
+  [
+   "Empanada humita",
+   4550,
+   null
+  ],
+  [
+   "Empanada de jamón y queso",
+   4550,
+   null
+  ],
+  [
+   "Empanada de pollo",
+   4550,
+   null
+  ],
+  [
+   "Empanada de queso y cebolla",
+   4550,
+   null
+  ],
+  [
+   "Empanada de verdura",
+   4550,
+   null
+  ],
+  [
+   "Empanadas de carne suave",
+   4550,
+   null
+  ],
+  [
+   "Grillito con jamón y queso",
+   8300,
+   null
+  ],
+  [
+   "Pizza fugazzetta grande",
+   37200,
+   null
+  ],
+  [
+   "Pizza albahaca grande",
+   35300,
+   null
+  ],
+  [
+   "Pizza napolitana con jamón",
+   45600,
+   null
+  ],
+  [
+   "Al corte fuga rellena c/jamon",
+   6700,
+   null
+  ]
+ ]
+}

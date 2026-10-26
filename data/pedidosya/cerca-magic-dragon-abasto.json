@@ -1,0 +1,353 @@
+{
+ "store": "Magic Dragon - Abasto",
+ "brand": "magic dragon",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/magic-dragon-abasto-e89f06cf-f917-4001-aab0-9d661a8ed255-menu",
+ "fetchedAt": "2026-10-26T18:47:21.876Z",
+ "products": [
+  [
+   "Chaw fan con camarones",
+   15040,
+   18800
+  ],
+  [
+   "Promo para compartir",
+   39200,
+   49000
+  ],
+  [
+   "Chaw fan y haromaki",
+   15000,
+   null
+  ],
+  [
+   "Cerdo agridulce",
+   19800,
+   null
+  ],
+  [
+   "Pollo agridulce",
+   21900,
+   null
+  ],
+  [
+   "Promo - chaw fan y haromaki",
+   15000,
+   null
+  ],
+  [
+   "Chaw mien, chaw fan + 3 wan tan",
+   18500,
+   null
+  ],
+  [
+   "Nankin de pollo",
+   15500,
+   null
+  ],
+  [
+   "Pollo picante + chaw fan + wan tan",
+   16500,
+   null
+  ],
+  [
+   "Chaw Fan Pollo Y Carne",
+   22000,
+   null
+  ],
+  [
+   "Pollo al curry",
+   18800,
+   null
+  ],
+  [
+   "Carne picante",
+   18600,
+   null
+  ],
+  [
+   "Cerdo especiado",
+   15000,
+   null
+  ],
+  [
+   "Carne macerada",
+   17400,
+   null
+  ],
+  [
+   "Más vendido",
+   15000,
+   null
+  ],
+  [
+   "Chaw fan + haromaki",
+   15000,
+   null
+  ],
+  [
+   "20 % OFF",
+   15040,
+   18800
+  ],
+  [
+   "Promo para compartir + bebida",
+   52950,
+   null
+  ],
+  [
+   "Chaw fan y haromaki + bebida 1.5",
+   18950,
+   null
+  ],
+  [
+   "Chaw mien + chaw fan + wantan + bebida 1.5",
+   22450,
+   null
+  ],
+  [
+   "Nankin de pollo + bebida 1.5",
+   19450,
+   null
+  ],
+  [
+   "Pollo picante + bebida 1.5",
+   20450,
+   null
+  ],
+  [
+   "Pollo al curry + bebida",
+   22750,
+   null
+  ],
+  [
+   "Chaw mien pollo y carne + bebida",
+   22650,
+   null
+  ],
+  [
+   "Cerdo especiado + bebida",
+   18950,
+   null
+  ],
+  [
+   "Carne picante + bebida 1.5",
+   22550,
+   null
+  ],
+  [
+   "Chaw fan + chop suey + bebida 1.5",
+   22950,
+   null
+  ],
+  [
+   "Promo para compartir + cerveza",
+   54800,
+   null
+  ],
+  [
+   "Chaw fan y haromaki + cerveza",
+   20800,
+   null
+  ],
+  [
+   "Chaw mien, chaw fan + cerveza",
+   24300,
+   null
+  ],
+  [
+   "Nankin + cerveza",
+   21300,
+   null
+  ],
+  [
+   "Pollo picante + cerveza",
+   22300,
+   null
+  ],
+  [
+   "Chaw fan mixto + cerveza",
+   27800,
+   null
+  ],
+  [
+   "Pollo al curry + cerveza",
+   24600,
+   null
+  ],
+  [
+   "Cerdo especiado + cerveza",
+   20800,
+   null
+  ],
+  [
+   "Carne picante + cerveza",
+   24400,
+   null
+  ],
+  [
+   "Carne macerada + cerveza",
+   23200,
+   null
+  ],
+  [
+   "Chaw fan, chop suey + cerveza",
+   24800,
+   null
+  ],
+  [
+   "Pollo con verduras + cerveza",
+   25700,
+   null
+  ],
+  [
+   "Veggie magic + cerveza sin alcohol",
+   22800,
+   null
+  ],
+  [
+   "Veggie magic",
+   19000,
+   null
+  ],
+  [
+   "Pollo con verduras",
+   19900,
+   null
+  ],
+  [
+   "Chaw fan magic",
+   12500,
+   null
+  ],
+  [
+   "Haromaki de carne (1 unidad)",
+   4000,
+   null
+  ],
+  [
+   "Haromaki de verdura (1 unidad)",
+   4000,
+   null
+  ],
+  [
+   "Haromakis de carne (2 unidades)",
+   6000,
+   null
+  ],
+  [
+   "Haromakis de verdura (2 unidades)",
+   6000,
+   null
+  ],
+  [
+   "Boconccinos de salmón (5 unidades)",
+   4000,
+   null
+  ],
+  [
+   "Boconccinos de arroz (5 unidades)",
+   4000,
+   null
+  ],
+  [
+   "Eco de los andes sin gas 500 ml",
+   1900,
+   null
+  ],
+  [
+   "Eco de los andes con gas 500 ml",
+   1900,
+   null
+  ],
+  [
+   "Pepsi regular 500 ml",
+   2200,
+   null
+  ],
+  [
+   "Pepsi black 500 ml",
+   2200,
+   null
+  ],
+  [
+   "Mirinda 500 ml",
+   2200,
+   null
+  ],
+  [
+   "H2oh limoneto 500 ml",
+   2400,
+   null
+  ],
+  [
+   "H2o manzanella 500 ml",
+   2400,
+   null
+  ],
+  [
+   "Cerveza Stella Artois 330 ml",
+   5800,
+   null
+  ],
+  [
+   "Quilmes 340ml",
+   4300,
+   null
+  ],
+  [
+   "Quilmes stout 340 ml",
+   7000,
+   null
+  ],
+  [
+   "Quilmes 0.0% 473 ml",
+   2700,
+   null
+  ],
+  [
+   "Cerveza corona 330 ml",
+   7400,
+   null
+  ],
+  [
+   "Paso de los toros 500 ml",
+   2200,
+   null
+  ],
+  [
+   "Pepsi 1.5 l",
+   3950,
+   null
+  ],
+  [
+   "Pepsi black 1.5 l",
+   3950,
+   null
+  ],
+  [
+   "7up free 1.5 l",
+   3950,
+   null
+  ],
+  [
+   "Agua h2oh saborizada sin gas de naranja 1.5 l",
+   3950,
+   null
+  ],
+  [
+   "Agua saborizada h2oh pomelo 1.5 l",
+   3950,
+   null
+  ],
+  [
+   "Agua saborizada h2oh manzana 1.5 l",
+   3950,
+   null
+  ],
+  [
+   "Agua saborizada h2oh limoneto 1.5 l",
+   3950,
+   null
+  ]
+ ]
+}

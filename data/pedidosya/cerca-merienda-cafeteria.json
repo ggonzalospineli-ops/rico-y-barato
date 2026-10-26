@@ -1,0 +1,353 @@
+{
+ "store": "Merienda - Cafeteria",
+ "brand": "merienda palermo",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/merienda--cafeteria-a5b17f3a-847b-4065-9e9c-5fb5d4b48ee5-menu",
+ "fetchedAt": "2026-10-26T19:25:26.043Z",
+ "products": [
+  [
+   "$10.642,5",
+   14190,
+   null
+  ],
+  [
+   "Promo - Un latte más un croissant relleno",
+   9520,
+   11200
+  ],
+  [
+   "Promo  -  Un latte más dos medialunas",
+   8415,
+   9900
+  ],
+  [
+   "Más vendido",
+   10890,
+   null
+  ],
+  [
+   "Pancakes triples",
+   21560,
+   null
+  ],
+  [
+   "Avocado toast",
+   19690,
+   null
+  ],
+  [
+   "Avocado toast con huevos revueltos",
+   19250,
+   null
+  ],
+  [
+   "Tostadas francesas con frutos rojos y helado",
+   20350,
+   null
+  ],
+  [
+   "Canasto de tostadas de pan",
+   17050,
+   null
+  ],
+  [
+   "15 % OFF",
+   9520,
+   11200
+  ],
+  [
+   "Pastafrola + brownie melba",
+   19580,
+   null
+  ],
+  [
+   "Huevos revueltos con pancakes",
+   18590,
+   null
+  ],
+  [
+   "Huevos revueltos con rodajas de pan tostado",
+   18150,
+   null
+  ],
+  [
+   "Croissant de dulce de leche",
+   10120,
+   null
+  ],
+  [
+   "Croissant pastelera",
+   9790,
+   null
+  ],
+  [
+   "Croissant de huevos y panceta",
+   17490,
+   null
+  ],
+  [
+   "Crumble de manzana",
+   14850,
+   null
+  ],
+  [
+   "Pastafrola de membrillo",
+   13750,
+   null
+  ],
+  [
+   "Brownie melba",
+   11550,
+   null
+  ],
+  [
+   "Crumble tibio con helado",
+   15950,
+   null
+  ],
+  [
+   "Brownie melba tibio con helado",
+   14850,
+   null
+  ],
+  [
+   "Tostado de jamón y queso pan de campo brioche",
+   18150,
+   null
+  ],
+  [
+   "Chipa sándwich lomito",
+   14850,
+   null
+  ],
+  [
+   "Sándwich de milanesa de lomo",
+   28940,
+   null
+  ],
+  [
+   "Sándwich lomito en fiambre",
+   18500,
+   null
+  ],
+  [
+   "Sándwich veggie berenjena",
+   13900,
+   null
+  ],
+  [
+   "Bruschetta Mediterránea",
+   20790,
+   null
+  ],
+  [
+   "Bruschettas Portobelos confitados",
+   19690,
+   null
+  ],
+  [
+   "Alfajor de almendras",
+   9790,
+   null
+  ],
+  [
+   "Alfajor de maicena",
+   8250,
+   null
+  ],
+  [
+   "Alfajor de pistacho",
+   11550,
+   null
+  ],
+  [
+   "Alfajor de mantecol",
+   8360,
+   null
+  ],
+  [
+   "Melonada",
+   8690,
+   null
+  ],
+  [
+   "Limonada con frutos rojos",
+   8690,
+   null
+  ],
+  [
+   "Limonada clásica y menta",
+   7920,
+   null
+  ],
+  [
+   "Budin de naranja",
+   8690,
+   null
+  ],
+  [
+   "Budin de banana split",
+   9020,
+   null
+  ],
+  [
+   "Licuado de banana naranja frutos rojos",
+   9350,
+   null
+  ],
+  [
+   "Licuado de banana almendras tostadas vainilla canela",
+   8690,
+   null
+  ],
+  [
+   "Licuado de naranja durazno y frutillas",
+   8690,
+   null
+  ],
+  [
+   "Licuado de banana durazno frutilla con leche o agua",
+   8690,
+   null
+  ],
+  [
+   "Tita de limón y chocolate",
+   6490,
+   null
+  ],
+  [
+   "Cheesecake con frutos rojos",
+   14740,
+   null
+  ],
+  [
+   "Cheesecake maracuyá",
+   14740,
+   null
+  ],
+  [
+   "Torta vigilante queso y batata",
+   14850,
+   null
+  ],
+  [
+   "Torta chaja de merengue",
+   15950,
+   null
+  ],
+  [
+   "Torta vasca",
+   16170,
+   null
+  ],
+  [
+   "Chocotorta",
+   13750,
+   null
+  ],
+  [
+   "Torta red velvet",
+   15950,
+   null
+  ],
+  [
+   "Torta bruce",
+   16390,
+   null
+  ],
+  [
+   "Torta flan de pistacho",
+   16170,
+   null
+  ],
+  [
+   "Torta de lemon pie",
+   13750,
+   null
+  ],
+  [
+   "Frappe chocolatada melba",
+   8690,
+   null
+  ],
+  [
+   "Frappe vainillada lincoln",
+   8690,
+   null
+  ],
+  [
+   "Cookies red velvet",
+   8800,
+   null
+  ],
+  [
+   "Cookies chocolate",
+   9240,
+   null
+  ],
+  [
+   "Cookies Nutella",
+   10120,
+   null
+  ],
+  [
+   "Croissant artesanal",
+   6930,
+   null
+  ],
+  [
+   "Té merienda blend",
+   4800,
+   null
+  ],
+  [
+   "Té chai",
+   4800,
+   null
+  ],
+  [
+   "Té English Breakfast",
+   4800,
+   null
+  ],
+  [
+   "Té verde Thai Wind: Ananá caramelizado y coco",
+   4800,
+   null
+  ],
+  [
+   "Gaseosa cola pepsi 354 ml",
+   7150,
+   null
+  ],
+  [
+   "Gaseosa Pepsi Black 354 ml",
+   7150,
+   null
+  ],
+  [
+   "Gaseosa 7Up Lima 354 ml",
+   7150,
+   null
+  ],
+  [
+   "Gaseosa 7up lima limón 354 ml",
+   7150,
+   null
+  ],
+  [
+   "Cerveza stella artois 330 ml",
+   8690,
+   null
+  ],
+  [
+   "Agua villavicencio con gas",
+   3630,
+   null
+  ],
+  [
+   "Agua villavicencio sin gas",
+   3630,
+   null
+  ]
+ ]
+}

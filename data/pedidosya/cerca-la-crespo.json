@@ -1,0 +1,53 @@
+{
+ "store": "La Crespo",
+ "brand": "la crespo",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/la-crespo-menu",
+ "fetchedAt": "2026-10-26T18:28:23.261Z",
+ "products": [
+  [
+   "Hummus",
+   14990,
+   null
+  ],
+  [
+   "Berenjena ahumada",
+   14990,
+   null
+  ],
+  [
+   "Hígado picado",
+   14990,
+   null
+  ],
+  [
+   "Knishe de papa",
+   4590,
+   null
+  ],
+  [
+   "Mini strudel de espinaca",
+   5490,
+   null
+  ],
+  [
+   "Lajmayín",
+   4590,
+   null
+  ],
+  [
+   "Hot pastrami en bagel casero",
+   40490,
+   null
+  ],
+  [
+   "Chocotorta",
+   10900,
+   null
+  ],
+  [
+   "Cheescake de la casa",
+   10900,
+   null
+  ]
+ ]
+}

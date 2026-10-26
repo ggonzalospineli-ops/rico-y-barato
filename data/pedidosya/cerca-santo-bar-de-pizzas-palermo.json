@@ -1,0 +1,38 @@
+{
+ "store": "Santo Bar De Pizzas- Palermo",
+ "brand": "santo bar de pizzas",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/santo-bar-de-pizzas--palermo-menu",
+ "fetchedAt": "2026-10-26T18:31:22.285Z",
+ "products": [
+  [
+   "Docena de empanadas",
+   43296,
+   54120
+  ],
+  [
+   "Pizza grande mitad napolitana + mitad de jamón",
+   26312,
+   32890
+  ],
+  [
+   "Pizza fugazzeta grande",
+   41030,
+   null
+  ],
+  [
+   "Pizza calabresa grande",
+   33990,
+   null
+  ],
+  [
+   "Pizza gran santo grande",
+   41690,
+   null
+  ],
+  [
+   "Pizza red onion grande",
+   40150,
+   null
+  ]
+ ]
+}

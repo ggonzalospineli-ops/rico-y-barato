@@ -1,0 +1,23 @@
+{
+ "store": "Gelée Helados",
+ "brand": "gelee helados",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/gelee-helados-menu",
+ "fetchedAt": "2026-10-26T18:29:35.343Z",
+ "products": [
+  [
+   "Helado 1 KG",
+   25000,
+   null
+  ],
+  [
+   "Helado 1/2 Kg",
+   15000,
+   null
+  ],
+  [
+   "Helado 1/4 Kg",
+   8500,
+   null
+  ]
+ ]
+}

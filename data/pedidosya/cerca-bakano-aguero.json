@@ -1,0 +1,48 @@
+{
+ "store": "Bakano - Aguero",
+ "brand": "bakano",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/bakano-aguero-menu",
+ "fetchedAt": "2026-10-26T18:30:57.622Z",
+ "products": [
+  [
+   "Pizza mozzarella gde",
+   25080,
+   31350
+  ],
+  [
+   "Pizza napolitana gde",
+   30800,
+   38500
+  ],
+  [
+   "Porc. De Mozzarella",
+   3520,
+   null
+  ],
+  [
+   "Porc. de mozza y albahaca",
+   5280,
+   null
+  ],
+  [
+   "Porc. De Mozzarella Y Rúcula",
+   5280,
+   null
+  ],
+  [
+   "Porc. De Fugazzeta",
+   6710,
+   null
+  ],
+  [
+   "Porc. Fainá",
+   2640,
+   null
+  ],
+  [
+   "Panqueque",
+   10890,
+   null
+  ]
+ ]
+}

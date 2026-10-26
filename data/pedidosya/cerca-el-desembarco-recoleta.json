@@ -1,0 +1,368 @@
+{
+ "store": "El Desembarco - Recoleta",
+ "brand": "el desembarco",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/el-desembarco-recoleta-2cb3cbcc-1380-415d-8ec6-c1084c2dabff-menu",
+ "fetchedAt": "2026-10-26T18:41:03.842Z",
+ "products": [
+  [
+   "Estuche de Papas Fritas",
+   2790,
+   5700
+  ],
+  [
+   "2 x Bajoncito Slice",
+   11590,
+   19990
+  ],
+  [
+   "2 x Cheese Slice",
+   9990,
+   17140
+  ],
+  [
+   "Vicio Simple + Papas",
+   9454,
+   16300
+  ],
+  [
+   "Bajoncito + Papas",
+   9976,
+   17200
+  ],
+  [
+   "Tostado Panceta y Queso",
+   5290,
+   8900
+  ],
+  [
+   "2 Doble Cheese + 2 Papas",
+   29990,
+   50000
+  ],
+  [
+   "3 Bajoncitos Slice + Papas P/Compartir",
+   24990,
+   41998
+  ],
+  [
+   "Tostado Panceta, Queso y Huevo",
+   5990,
+   10000
+  ],
+  [
+   "Tostado Jamón y Queso",
+   5490,
+   9200
+  ],
+  [
+   "Tostado Jamón, Queso y Huevo",
+   6090,
+   10200
+  ],
+  [
+   "2 Petit Butter + 2 Papas",
+   22590,
+   37200
+  ],
+  [
+   "Milanesa Napolitana de Pollo + Papas",
+   19990,
+   32200
+  ],
+  [
+   "Milanesa Clasica de Pollo + Papas",
+   15690,
+   24150
+  ],
+  [
+   "Sándwich Completo de Pollo",
+   18990,
+   27400
+  ],
+  [
+   "Porción de Papas",
+   6990,
+   10100
+  ],
+  [
+   "San Antonio Slice + Papas",
+   14890,
+   21190
+  ],
+  [
+   "Doble Cheese + Papas",
+   17490,
+   25000
+  ],
+  [
+   "San Antonio + Papas",
+   18690,
+   26600
+  ],
+  [
+   "Buen Puerto + Papas",
+   20490,
+   29300
+  ],
+  [
+   "Doble Cheese Slice + Papas",
+   17990,
+   null
+  ],
+  [
+   "42 % OFF",
+   11590,
+   19990
+  ],
+  [
+   "Cheese Slice Doble + Nuggets",
+   19780,
+   null
+  ],
+  [
+   "Bajoncito Slice Triple + Papas",
+   24890,
+   null
+  ],
+  [
+   "Triple Cheese Slice + Papas",
+   23290,
+   null
+  ],
+  [
+   "Vicio Slice Doble + Papas",
+   19190,
+   null
+  ],
+  [
+   "Más vendido",
+   19590,
+   null
+  ],
+  [
+   "30 % OFF",
+   14890,
+   21190
+  ],
+  [
+   "39 % OFF",
+   22590,
+   37200
+  ],
+  [
+   "40 % OFF",
+   29990,
+   50000
+  ],
+  [
+   "Box 2 Cheese Doble + 2 Papas",
+   50600,
+   null
+  ],
+  [
+   "Box 2 cheese simple+ 2 Papas",
+   34500,
+   null
+  ],
+  [
+   "Petit Butter + Papas",
+   18800,
+   null
+  ],
+  [
+   "Perla Negra + Papas",
+   19700,
+   null
+  ],
+  [
+   "20 % OFF",
+   23690,
+   29600
+  ],
+  [
+   "Cheese Simple + Papas",
+   15800,
+   null
+  ],
+  [
+   "38 % OFF",
+   19990,
+   32200
+  ],
+  [
+   "Milanesa Napolitana de Carne + Papas",
+   32200,
+   null
+  ],
+  [
+   "35 % OFF",
+   15690,
+   24150
+  ],
+  [
+   "Milanesa Clasica de Carne + Papas",
+   25300,
+   null
+  ],
+  [
+   "Milanesa Cheddar Panceta Pollo + Papas",
+   27600,
+   null
+  ],
+  [
+   "Milanesa Cheddar Panceta Carne + Papas",
+   28750,
+   null
+  ],
+  [
+   "Milanesa Caballo de Pollo + Papas",
+   25300,
+   null
+  ],
+  [
+   "Milanesa Caballo de Carne + Papas",
+   26450,
+   null
+  ],
+  [
+   "Milanesa Fugazeta de Carne + Papas",
+   32200,
+   null
+  ],
+  [
+   "Milanesa Fugazeta de Pollo + Papas",
+   31050,
+   null
+  ],
+  [
+   "Sándwich Completo de Carne",
+   28400,
+   null
+  ],
+  [
+   "31 % OFF",
+   18990,
+   27400
+  ],
+  [
+   "28 % OFF",
+   18990,
+   26300
+  ],
+  [
+   "Sándwich Especial de Carne",
+   27400,
+   null
+  ],
+  [
+   "Sándwich de Milanesa Pollo",
+   22800,
+   null
+  ],
+  [
+   "Sándwich de Milanesa Carne",
+   24000,
+   null
+  ],
+  [
+   "Papas Pulled Pork",
+   23000,
+   null
+  ],
+  [
+   "Aros de Cebolla",
+   16600,
+   null
+  ],
+  [
+   "Picada + Dips",
+   43700,
+   null
+  ],
+  [
+   "Empanadas x2",
+   11000,
+   null
+  ],
+  [
+   "Triangulos De Muzzarella",
+   22800,
+   null
+  ],
+  [
+   "Nuggets x10 + Papas",
+   18800,
+   null
+  ],
+  [
+   "51 % OFF",
+   2790,
+   5700
+  ],
+  [
+   "Caesar con Pollo Grill",
+   21620,
+   null
+  ],
+  [
+   "Caesar sin Pollo",
+   13800,
+   null
+  ],
+  [
+   "Caesar con Pollo Crispy",
+   25300,
+   null
+  ],
+  [
+   "41 % OFF",
+   5290,
+   8900
+  ],
+  [
+   "Sprite Zero 500 ML",
+   4800,
+   null
+  ],
+  [
+   "Sprite Lima-Limón 500 ML",
+   4800,
+   null
+  ],
+  [
+   "Fanta Naranja 500 ML",
+   4800,
+   null
+  ],
+  [
+   "Coca Cola Zero 500 ML",
+   4800,
+   null
+  ],
+  [
+   "Aquarius Pomelo 500 ML",
+   4800,
+   null
+  ],
+  [
+   "Aquarius Pera 500 ML",
+   4800,
+   null
+  ],
+  [
+   "Aquarius Manzana 500 ML",
+   4800,
+   null
+  ],
+  [
+   "Agua Smartwater sin Gas 591 ML",
+   4800,
+   null
+  ],
+  [
+   "Coca Cola Original 500 ML",
+   4800,
+   null
+  ]
+ ]
+}

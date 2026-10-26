@@ -1,0 +1,68 @@
+{
+ "store": "Barra Enchilada",
+ "brand": "barra enchilada",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/barra-enchilada-6083e00f-d839-4d07-b17f-15aae3f6abab-menu",
+ "fetchedAt": "2026-10-26T18:42:29.420Z",
+ "products": [
+  [
+   "Quesadilla",
+   10400,
+   13000
+  ],
+  [
+   "Burrito gigante",
+   16800,
+   21000
+  ],
+  [
+   "20 % OFF",
+   10400,
+   13000
+  ],
+  [
+   "Más vendido",
+   10000,
+   null
+  ],
+  [
+   "Chihuahua",
+   7500,
+   null
+  ],
+  [
+   "Tex mex",
+   7500,
+   null
+  ],
+  [
+   "Jalisco",
+   7500,
+   null
+  ],
+  [
+   "Burrito personal mediodia",
+   9900,
+   null
+  ],
+  [
+   "Burrito grande",
+   17000,
+   null
+  ],
+  [
+   "Burrito personal",
+   9999,
+   null
+  ],
+  [
+   "Bowl gigante",
+   21000,
+   null
+  ],
+  [
+   "Bowl grande",
+   17000,
+   null
+  ]
+ ]
+}

@@ -1,0 +1,53 @@
+{
+ "store": "Bodegon De Pastas",
+ "brand": "bodegon de pastas",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/bodegon-de-pastas-9cbd59fb-5ce8-41fb-b5ae-9e652c61392c-menu",
+ "fetchedAt": "2026-10-26T19:22:46.820Z",
+ "products": [
+  [
+   "Promo - 2 ñoquis con salsa de tomate",
+   23500,
+   29800
+  ],
+  [
+   "Promo - 2 spaghettis italianos con salsa de tomate",
+   23500,
+   29800
+  ],
+  [
+   "21 % OFF",
+   23500,
+   29800
+  ],
+  [
+   "Más vendido",
+   16900,
+   null
+  ],
+  [
+   "Ravioles de vegetales al curry con salsa a elección",
+   16900,
+   null
+  ],
+  [
+   "Canelones rellenos de hongos, cabutia y cebolla caramelizada con salsa a elección",
+   16900,
+   null
+  ],
+  [
+   "Crema de albahaca y almendras",
+   8800,
+   null
+  ],
+  [
+   "Tomate",
+   5800,
+   null
+  ],
+  [
+   "Limonada vaso",
+   6400,
+   null
+  ]
+ ]
+}

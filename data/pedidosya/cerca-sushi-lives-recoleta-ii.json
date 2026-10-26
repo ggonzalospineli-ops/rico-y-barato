@@ -1,0 +1,423 @@
+{
+ "store": "Sushi Lives Recoleta Ii",
+ "brand": "sushi lives",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/sushi-lives-recoleta-ii-99785ace-2b4a-4f62-a098-795fb3a9cc8b-menu",
+ "fetchedAt": "2026-10-26T18:56:22.461Z",
+ "products": [
+  [
+   "Combinado Selección Salmon 12P",
+   20600,
+   51500
+  ],
+  [
+   "Promo mix 12 piezas -50%",
+   13900,
+   27800
+  ],
+  [
+   "Promo classic 12 piezas -50%",
+   18500,
+   37000
+  ],
+  [
+   "Promo salmon 12 piezas",
+   25750,
+   51500
+  ],
+  [
+   "Promo salmon 25 piezas -50 off",
+   49250,
+   98500
+  ],
+  [
+   "Shrimps Sushi Salad",
+   19276,
+   31600
+  ],
+  [
+   "Chicken Honey Sushi Salad",
+   19276,
+   31600
+  ],
+  [
+   "Salmón Sushi Salad",
+   20540,
+   31600
+  ],
+  [
+   "Poke Salmón",
+   15120,
+   21600
+  ],
+  [
+   "Veggie Sushi Salad",
+   14700,
+   21000
+  ],
+  [
+   "Mexican Sushi Salad",
+   23700,
+   31600
+  ],
+  [
+   "Combinado Veggie 15P",
+   16880,
+   21100
+  ],
+  [
+   "Combinado Caribe 15P",
+   19600,
+   24500
+  ],
+  [
+   "Combinado Báltico 15P",
+   29920,
+   37400
+  ],
+  [
+   "Combinado Mediterráneo 15P",
+   23440,
+   29300
+  ],
+  [
+   "Combinado Céltico 15P",
+   32080,
+   40100
+  ],
+  [
+   "Combinado Jónico 15P",
+   36480,
+   45600
+  ],
+  [
+   "Combinado Caribe 30P",
+   38560,
+   48200
+  ],
+  [
+   "Combinado Báltico 30P",
+   54400,
+   68000
+  ],
+  [
+   "Combinado Mediterráneo 30P",
+   56640,
+   70800
+  ],
+  [
+   "Feel Roll 5p",
+   13350,
+   null
+  ],
+  [
+   "50 % OFF",
+   13900,
+   27800
+  ],
+  [
+   "Temaki salmon",
+   9900,
+   null
+  ],
+  [
+   "Temaki langostino",
+   9900,
+   null
+  ],
+  [
+   "Temaki vegano",
+   8300,
+   null
+  ],
+  [
+   "Poke Veggie",
+   11500,
+   null
+  ],
+  [
+   "Poke Kanikama",
+   15400,
+   null
+  ],
+  [
+   "30 % OFF",
+   15120,
+   21600
+  ],
+  [
+   "35 % OFF",
+   20540,
+   31600
+  ],
+  [
+   "39 % OFF",
+   19276,
+   31600
+  ],
+  [
+   "25 % OFF",
+   23700,
+   31600
+  ],
+  [
+   "Harumaki Carne 5u",
+   12500,
+   null
+  ],
+  [
+   "Harumaki Verdura 5u",
+   12500,
+   null
+  ],
+  [
+   "Albóndigas De Salmón 5u",
+   12500,
+   null
+  ],
+  [
+   "Langostinos Panizados 5u",
+   17900,
+   null
+  ],
+  [
+   "20 % OFF",
+   16880,
+   21100
+  ],
+  [
+   "60 % OFF",
+   20600,
+   51500
+  ],
+  [
+   "15 % OFF",
+   40970,
+   48200
+  ],
+  [
+   "Wok box chow fan",
+   17000,
+   null
+  ],
+  [
+   "Wok box yakimeshi",
+   17000,
+   null
+  ],
+  [
+   "Roll NYP Rebozado 5p",
+   14500,
+   null
+  ],
+  [
+   "Roll Indonesia 5p",
+   15500,
+   null
+  ],
+  [
+   "Roll Tasmania 5p",
+   13350,
+   null
+  ],
+  [
+   "Roll Fiji 5p",
+   6450,
+   null
+  ],
+  [
+   "Feel Roll Veggie 5p",
+   13350,
+   null
+  ],
+  [
+   "Roll Aruba 5p",
+   6450,
+   null
+  ],
+  [
+   "Caiman Roll Veggie 5p",
+   6450,
+   null
+  ],
+  [
+   "Roll Ibiza 5p",
+   14500,
+   null
+  ],
+  [
+   "Roll New York Phila 5p",
+   13350,
+   null
+  ],
+  [
+   "Roll Philadelphia 5p",
+   13350,
+   null
+  ],
+  [
+   "Roll California 5p",
+   10100,
+   null
+  ],
+  [
+   "Roll New York 5p",
+   15500,
+   null
+  ],
+  [
+   "Roll Borneo 5p",
+   10100,
+   null
+  ],
+  [
+   "Roll Haití 5p",
+   11750,
+   null
+  ],
+  [
+   "Roll Bahamas 5p",
+   10100,
+   null
+  ],
+  [
+   "Roll Bali 5p",
+   14500,
+   null
+  ],
+  [
+   "Roll Hawaii 5p",
+   13350,
+   null
+  ],
+  [
+   "Roll Dominica 5p",
+   10100,
+   null
+  ],
+  [
+   "Roll Nueva Zelanda 5p",
+   15500,
+   null
+  ],
+  [
+   "Roll Punta Cana 5p",
+   11750,
+   null
+  ],
+  [
+   "Maki Grill 5p",
+   6450,
+   null
+  ],
+  [
+   "Maki Sake 5p",
+   13350,
+   null
+  ],
+  [
+   "Maki Sake Zero 5p",
+   15500,
+   null
+  ],
+  [
+   "Maki Green Style 5p",
+   6450,
+   null
+  ],
+  [
+   "Maki California 5p",
+   10100,
+   null
+  ],
+  [
+   "Niguiri De Salmón 5p",
+   17000,
+   null
+  ],
+  [
+   "Niguiri Veggie 5p",
+   9200,
+   null
+  ],
+  [
+   "Niguiri De Langostino 5p",
+   16200,
+   null
+  ],
+  [
+   "Geisha Salmón 5p",
+   17000,
+   null
+  ],
+  [
+   "Geisha Salmon Feel 5p",
+   13900,
+   null
+  ],
+  [
+   "Sashimi De Salmón 5p",
+   20400,
+   null
+  ],
+  [
+   "Sashimi De Langostino 5p",
+   20400,
+   null
+  ],
+  [
+   "Salsa de soja",
+   1500,
+   null
+  ],
+  [
+   "Salsa Bs.As",
+   1800,
+   null
+  ],
+  [
+   "Wasabi",
+   1100,
+   null
+  ],
+  [
+   "Salsa agridulce",
+   1800,
+   null
+  ],
+  [
+   "Jengibre",
+   1100,
+   null
+  ],
+  [
+   "Tableta dulce de leche 50 grs",
+   4216,
+   null
+  ],
+  [
+   "Pinta Dulce De Leche Doble Tentacion 375g",
+   11308,
+   null
+  ],
+  [
+   "Pinta Chocolate Doble Tentación Freddo 375 G",
+   11308,
+   null
+  ],
+  [
+   "Pinta Frutilla 375g",
+   11308,
+   null
+  ],
+  [
+   "Gio - Frambuesas Bañadas",
+   9920,
+   null
+  ],
+  [
+   "Pinta Bombones Dulce De Leche 180g",
+   13850,
+   null
+  ]
+ ]
+}

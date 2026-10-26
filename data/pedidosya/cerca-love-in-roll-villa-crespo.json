@@ -1,0 +1,88 @@
+{
+ "store": "Love In Roll - Villa Crespo",
+ "brand": "love in roll",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/love-in-roll-villa-crespo-5bbe36e5-b33f-44b4-bc51-5e7189afa41b-menu",
+ "fetchedAt": "2026-10-26T19:09:40.611Z",
+ "products": [
+  [
+   "Porción de papas fritas",
+   9000,
+   null
+  ],
+  [
+   "Porción de falafel",
+   9000,
+   null
+  ],
+  [
+   "Rollo luigi",
+   17000,
+   null
+  ],
+  [
+   "Rollo sri sri luí (vegano)",
+   17000,
+   null
+  ],
+  [
+   "Ensalada sri sri luí (vegano)",
+   18000,
+   null
+  ],
+  [
+   "Ensalada bruce luí",
+   18000,
+   null
+  ],
+  [
+   "Ensalada luigi",
+   18000,
+   null
+  ],
+  [
+   "Guiso De Lentejas",
+   14000,
+   null
+  ],
+  [
+   "Sopa ZZ Top",
+   11000,
+   null
+  ],
+  [
+   "La Rica Chaufa",
+   16000,
+   null
+  ],
+  [
+   "Pasta con brócoli y limón.",
+   16000,
+   null
+  ],
+  [
+   "Sopa levanta muertos",
+   11000,
+   null
+  ],
+  [
+   "Más vendido",
+   17000,
+   null
+  ],
+  [
+   "Rollo green luí (apto vegano)",
+   17000,
+   null
+  ],
+  [
+   "Rollo De Lui",
+   17000,
+   null
+  ],
+  [
+   "Ensalada green luí (vegano)",
+   18000,
+   null
+  ]
+ ]
+}

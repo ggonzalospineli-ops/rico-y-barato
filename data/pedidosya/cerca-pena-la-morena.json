@@ -1,0 +1,128 @@
+{
+ "store": "Peña La Morena",
+ "brand": "pena la morena",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/pena-la-morena-menu",
+ "fetchedAt": "2026-10-26T19:01:14.076Z",
+ "products": [
+  [
+   "Empanada de carne a cuchillo",
+   3600,
+   null
+  ],
+  [
+   "Empanada de queso y cebolla",
+   3600,
+   null
+  ],
+  [
+   "Empanada de jamón y queso",
+   3600,
+   null
+  ],
+  [
+   "Papas fritas",
+   9800,
+   null
+  ],
+  [
+   "Ensalada de lechuga y tomate",
+   9800,
+   null
+  ],
+  [
+   "Puré de Papa",
+   9800,
+   null
+  ],
+  [
+   "Puré de Calabaza",
+   9800,
+   null
+  ],
+  [
+   "Queso con dulce de cayote",
+   14200,
+   null
+  ],
+  [
+   "Queso fresco con miel de caña",
+   13200,
+   null
+  ],
+  [
+   "Flan con dulce de leche",
+   13800,
+   null
+  ],
+  [
+   "Queso y dulce",
+   9800,
+   null
+  ],
+  [
+   "Más vendido",
+   38600,
+   null
+  ],
+  [
+   "Milanesa de ternera",
+   25300,
+   null
+  ],
+  [
+   "Milanesa de ternera fugazzeta",
+   32100,
+   null
+  ],
+  [
+   "Matambre tiernizado a la pizza",
+   42600,
+   null
+  ],
+  [
+   "Milanesa de pollo",
+   25300,
+   null
+  ],
+  [
+   "Milanesa de pollo a la napo",
+   32100,
+   null
+  ],
+  [
+   "Milanesa de pollo fugazzeta",
+   32100,
+   null
+  ],
+  [
+   "Ensalada La Morena",
+   24800,
+   null
+  ],
+  [
+   "Pepsi 350 ml",
+   4400,
+   null
+  ],
+  [
+   "Pepsi black 354 ml",
+   4400,
+   null
+  ],
+  [
+   "Seven Up  350 ml",
+   4400,
+   null
+  ],
+  [
+   "Paso pomelo 350 ml",
+   4400,
+   null
+  ],
+  [
+   "Paso tónica 354 cc.",
+   4400,
+   null
+  ]
+ ]
+}

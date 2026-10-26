@@ -1,0 +1,393 @@
+{
+ "store": "Los Inmortales - Paraná",
+ "brand": "los inmortales",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/los-inmortales---parana-menu",
+ "fetchedAt": "2026-10-26T18:51:10.867Z",
+ "products": [
+  [
+   "Individual napo con longaniza",
+   19500,
+   null
+  ],
+  [
+   "Empanada capresse",
+   4100,
+   null
+  ],
+  [
+   "Empanada de carne picante",
+   4300,
+   null
+  ],
+  [
+   "Empanada de carne a cuchillo",
+   4400,
+   null
+  ],
+  [
+   "Fettuccini",
+   13500,
+   null
+  ],
+  [
+   "Sorrentinos",
+   15000,
+   null
+  ],
+  [
+   "Papas fritas",
+   12000,
+   null
+  ],
+  [
+   "Más vendido",
+   33000,
+   null
+  ],
+  [
+   "Grande muzza, albahaca",
+   34000,
+   null
+  ],
+  [
+   "Grande muzzarella con rúcula",
+   34000,
+   null
+  ],
+  [
+   "Grande fugazza con muzzarella",
+   36000,
+   null
+  ],
+  [
+   "Grande fugazza al roquefort",
+   38000,
+   null
+  ],
+  [
+   "Grande muzza con longaniza",
+   38000,
+   null
+  ],
+  [
+   "Grande napolitana",
+   38000,
+   null
+  ],
+  [
+   "Grande sorrentina",
+   38000,
+   null
+  ],
+  [
+   "Grande jamón y ananá glasé",
+   41500,
+   null
+  ],
+  [
+   "Grande capresse",
+   38000,
+   null
+  ],
+  [
+   "Grande fugazzeta rellena",
+   41500,
+   null
+  ],
+  [
+   "Grande jamón y morrón",
+   41500,
+   null
+  ],
+  [
+   "Grande panceta y aceitunas",
+   41500,
+   null
+  ],
+  [
+   "Grande provolone",
+   41500,
+   null
+  ],
+  [
+   "Grande j.crudo y rúcula",
+   49500,
+   null
+  ],
+  [
+   "Grande muzza panceta y ananá",
+   49500,
+   null
+  ],
+  [
+   "Fugazzeta rellena con jamon",
+   46500,
+   null
+  ],
+  [
+   "Grande cuatro quesos",
+   46500,
+   null
+  ],
+  [
+   "Mediana muzzarella, albahaca",
+   26000,
+   null
+  ],
+  [
+   "Mediana muzza con rúcula",
+   26000,
+   null
+  ],
+  [
+   "Mediana muzza con aceitunas",
+   25000,
+   null
+  ],
+  [
+   "Mediana fugazza con muzzarella",
+   27000,
+   null
+  ],
+  [
+   "Mediana tomate natural",
+   27000,
+   null
+  ],
+  [
+   "Mediana muzza con longaniza",
+   28000,
+   null
+  ],
+  [
+   "Mediana napolitana",
+   28000,
+   null
+  ],
+  [
+   "Mediana sorrentina",
+   28000,
+   null
+  ],
+  [
+   "Mediana jamón y ananá glasé",
+   31000,
+   null
+  ],
+  [
+   "Mediana capresse",
+   28000,
+   null
+  ],
+  [
+   "Mediana fugazzeta rellena",
+   31000,
+   null
+  ],
+  [
+   "Mediana jamón, morrón",
+   31000,
+   null
+  ],
+  [
+   "Mediana panceta y aceitunas",
+   31000,
+   null
+  ],
+  [
+   "Mediana al provolone",
+   31000,
+   null
+  ],
+  [
+   "Mediana fugazzeta c/ jamon",
+   35000,
+   null
+  ],
+  [
+   "Mediana muzza panceta y ananá",
+   37500,
+   null
+  ],
+  [
+   "Individual muzza con rúcula",
+   17000,
+   null
+  ],
+  [
+   "Individual jamón y morrón",
+   21000,
+   null
+  ],
+  [
+   "Individual con panceta y ananá",
+   25000,
+   null
+  ],
+  [
+   "Individual fugazzeta con muzza",
+   21000,
+   null
+  ],
+  [
+   "Filoccio",
+   29500,
+   null
+  ],
+  [
+   "Fugafainá",
+   2900,
+   null
+  ],
+  [
+   "Fainá con muzzarella (porción)",
+   3500,
+   null
+  ],
+  [
+   "Ñoquis",
+   13500,
+   null
+  ],
+  [
+   "Ravioles Carne Pollo Y Verdura",
+   13500,
+   null
+  ],
+  [
+   "Ravioles De Ricota",
+   12000,
+   null
+  ],
+  [
+   "Bolognesa",
+   5500,
+   null
+  ],
+  [
+   "Salsa 4 quesos",
+   6000,
+   null
+  ],
+  [
+   "Fileto",
+   4500,
+   null
+  ],
+  [
+   "Lomito completo",
+   32500,
+   null
+  ],
+  [
+   "Lomito con pan de pizza",
+   29500,
+   null
+  ],
+  [
+   "Sándwich de milanesa completo",
+   28000,
+   null
+  ],
+  [
+   "Milanesa de ternera",
+   20000,
+   null
+  ],
+  [
+   "Milanesa de ternera napolitana",
+   22000,
+   null
+  ],
+  [
+   "Milanesa de pollo",
+   20000,
+   null
+  ],
+  [
+   "Mila de pollo a la napolitana",
+   22000,
+   null
+  ],
+  [
+   "Papas rejilla",
+   13500,
+   null
+  ],
+  [
+   "Puré de papas",
+   12000,
+   null
+  ],
+  [
+   "Ensalada Caesar con pollo",
+   23000,
+   null
+  ],
+  [
+   "Ensalada de tres ingredientes",
+   14000,
+   null
+  ],
+  [
+   "Ensalada de cinco ingredientes",
+   16000,
+   null
+  ],
+  [
+   "Gaseosa Coca Cola 1.75 Litro",
+   9000,
+   null
+  ],
+  [
+   "Gaseosa cocacola light 1.75l",
+   9000,
+   null
+  ],
+  [
+   "Gaseosa sprite 1,75 litro",
+   9000,
+   null
+  ],
+  [
+   "Gaseosa sprite sin azucar 1.75",
+   9000,
+   null
+  ],
+  [
+   "Schweppes pomelo s/azúcar 1.5l",
+   9000,
+   null
+  ],
+  [
+   "Gaseosa Coca Cola 500 Cc.",
+   5300,
+   null
+  ],
+  [
+   "Gaseosa Sprite Lima Limon 500 Cc",
+   5300,
+   null
+  ],
+  [
+   "Gaseosa Sprite Sin azúcar 500ml",
+   5300,
+   null
+  ],
+  [
+   "Aquarius manzana 500 ml",
+   5500,
+   null
+  ],
+  [
+   "Aquarius pomelo 500 ml",
+   5500,
+   null
+  ],
+  [
+   "Aquarius pera 500 ml",
+   5500,
+   null
+  ]
+ ]
+}

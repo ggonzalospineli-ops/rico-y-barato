@@ -1,0 +1,88 @@
+{
+ "store": "Asu Yopo",
+ "brand": "asu yopo",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/asu-yopo-f77e69a9-3ccb-48c8-acac-cc8605cfab25-menu",
+ "fetchedAt": "2026-10-26T19:14:21.327Z",
+ "products": [
+  [
+   "Combo clasico",
+   45000,
+   null
+  ],
+  [
+   "Combo golazo familiar",
+   68500,
+   null
+  ],
+  [
+   "Más vendido",
+   45000,
+   null
+  ],
+  [
+   "Combo Epa Chamo Entero",
+   48000,
+   null
+  ],
+  [
+   "Combo Rústico Entero",
+   50400,
+   null
+  ],
+  [
+   "Pollo broaster entero",
+   52500,
+   null
+  ],
+  [
+   "Combo personal",
+   53000,
+   null
+  ],
+  [
+   "Pollo clásico 1/4",
+   25000,
+   null
+  ],
+  [
+   "Pollo clásico entero solo",
+   42000,
+   null
+  ],
+  [
+   "Pollo broaster 1/2",
+   39900,
+   null
+  ],
+  [
+   "Pollo broaster 1/4",
+   28500,
+   null
+  ],
+  [
+   "Chaufa De Lomo",
+   32600,
+   null
+  ],
+  [
+   "Tequeños de queso x5",
+   14200,
+   null
+  ],
+  [
+   "Tequeños de queso x10",
+   18400,
+   null
+  ],
+  [
+   "Tequeños de queso x15",
+   23100,
+   null
+  ],
+  [
+   "Wantan frito x6",
+   21000,
+   null
+  ]
+ ]
+}

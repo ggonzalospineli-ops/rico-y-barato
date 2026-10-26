@@ -1,0 +1,188 @@
+{
+ "store": "Bravo Pizza Romana",
+ "brand": "bravo pizza romana",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/bravo-pizza-romana-111baf73-fdb5-42c2-9de0-a167195676aa-menu",
+ "fetchedAt": "2026-10-26T19:23:06.048Z",
+ "products": [
+  [
+   "Porción Individual+Fainá",
+   15075,
+   20100
+  ],
+  [
+   "Combo Margarita Bravo",
+   21675,
+   28900
+  ],
+  [
+   "Combo para 6 personas",
+   93750,
+   125000
+  ],
+  [
+   "Combo para 3 personas",
+   52960,
+   66200
+  ],
+  [
+   "Combo Trío Romano",
+   24565,
+   28900
+  ],
+  [
+   "Combo Duo Romano",
+   18360,
+   20400
+  ],
+  [
+   "25 % OFF",
+   15075,
+   20100
+  ],
+  [
+   "10 % OFF",
+   18360,
+   20400
+  ],
+  [
+   "15 % OFF",
+   24565,
+   28900
+  ],
+  [
+   "20 % OFF",
+   52960,
+   66200
+  ],
+  [
+   "Pizza Pepperoni para 3",
+   61200,
+   null
+  ],
+  [
+   "Pizza Margarita para 3",
+   56400,
+   null
+  ],
+  [
+   "Pizza Mortadella para 3",
+   61200,
+   null
+  ],
+  [
+   "Más vendido",
+   5300,
+   null
+  ],
+  [
+   "Chilli boniato",
+   10500,
+   null
+  ],
+  [
+   "Mortadella stracciatella",
+   10200,
+   null
+  ],
+  [
+   "Pepperoni",
+   10200,
+   null
+  ],
+  [
+   "Trastevere",
+   11000,
+   null
+  ],
+  [
+   "Papas crocantes",
+   8400,
+   null
+  ],
+  [
+   "Hongos alla fiorentina",
+   9400,
+   null
+  ],
+  [
+   "Fuga rellena",
+   11000,
+   null
+  ],
+  [
+   "Jamón natural y morrones",
+   9400,
+   null
+  ],
+  [
+   "Schiacciata J&Q",
+   10500,
+   null
+  ],
+  [
+   "Fainá Funghi",
+   7100,
+   null
+  ],
+  [
+   "Mozzarella Frita",
+   10200,
+   null
+  ],
+  [
+   "Focaccia Ajo & Perejil",
+   5600,
+   null
+  ],
+  [
+   "Calzone Caprese",
+   8900,
+   null
+  ],
+  [
+   "Calzone de ternera braseada",
+   9900,
+   null
+  ],
+  [
+   "Olivas Marinadas",
+   3600,
+   null
+  ],
+  [
+   "Almendras Romanas",
+   4200,
+   null
+  ],
+  [
+   "Coca cola zero",
+   4600,
+   null
+  ],
+  [
+   "Sprite",
+   4600,
+   null
+  ],
+  [
+   "Agua Mineral Eco De Los Andes Sin Gas 500 ml",
+   4500,
+   null
+  ],
+  [
+   "Agua Mineral Eco De Los Andes Con Gas 500 ml",
+   4500,
+   null
+  ],
+  [
+   "Kombucha De Manzana Verde Y Menta",
+   7000,
+   null
+  ],
+  [
+   "Kombucha de naranaja",
+   7500,
+   null
+  ]
+ ]
+}

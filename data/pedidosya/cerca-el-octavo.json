@@ -1,0 +1,123 @@
+{
+ "store": "El Octavo",
+ "brand": "el octavo",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/el-octavo-menu",
+ "fetchedAt": "2026-10-26T19:23:41.249Z",
+ "products": [
+  [
+   "Milanesa 4 Quesos",
+   41900,
+   null
+  ],
+  [
+   "Caesar octavo",
+   25900,
+   null
+  ],
+  [
+   "Más vendido",
+   12900,
+   null
+  ],
+  [
+   "Brie apanado",
+   13900,
+   null
+  ],
+  [
+   "De Espinaca",
+   5900,
+   null
+  ],
+  [
+   "De Hongos",
+   5900,
+   null
+  ],
+  [
+   "Napolitana",
+   29900,
+   null
+  ],
+  [
+   "Pollo entero al spiedo",
+   50900,
+   null
+  ],
+  [
+   "Medio pollo al spiedo",
+   35900,
+   null
+  ],
+  [
+   "Cuarto de pollo al spiedo",
+   27900,
+   null
+  ],
+  [
+   "Ojo de bife con papas rusticas",
+   52900,
+   null
+  ],
+  [
+   "Milanesa Caprese",
+   41900,
+   null
+  ],
+  [
+   "Milanesa La Octava",
+   41900,
+   null
+  ],
+  [
+   "Ravioles de ricota",
+   19900,
+   null
+  ],
+  [
+   "Ravioles de calabaza",
+   19900,
+   null
+  ],
+  [
+   "Sorrentinos capresse",
+   19900,
+   null
+  ],
+  [
+   "Raviolones Negros",
+   46900,
+   null
+  ],
+  [
+   "Quinua",
+   23900,
+   null
+  ],
+  [
+   "Flan Casero Mixto",
+   11900,
+   null
+  ],
+  [
+   "Vigilante Clasico De Batata",
+   11900,
+   null
+  ],
+  [
+   "Chocotorta",
+   16900,
+   null
+  ],
+  [
+   "Lingote",
+   16900,
+   null
+  ],
+  [
+   "Torta vasca",
+   23900,
+   null
+  ]
+ ]
+}

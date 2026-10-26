@@ -1,0 +1,408 @@
+{
+ "store": "Lo Del Bachicha Once",
+ "brand": "lo del bachicha once",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/lo-del-bachicha-once-b2e5cfae-47c2-486b-8eb0-4cfec262d795-menu",
+ "fetchedAt": "2026-10-26T19:29:07.695Z",
+ "products": [
+  [
+   "Más vendido",
+   10700,
+   null
+  ],
+  [
+   "Tortilla de acelga",
+   11600,
+   null
+  ],
+  [
+   "Tortilla española",
+   13900,
+   null
+  ],
+  [
+   "Rabas",
+   18800,
+   null
+  ],
+  [
+   "Rabas a la provenzal",
+   20600,
+   null
+  ],
+  [
+   "Sandwich De Milanesa Con Jamon Y Queso",
+   15900,
+   null
+  ],
+  [
+   "Sandwich De Milanesa Con Lechuga Y Tomate",
+   13500,
+   null
+  ],
+  [
+   "Sandwich De Milanesa",
+   12000,
+   null
+  ],
+  [
+   "Sandwich De Lomito Con Jamon Y Queso",
+   18000,
+   null
+  ],
+  [
+   "Sandwich De Lomito Con Lechuga Y Tomate",
+   15400,
+   null
+  ],
+  [
+   "Sandwich De Lomito",
+   13700,
+   null
+  ],
+  [
+   "Asado De Ternera Con Guarnicion",
+   25600,
+   null
+  ],
+  [
+   "Bife de chorizo con guarnición",
+   29200,
+   null
+  ],
+  [
+   "Bife de costilla con guarnicion",
+   18600,
+   null
+  ],
+  [
+   "Cuarto De Pollo Con Guarnicion",
+   15600,
+   null
+  ],
+  [
+   "Costillitas De Cerdo Con Guarnicion",
+   18600,
+   null
+  ],
+  [
+   "Chorizo O Morcilla",
+   8300,
+   null
+  ],
+  [
+   "Milanesa Napolitana Con Guarnicion",
+   21000,
+   null
+  ],
+  [
+   "Milanesa A Caballo Con Guarnicion",
+   18500,
+   null
+  ],
+  [
+   "Milanesa Con Guarnicion",
+   16900,
+   null
+  ],
+  [
+   "Suprema De Pollo Napolitana Con Guarnicion",
+   21000,
+   null
+  ],
+  [
+   "Suprema De Pollo Con Guarnicion",
+   16900,
+   null
+  ],
+  [
+   "Milanesa De Pollo Napolitana Con Guarnicion",
+   21000,
+   null
+  ],
+  [
+   "Milanesa De Pollo Con Guarnicion",
+   16900,
+   null
+  ],
+  [
+   "Filet de merluza con guarnición",
+   16900,
+   null
+  ],
+  [
+   "Carne Al Horno Con Guarnicion",
+   19900,
+   null
+  ],
+  [
+   "Guiso De Lentejas",
+   18900,
+   null
+  ],
+  [
+   "Guiso De Mondongo",
+   18900,
+   null
+  ],
+  [
+   "Locro",
+   18900,
+   null
+  ],
+  [
+   "Albondigas Con Pure O Arroz",
+   16900,
+   null
+  ],
+  [
+   "Pollo al horno con guarnición",
+   15600,
+   null
+  ],
+  [
+   "Pollo al champiñón con guarnición",
+   23700,
+   null
+  ],
+  [
+   "Matambrito Al Verdeo Con Guarnicion",
+   24400,
+   null
+  ],
+  [
+   "Ravioles Con Estofado De Carne",
+   19500,
+   null
+  ],
+  [
+   "Ravioles Con Estofado De Pollo",
+   19500,
+   null
+  ],
+  [
+   "Ravioles Con Salsa Bolognesa",
+   19700,
+   null
+  ],
+  [
+   "Ravioles Con Salsa Parisienne",
+   20000,
+   null
+  ],
+  [
+   "Ravioles Con Salsa Rosa",
+   16300,
+   null
+  ],
+  [
+   "Ravioles Con Salsa Blanca",
+   16300,
+   null
+  ],
+  [
+   "Ravioles Con Salsa Fileto",
+   14800,
+   null
+  ],
+  [
+   "Sorrentinos Con Estofado Carne",
+   20900,
+   null
+  ],
+  [
+   "Sorrentinos Con Estofado Pollo",
+   20900,
+   null
+  ],
+  [
+   "Sorrentinos Con Salsa Bolognesa",
+   21000,
+   null
+  ],
+  [
+   "Sorrentinos Con Salsa Parisienne",
+   21500,
+   null
+  ],
+  [
+   "Sorrentinos Con Salsa Blanca",
+   17600,
+   null
+  ],
+  [
+   "Sorrentinos Con Salsa Fileto",
+   16200,
+   null
+  ],
+  [
+   "Ñoquis Con Estofado De Carne",
+   17500,
+   null
+  ],
+  [
+   "Ñoquis Con Estofado De Pollo",
+   17500,
+   null
+  ],
+  [
+   "Ñoquis Con Salsa Bolognesa",
+   17600,
+   null
+  ],
+  [
+   "Ñoquis Con Salsa Parisienne",
+   18000,
+   null
+  ],
+  [
+   "Ñoquis Con Salsa Rosa",
+   14200,
+   null
+  ],
+  [
+   "Ñoquis Con Salsa Blanca",
+   14200,
+   null
+  ],
+  [
+   "Ñoquis Con Salsa Fileto",
+   12800,
+   null
+  ],
+  [
+   "Tallarines Con Estofado De Carne",
+   17500,
+   null
+  ],
+  [
+   "Tallarines Con Estofado De Pollo",
+   17500,
+   null
+  ],
+  [
+   "Tallarines Con Salsa Bolognesa",
+   17600,
+   null
+  ],
+  [
+   "Tallarines Con Salsa Parisienne",
+   18000,
+   null
+  ],
+  [
+   "Tallarines Con Salsa Rosa",
+   14200,
+   null
+  ],
+  [
+   "Tallarines Con Salsa Blanca",
+   14200,
+   null
+  ],
+  [
+   "Tallarines Con Salsa Fileto",
+   12800,
+   null
+  ],
+  [
+   "Papas Fritas",
+   8200,
+   null
+  ],
+  [
+   "Porción de ensalada mixta",
+   8200,
+   null
+  ],
+  [
+   "Porción de puré de papa",
+   8200,
+   null
+  ],
+  [
+   "Papas fritas provenzal",
+   8800,
+   null
+  ],
+  [
+   "Porción de puré mixto",
+   8200,
+   null
+  ],
+  [
+   "Porción de papas al horno",
+   8200,
+   null
+  ],
+  [
+   "Pizza De Muzzarella",
+   23900,
+   null
+  ],
+  [
+   "Pizza De Muzzarella Con Jamon",
+   29300,
+   null
+  ],
+  [
+   "Pizza De Jamon Y Morrones",
+   33500,
+   null
+  ],
+  [
+   "Pizza De Calabresa",
+   32800,
+   null
+  ],
+  [
+   "Pizza Napolitana",
+   29000,
+   null
+  ],
+  [
+   "Pizza Napolitana Con Jamon",
+   33500,
+   null
+  ],
+  [
+   "Empanada De Pollo",
+   3500,
+   null
+  ],
+  [
+   "Empanada De Jamon Y Queso",
+   3500,
+   null
+  ],
+  [
+   "Empanada De Provolone",
+   3500,
+   null
+  ],
+  [
+   "Empanada De Cantimpalo",
+   3500,
+   null
+  ],
+  [
+   "Hamburguesa Super Completa",
+   18500,
+   null
+  ],
+  [
+   "Hamburguesa Con Jamon Y Queso",
+   15200,
+   null
+  ],
+  [
+   "Hamburguesa Con Lechuga Y Tomate",
+   12800,
+   null
+  ],
+  [
+   "Hamburguesa Sola",
+   11300,
+   null
+  ]
+ ]
+}

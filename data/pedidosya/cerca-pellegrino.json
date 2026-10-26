@@ -1,0 +1,123 @@
+{
+ "store": "Pellegrino",
+ "brand": "pellegrino",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/pellegrino-eb6d302e-f88f-46f9-a64b-7b797bcc53f4-menu",
+ "fetchedAt": "2026-10-26T19:27:52.449Z",
+ "products": [
+  [
+   "Pizza Napolitana Compromiso",
+   21200,
+   26500
+  ],
+  [
+   "Pizza Napolitana Gratitud",
+   20400,
+   25500
+  ],
+  [
+   "Sandwich la roma",
+   13600,
+   17000
+  ],
+  [
+   "Pizza Napolitana Esperanza",
+   23800,
+   28000
+  ],
+  [
+   "15 % OFF",
+   23800,
+   28000
+  ],
+  [
+   "20 % OFF",
+   21200,
+   26500
+  ],
+  [
+   "Más vendido",
+   28000,
+   null
+  ],
+  [
+   "Pizza Napolitana Juramento",
+   26500,
+   null
+  ],
+  [
+   "Pizza Napolitana Resiliencia",
+   27500,
+   null
+  ],
+  [
+   "Sandwich la meca",
+   15000,
+   null
+  ],
+  [
+   "Pulpetines al Pomodoro",
+   18000,
+   null
+  ],
+  [
+   "Croquetas de Jamón Italiano",
+   13000,
+   null
+  ],
+  [
+   "Antipasto de la Casa",
+   28000,
+   null
+  ],
+  [
+   "Sorrentinos artesanales",
+   28000,
+   null
+  ],
+  [
+   "Penne rigate a la zazzona",
+   27000,
+   null
+  ],
+  [
+   "Ensalada Caesar Clásica",
+   22000,
+   null
+  ],
+  [
+   "Ensalada Caprese con Bruschetta",
+   21000,
+   null
+  ],
+  [
+   "Ensalada tabulé",
+   21000,
+   null
+  ],
+  [
+   "Villavicencio sin Gas",
+   5000,
+   null
+  ],
+  [
+   "Villavicencio con Gas",
+   5000,
+   null
+  ],
+  [
+   "Coca-Cola Sabor Original",
+   4500,
+   null
+  ],
+  [
+   "Sprite",
+   5000,
+   null
+  ],
+  [
+   "Sprite Zero",
+   5000,
+   null
+  ]
+ ]
+}

@@ -1,0 +1,363 @@
+{
+ "store": "Páru Inkas Sushi Palermo",
+ "brand": "paru inkas sushi",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/paru-inkas-sushi-palermo-f33bdc4f-2f88-4146-9447-fe76d51a511a-menu",
+ "fetchedAt": "2026-10-26T18:27:43.960Z",
+ "products": [
+  [
+   "Promoción Roll New York x 5u",
+   10399,
+   20600
+  ],
+  [
+   "Selección 15",
+   35900,
+   54000
+  ],
+  [
+   "Selección 15 Bentobox",
+   40500,
+   57900
+  ],
+  [
+   "Selección 15 Salmón",
+   40900,
+   58400
+  ],
+  [
+   "Promo Roll Tempura x 5u",
+   14499,
+   20600
+  ],
+  [
+   "Omakase 80",
+   225000,
+   321500
+  ],
+  [
+   "Selección 30",
+   69900,
+   99800
+  ],
+  [
+   "Selección 30 Especial",
+   77900,
+   111300
+  ],
+  [
+   "Omakase 50",
+   136000,
+   194300
+  ],
+  [
+   "Ceviche Clásico Peruano",
+   25130,
+   35900
+  ],
+  [
+   "Promo Chirashi Acevichado",
+   27675,
+   36900
+  ],
+  [
+   "Promo Chirashi Veggie",
+   27675,
+   36900
+  ],
+  [
+   "Nigiri Tasting x 6u",
+   33900,
+   43500
+  ],
+  [
+   "22 % OFF",
+   33900,
+   43500
+  ],
+  [
+   "34 % OFF",
+   35900,
+   54000
+  ],
+  [
+   "30 % OFF",
+   40500,
+   57900
+  ],
+  [
+   "25 % OFF",
+   27675,
+   36900
+  ],
+  [
+   "50 % OFF",
+   10399,
+   20600
+  ],
+  [
+   "Sashimi de Pescado Blanco x 5u",
+   19700,
+   null
+  ],
+  [
+   "Nigiri de Langostino x 2u",
+   9850,
+   null
+  ],
+  [
+   "Sashimi de Salmón Rosado x 5u",
+   27900,
+   null
+  ],
+  [
+   "Nigiri de Pulpo x 2u",
+   15450,
+   null
+  ],
+  [
+   "Sashimi de Pulpo x 5u",
+   30900,
+   null
+  ],
+  [
+   "Más vendido",
+   13950,
+   null
+  ],
+  [
+   "Nigiri de Pescado Blanco x 2u",
+   9850,
+   null
+  ],
+  [
+   "Sashimi de Langostino x 5u",
+   19700,
+   null
+  ],
+  [
+   "Roll Veggie x 5u",
+   16500,
+   null
+  ],
+  [
+   "Roll Mosqueta Maki x 5u",
+   21200,
+   null
+  ],
+  [
+   "Roll Tempura x 5u",
+   20600,
+   null
+  ],
+  [
+   "Roll Tropical x 5u",
+   20600,
+   null
+  ],
+  [
+   "Roll Teriyaki Maki x 5u",
+   21200,
+   null
+  ],
+  [
+   "Roll Sake Nikkei x 5u",
+   21200,
+   null
+  ],
+  [
+   "Roll Dos Sakes x 5u",
+   21200,
+   null
+  ],
+  [
+   "Roll Tempura Salmón x 5u",
+   21200,
+   null
+  ],
+  [
+   "Roll Tropical Salmón x 5u",
+   21200,
+   null
+  ],
+  [
+   "Roll Teriyaki Maki Salmón x 5u",
+   21800,
+   null
+  ],
+  [
+   "Roll Mosqueta Maki Salmón x 5u",
+   21800,
+   null
+  ],
+  [
+   "Roll New York x 5u",
+   20600,
+   null
+  ],
+  [
+   "Roll Phila y Salmón x 5u",
+   20600,
+   null
+  ],
+  [
+   "Roll Philadelphia x 5u",
+   20600,
+   null
+  ],
+  [
+   "Wantan Criollo x 1u",
+   7400,
+   null
+  ],
+  [
+   "Sake Wan x 1u",
+   7400,
+   null
+  ],
+  [
+   "Tiradito Car-Passion",
+   43900,
+   null
+  ],
+  [
+   "Ceviche de Máncora",
+   48600,
+   null
+  ],
+  [
+   "Tiradito Olivado",
+   52900,
+   null
+  ],
+  [
+   "Ceviche Nikkei",
+   43600,
+   null
+  ],
+  [
+   "Thai Rice de Lomo",
+   41300,
+   null
+  ],
+  [
+   "Thai Rice de Salmón",
+   43300,
+   null
+  ],
+  [
+   "Thai Rice de Pescado Blanco",
+   35900,
+   null
+  ],
+  [
+   "Lomo Saltado",
+   44900,
+   null
+  ],
+  [
+   "Thai Rice de Langostinos",
+   38800,
+   null
+  ],
+  [
+   "Thai Rice Veggie",
+   30300,
+   null
+  ],
+  [
+   "Picante de Mariscos",
+   57400,
+   null
+  ],
+  [
+   "Quinoto con Langostinos",
+   37500,
+   null
+  ],
+  [
+   "Pulpo y Langostinos a la Páru",
+   59500,
+   null
+  ],
+  [
+   "Shiromi Yellow",
+   40700,
+   null
+  ],
+  [
+   "Sésamo y Salmón con Acompañamiento",
+   51000,
+   null
+  ],
+  [
+   "Papas Inkas Fries",
+   8900,
+   null
+  ],
+  [
+   "Arroz Thai",
+   8900,
+   null
+  ],
+  [
+   "Risotto de Quinoa",
+   11900,
+   null
+  ],
+  [
+   "Arroz Blanco",
+   7100,
+   null
+  ],
+  [
+   "Flan Perú",
+   15000,
+   null
+  ],
+  [
+   "Suspiro Limeño",
+   15000,
+   null
+  ],
+  [
+   "Eco de los Andes Con Gas",
+   3800,
+   null
+  ],
+  [
+   "Pepsi Black",
+   3900,
+   null
+  ],
+  [
+   "7up",
+   3900,
+   null
+  ],
+  [
+   "Eco de los Andes Sin Gas",
+   3800,
+   null
+  ],
+  [
+   "Pepsi",
+   3900,
+   null
+  ],
+  [
+   "7 up Free",
+   3900,
+   null
+  ],
+  [
+   "Chirashi Pesca del día",
+   36900,
+   null
+  ],
+  [
+   "Chirashi Dos Sakes",
+   36900,
+   null
+  ]
+ ]
+}

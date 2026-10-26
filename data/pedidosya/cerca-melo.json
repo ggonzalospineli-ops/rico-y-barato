@@ -1,0 +1,93 @@
+{
+ "store": "Melo",
+ "brand": "melo",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/melo-menu",
+ "fetchedAt": "2026-10-26T18:32:20.567Z",
+ "products": [
+  [
+   "Ensalada Crispy",
+   22200,
+   null
+  ],
+  [
+   "Kanikama salad",
+   23500,
+   null
+  ],
+  [
+   "Ensalada Abril",
+   26000,
+   null
+  ],
+  [
+   "Salmón ahumado salad",
+   26000,
+   null
+  ],
+  [
+   "Tuna Salad",
+   24000,
+   null
+  ],
+  [
+   "Panache legumbres",
+   8500,
+   null
+  ],
+  [
+   "Lomo Irresistible, A Tu Manera",
+   38000,
+   null
+  ],
+  [
+   "1/2 lomo irresistible c/guarn",
+   34000,
+   null
+  ],
+  [
+   "Molleja consalsa c/ guarnición",
+   34000,
+   null
+  ],
+  [
+   "Pechuga pollo salseada c/guarn",
+   29000,
+   null
+  ],
+  [
+   "Salmón don vito papas natural",
+   40000,
+   null
+  ],
+  [
+   "Salmon a la leira",
+   40000,
+   null
+  ],
+  [
+   "Salmon piamontes salseado risotto berenjena",
+   40000,
+   null
+  ],
+  [
+   "Salmon salseado al roquefort",
+   32200,
+   null
+  ],
+  [
+   "Rabas",
+   25000,
+   null
+  ],
+  [
+   "Panqueque con dulce de leche",
+   7130,
+   null
+  ],
+  [
+   "Frambuesas patagonicas",
+   12420,
+   null
+  ]
+ ]
+}

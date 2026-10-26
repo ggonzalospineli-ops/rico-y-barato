@@ -1,0 +1,58 @@
+{
+ "store": "Mirana Pizza",
+ "brand": "mirana pizza",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/mirana-pizza-14662a87-6704-430f-9c24-a5d9d4a12b3f-menu",
+ "fetchedAt": "2026-10-26T19:14:36.152Z",
+ "products": [
+  [
+   "Pizza grande de mozzarella",
+   24000,
+   null
+  ],
+  [
+   "Más vendido",
+   27000,
+   null
+  ],
+  [
+   "Grande de fugazzetta con queso",
+   23000,
+   null
+  ],
+  [
+   "Grande rucula e provolone",
+   24000,
+   null
+  ],
+  [
+   "Grande de mozzarella + dos latas a elección",
+   30000,
+   null
+  ],
+  [
+   "Pizza Grande  a elección + Dos latas a elección línea Coca-Cola",
+   36000,
+   null
+  ],
+  [
+   "Porción de mozzarella",
+   3000,
+   null
+  ],
+  [
+   "Porción de jamón y morrones",
+   4100,
+   null
+  ],
+  [
+   "Porción napolitana con jamon",
+   4100,
+   null
+  ],
+  [
+   "Porción de fugazzetta",
+   4100,
+   null
+  ]
+ ]
+}

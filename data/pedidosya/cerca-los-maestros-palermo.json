@@ -1,0 +1,743 @@
+{
+ "store": "Los Maestros Palermo",
+ "brand": "los maestros",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/los-maestros-palermo-menu",
+ "fetchedAt": "2026-10-26T18:50:43.285Z",
+ "products": [
+  [
+   "Docena de empanadas + gaseosa 1,75 l",
+   43095,
+   50700
+  ],
+  [
+   "Napolitana grande + 3 fainá",
+   29240,
+   34400
+  ],
+  [
+   "15 % OFF",
+   43095,
+   50700
+  ],
+  [
+   "Tostado de jamón y queso",
+   9700,
+   null
+  ],
+  [
+   "Café con leche + 2 medialunas",
+   7600,
+   null
+  ],
+  [
+   "Medialuna de manteca",
+   1700,
+   null
+  ],
+  [
+   "Medialuna de grasa",
+   1700,
+   null
+  ],
+  [
+   "Medialuna integral",
+   1700,
+   null
+  ],
+  [
+   "Café con leche",
+   4700,
+   null
+  ],
+  [
+   "Café doble",
+   5500,
+   null
+  ],
+  [
+   "Docena de medialunas de manteca",
+   20400,
+   null
+  ],
+  [
+   "3 empanadas a elección",
+   10800,
+   null
+  ],
+  [
+   "Pizza individual de muzzarella",
+   11100,
+   null
+  ],
+  [
+   "Pizza individual de jamón",
+   12200,
+   null
+  ],
+  [
+   "Media docena de empanadas",
+   21600,
+   null
+  ],
+  [
+   "Muzzarella grande",
+   26900,
+   null
+  ],
+  [
+   "Muzzarella grande + 2 fainá",
+   26900,
+   null
+  ],
+  [
+   "Napolitana grande",
+   29300,
+   null
+  ],
+  [
+   "Pesto y pistacho grande",
+   43800,
+   null
+  ],
+  [
+   "Muzzarella con albahaca grande",
+   29300,
+   null
+  ],
+  [
+   "Pepperoni grande",
+   34700,
+   null
+  ],
+  [
+   "Jamón grande",
+   30600,
+   null
+  ],
+  [
+   "Toscana grande",
+   37600,
+   null
+  ],
+  [
+   "Morrón con muzzarella grande",
+   32200,
+   null
+  ],
+  [
+   "Napolitana con ajo y albahaca grande",
+   32200,
+   null
+  ],
+  [
+   "Especial de jamón y morrones grande",
+   34700,
+   null
+  ],
+  [
+   "Calabresa grande",
+   37600,
+   null
+  ],
+  [
+   "Roquefort grande",
+   36100,
+   null
+  ],
+  [
+   "Provolone grande",
+   37600,
+   null
+  ],
+  [
+   "Cuatro quesos grande",
+   37600,
+   null
+  ],
+  [
+   "Romana grande",
+   36100,
+   null
+  ],
+  [
+   "Apio grande",
+   36100,
+   null
+  ],
+  [
+   "Americana grande",
+   41300,
+   null
+  ],
+  [
+   "Rusa grande",
+   41300,
+   null
+  ],
+  [
+   "Victoria grande",
+   37600,
+   null
+  ],
+  [
+   "Prosciutto grande",
+   43800,
+   null
+  ],
+  [
+   "Anchoas grande",
+   26300,
+   null
+  ],
+  [
+   "Aglio-pomodoro grande",
+   26300,
+   null
+  ],
+  [
+   "Verdura con salsa blanca grande",
+   34700,
+   null
+  ],
+  [
+   "Fugazza con muzzarella grande",
+   32200,
+   null
+  ],
+  [
+   "Fugazza grande",
+   21800,
+   null
+  ],
+  [
+   "Fugazzeta grande",
+   35500,
+   null
+  ],
+  [
+   "Fugazzeta c/jamon grande",
+   39400,
+   null
+  ],
+  [
+   "Fugazzetón grande",
+   43800,
+   null
+  ],
+  [
+   "Berenjena grande",
+   37500,
+   null
+  ],
+  [
+   "Espárragos grande",
+   43000,
+   null
+  ],
+  [
+   "Muzzarella con rúcula grande",
+   29300,
+   null
+  ],
+  [
+   "Muzzarella con anchoas grande",
+   32200,
+   null
+  ],
+  [
+   "Muzzarella con longaniza grande",
+   32200,
+   null
+  ],
+  [
+   "Muzzarella con cebolla grande",
+   32200,
+   null
+  ],
+  [
+   "Magistral grande",
+   36100,
+   null
+  ],
+  [
+   "25 aniversario grande",
+   37600,
+   null
+  ],
+  [
+   "Muzzarella mediana",
+   21900,
+   null
+  ],
+  [
+   "Jamón mediana",
+   24300,
+   null
+  ],
+  [
+   "Napolitana mediana",
+   23400,
+   null
+  ],
+  [
+   "Napolitana con ajo y albahaca mediana",
+   26700,
+   null
+  ],
+  [
+   "Especial de jamón y morrones mediana",
+   27900,
+   null
+  ],
+  [
+   "Calabresa mediana",
+   30100,
+   null
+  ],
+  [
+   "Roquefort mediana",
+   27900,
+   null
+  ],
+  [
+   "Provolone mediana",
+   30100,
+   null
+  ],
+  [
+   "Cuatro quesos mediana",
+   30100,
+   null
+  ],
+  [
+   "Magistral mediana",
+   27900,
+   null
+  ],
+  [
+   "Romana mediana",
+   27900,
+   null
+  ],
+  [
+   "Rústica mediana",
+   26800,
+   null
+  ],
+  [
+   "Apio mediana",
+   27900,
+   null
+  ],
+  [
+   "25 aniversario mediana",
+   30100,
+   null
+  ],
+  [
+   "Americana mediana",
+   31600,
+   null
+  ],
+  [
+   "Rusa mediana",
+   31600,
+   null
+  ],
+  [
+   "Victoria mediana",
+   30100,
+   null
+  ],
+  [
+   "Prosciutto mediana",
+   34900,
+   null
+  ],
+  [
+   "Pesto y pistacho mediana",
+   34900,
+   null
+  ],
+  [
+   "Anchoas mediana",
+   21700,
+   null
+  ],
+  [
+   "Aglio-pomodoro mediana",
+   21700,
+   null
+  ],
+  [
+   "Verdura con salsa blanca mediana",
+   27900,
+   null
+  ],
+  [
+   "Fugazza mediana",
+   18900,
+   null
+  ],
+  [
+   "Fugazza con muzzarella mediana",
+   24900,
+   null
+  ],
+  [
+   "Fugazzeta mediana",
+   29000,
+   null
+  ],
+  [
+   "Muzzarella con albahaca mediana",
+   23400,
+   null
+  ],
+  [
+   "Muzzarella con rúcula mediana",
+   23400,
+   null
+  ],
+  [
+   "Muzzarella con anchoas mediana",
+   24300,
+   null
+  ],
+  [
+   "Muzzarella con longaniza mediana",
+   26700,
+   null
+  ],
+  [
+   "Muzzarella con cebolla mediana",
+   26700,
+   null
+  ],
+  [
+   "Pepperoni mediana",
+   27900,
+   null
+  ],
+  [
+   "Toscana mediana",
+   30100,
+   null
+  ],
+  [
+   "Rustica mediana",
+   26800,
+   null
+  ],
+  [
+   "Muzzarella individual",
+   10900,
+   null
+  ],
+  [
+   "Napolitana individual",
+   15500,
+   null
+  ],
+  [
+   "Jamón individual",
+   12200,
+   null
+  ],
+  [
+   "Porción súper fugazzeta",
+   7000,
+   null
+  ],
+  [
+   "4 empanadas",
+   14400,
+   null
+  ],
+  [
+   "Empanada de calabaza y queso",
+   3600,
+   null
+  ],
+  [
+   "Empanada de atún",
+   3600,
+   null
+  ],
+  [
+   "Empanada de carne",
+   3600,
+   null
+  ],
+  [
+   "Más vendido",
+   3600,
+   null
+  ],
+  [
+   "Empanada de roquefort, apio y nuez",
+   3600,
+   null
+  ],
+  [
+   "Empanada de roquefort y jamón",
+   3600,
+   null
+  ],
+  [
+   "Empanada de verdura",
+   3600,
+   null
+  ],
+  [
+   "Empanada de cuatro quesos",
+   3600,
+   null
+  ],
+  [
+   "Empanada caprese",
+   3600,
+   null
+  ],
+  [
+   "Tarta de verdura",
+   8700,
+   null
+  ],
+  [
+   "Tarta de zapallitos",
+   8700,
+   null
+  ],
+  [
+   "Tarta de calabaza",
+   8700,
+   null
+  ],
+  [
+   "Tarta primavera",
+   8700,
+   null
+  ],
+  [
+   "Tarta de puerro",
+   8700,
+   null
+  ],
+  [
+   "Tarta de puerro y pollo",
+   9700,
+   null
+  ],
+  [
+   "Tarta de espárragos",
+   9700,
+   null
+  ],
+  [
+   "Fainazzeta",
+   5000,
+   null
+  ],
+  [
+   "Fainá napolitana",
+   5000,
+   null
+  ],
+  [
+   "Porción de fainazza",
+   2600,
+   null
+  ],
+  [
+   "Fainá",
+   1700,
+   null
+  ],
+  [
+   "Fainá picante",
+   1700,
+   null
+  ],
+  [
+   "Helado triple",
+   7000,
+   null
+  ],
+  [
+   "Helado almendrado",
+   7800,
+   null
+  ],
+  [
+   "Bombón suizo",
+   8300,
+   null
+  ],
+  [
+   "Bombón escocés",
+   8300,
+   null
+  ],
+  [
+   "Flan casero",
+   5000,
+   null
+  ],
+  [
+   "Ensalada de frutas",
+   5200,
+   null
+  ],
+  [
+   "Tiramisú",
+   7700,
+   null
+  ],
+  [
+   "Torta: lemon pie o chocotorta",
+   7700,
+   null
+  ],
+  [
+   "Fanta naranja 600 ml",
+   4500,
+   null
+  ],
+  [
+   "Coca cola light 500ml",
+   4500,
+   null
+  ],
+  [
+   "Sprite zero 500ml",
+   4500,
+   null
+  ],
+  [
+   "Coca cola 500ml",
+   4200,
+   null
+  ],
+  [
+   "Sprite 600 ml",
+   4500,
+   null
+  ],
+  [
+   "Coca cola zero 500ml",
+   4200,
+   null
+  ],
+  [
+   "Gaseosa Coca-Cola Zero 1.75 L",
+   7500,
+   null
+  ],
+  [
+   "Gaseosa Sprite Sin Azúcar 1.75 L",
+   7500,
+   null
+  ],
+  [
+   "Gaseosa Sprite Lima-Limón 1.75 L",
+   7500,
+   null
+  ],
+  [
+   "Stella artois 975ml",
+   12000,
+   null
+  ],
+  [
+   "Cerveza Stella Artois Botella 330 ml",
+   7400,
+   null
+  ],
+  [
+   "Quilmes 500 ml",
+   6100,
+   null
+  ],
+  [
+   "Quilmes clásica 340ml",
+   5200,
+   null
+  ],
+  [
+   "Aquarius 500",
+   4300,
+   null
+  ],
+  [
+   "Agua mineral 500 ml",
+   4300,
+   null
+  ],
+  [
+   "Cerveza Quilmes Clásica 473ml",
+   7400,
+   null
+  ],
+  [
+   "Patagonia 730ml",
+   13000,
+   null
+  ],
+  [
+   "Stella artois lata 473ml",
+   8900,
+   null
+  ],
+  [
+   "Vino tinto vasco viejo 750 ml",
+   10700,
+   null
+  ],
+  [
+   "Vino tinto lópez malbec 750 ml",
+   14400,
+   null
+  ],
+  [
+   "Vino Alma Mora Gran Reserva Malbec 750Ml",
+   17800,
+   null
+  ],
+  [
+   "Vino tinto fond de cave reserva malbec 750 ml",
+   22700,
+   null
+  ],
+  [
+   "Vino trumpeter cabernet suavignon 750ml",
+   22900,
+   null
+  ],
+  [
+   "Vino moscato crotta 930 ml",
+   10700,
+   null
+  ],
+  [
+   "Vino Blanco Vasco Viejo 750 ml",
+   10700,
+   null
+  ],
+  [
+   "Vino blanco lópez 750 ml",
+   14400,
+   null
+  ],
+  [
+   "Vino blanco don david chardonnay 750 ml",
+   16700,
+   null
+  ],
+  [
+   "Vino Blanco Fond De Cave Sauvignon Blanc 750 ml",
+   21500,
+   null
+  ]
+ ]
+}

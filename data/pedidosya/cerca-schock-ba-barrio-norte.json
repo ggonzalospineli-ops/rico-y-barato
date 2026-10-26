@@ -1,0 +1,33 @@
+{
+ "store": "Schock Ba Barrio Norte.",
+ "brand": "schock ba",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/schock-ba-barrio-norte-23178572-affe-45bd-bf35-93f13b05721f-menu",
+ "fetchedAt": "2026-10-26T18:56:59.709Z",
+ "products": [
+  [
+   "Más vendido",
+   33400,
+   null
+  ],
+  [
+   "1/2 kilo",
+   20800,
+   null
+  ],
+  [
+   "Schockcitos",
+   3350,
+   null
+  ],
+  [
+   "Vasitos",
+   3600,
+   null
+  ],
+  [
+   "Cucuruchos",
+   4200,
+   null
+  ]
+ ]
+}

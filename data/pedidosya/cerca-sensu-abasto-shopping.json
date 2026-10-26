@@ -1,0 +1,53 @@
+{
+ "store": "Sensu - Abasto Shopping",
+ "brand": "sensu",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/sensu-abasto-shopping-91011424-830d-4b58-976b-2f297e4ffdb3-menu",
+ "fetchedAt": "2026-10-26T18:39:43.900Z",
+ "products": [
+  [
+   "Poke salmón (grande)",
+   26960,
+   33700
+  ],
+  [
+   "Salmón premium (12 piezas)",
+   24320,
+   30400
+  ],
+  [
+   "Salmon premiun (12 piezas)",
+   29400,
+   null
+  ],
+  [
+   "Kawaii (10 piezas)",
+   21400,
+   null
+  ],
+  [
+   "Sushi surtido (10 piezas)",
+   19700,
+   null
+  ],
+  [
+   "Shogun de lomo",
+   29500,
+   null
+  ],
+  [
+   "Ummi Teppan",
+   18000,
+   null
+  ],
+  [
+   "Ebi no yakimeshi",
+   24900,
+   null
+  ],
+  [
+   "Lomo salteado",
+   29900,
+   null
+  ]
+ ]
+}

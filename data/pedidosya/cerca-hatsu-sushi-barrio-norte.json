@@ -1,0 +1,643 @@
+{
+ "store": "Hatsu Sushi- Barrio Norte",
+ "brand": "hatsu sushi",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/hatsu-sushi-barrio-norte-732b9189-669f-4204-bfa3-1bbe54eca802-menu",
+ "fetchedAt": "2026-10-26T18:53:17.055Z",
+ "products": [
+  [
+   "Full salmon x12",
+   22824,
+   38040
+  ],
+  [
+   "Full salmon x15",
+   30907,
+   47550
+  ],
+  [
+   "Full salmon x20",
+   41210,
+   63400
+  ],
+  [
+   "Full salmon x30",
+   61815,
+   95100
+  ],
+  [
+   "Full salmon x40",
+   82420,
+   126800
+  ],
+  [
+   "Poke salmon baby",
+   17850,
+   21000
+  ],
+  [
+   "Poke salmon grande",
+   22865,
+   26900
+  ],
+  [
+   "Spring rolls x2",
+   7820,
+   9200
+  ],
+  [
+   "40 % OFF",
+   22824,
+   38040
+  ],
+  [
+   "35 % OFF",
+   30907,
+   47550
+  ],
+  [
+   "15 % OFF",
+   17850,
+   21000
+  ],
+  [
+   "Combinado black x15",
+   32100,
+   null
+  ],
+  [
+   "Combinado black x20",
+   42800,
+   null
+  ],
+  [
+   "Combinado black x30",
+   64200,
+   null
+  ],
+  [
+   "Combinado black x40",
+   85600,
+   null
+  ],
+  [
+   "Combinado vegetariano x20",
+   37200,
+   null
+  ],
+  [
+   "Combinado vegetariano x30",
+   55800,
+   null
+  ],
+  [
+   "Combinado salmón y langostinos x15",
+   32100,
+   null
+  ],
+  [
+   "Combinado salmón y langostinos x20",
+   42800,
+   null
+  ],
+  [
+   "Combinado salmón y langostinos x30",
+   64200,
+   null
+  ],
+  [
+   "Combinado salmón y langostinos x40",
+   85600,
+   null
+  ],
+  [
+   "Combinado grill x15",
+   32100,
+   null
+  ],
+  [
+   "Combinado grill x20",
+   42800,
+   null
+  ],
+  [
+   "Combinado grill x30",
+   64200,
+   null
+  ],
+  [
+   "Combinado grill x40",
+   85600,
+   null
+  ],
+  [
+   "Combinado shangai",
+   45800,
+   null
+  ],
+  [
+   "Combinado limeño x15",
+   35700,
+   null
+  ],
+  [
+   "Combinado limeño x20",
+   47600,
+   null
+  ],
+  [
+   "Combinado limeño x30",
+   71400,
+   null
+  ],
+  [
+   "Combinado limeño x40",
+   95200,
+   null
+  ],
+  [
+   "Salmon vip x12.",
+   38500,
+   null
+  ],
+  [
+   "Salmon premium x20",
+   42800,
+   null
+  ],
+  [
+   "Salmon premium x30",
+   64200,
+   null
+  ],
+  [
+   "Salmon premium x15",
+   32100,
+   null
+  ],
+  [
+   "Salmon premium x40",
+   85600,
+   null
+  ],
+  [
+   "Niguiri de langostin x10",
+   26000,
+   null
+  ],
+  [
+   "Niguiri de salmón ahumado x10",
+   26000,
+   null
+  ],
+  [
+   "Niguiri de salmón x10",
+   26000,
+   null
+  ],
+  [
+   "Niguiri tataki x10",
+   26000,
+   null
+  ],
+  [
+   "Niguiri vegetariano x10",
+   20000,
+   null
+  ],
+  [
+   "Sashimi de salmón spicy x10",
+   26000,
+   null
+  ],
+  [
+   "Más vendido",
+   26000,
+   null
+  ],
+  [
+   "Geisha de salmón ahumado x5",
+   14800,
+   null
+  ],
+  [
+   "Geisha de salmón x5",
+   14800,
+   null
+  ],
+  [
+   "New york x10",
+   19900,
+   null
+  ],
+  [
+   "Philadelphia x10",
+   19900,
+   null
+  ],
+  [
+   "Tamago x10",
+   19900,
+   null
+  ],
+  [
+   "Tuna x10",
+   19900,
+   null
+  ],
+  [
+   "Wall street x10",
+   19900,
+   null
+  ],
+  [
+   "Salmon cocido x10",
+   19900,
+   null
+  ],
+  [
+   "Azteca grill x10",
+   19900,
+   null
+  ],
+  [
+   "Azteca x10",
+   19900,
+   null
+  ],
+  [
+   "Azteca x5",
+   9800,
+   null
+  ],
+  [
+   "Buenos aires x10",
+   19900,
+   null
+  ],
+  [
+   "Ceviche x10",
+   19900,
+   null
+  ],
+  [
+   "Ceviche x5",
+   9800,
+   null
+  ],
+  [
+   "Cuzco x10",
+   20300,
+   null
+  ],
+  [
+   "Dos salmones x10",
+   20300,
+   null
+  ],
+  [
+   "Fusion x10",
+   20300,
+   null
+  ],
+  [
+   "Green x10",
+   19900,
+   null
+  ],
+  [
+   "Mango x10",
+   19900,
+   null
+  ],
+  [
+   "Manhattan  x10",
+   19900,
+   null
+  ],
+  [
+   "Manhattan x5",
+   9800,
+   null
+  ],
+  [
+   "New york grill x10",
+   19900,
+   null
+  ],
+  [
+   "Nikkei x10",
+   19900,
+   null
+  ],
+  [
+   "Nikkei x5",
+   9800,
+   null
+  ],
+  [
+   "Red shrimp x10",
+   19900,
+   null
+  ],
+  [
+   "Sake x10",
+   19900,
+   null
+  ],
+  [
+   "Sake x5",
+   9800,
+   null
+  ],
+  [
+   "Salmon mousse x10",
+   19900,
+   null
+  ],
+  [
+   "Smoked x10",
+   19900,
+   null
+  ],
+  [
+   "Sweet phila x10",
+   19900,
+   null
+  ],
+  [
+   "Mex x10",
+   19000,
+   null
+  ],
+  [
+   "Vegetariano x10",
+   19000,
+   null
+  ],
+  [
+   "Veggie x10",
+   19000,
+   null
+  ],
+  [
+   "Yasai x10",
+   19000,
+   null
+  ],
+  [
+   "Hatsu  x10",
+   20300,
+   null
+  ],
+  [
+   "Honey shrimp x10",
+   20300,
+   null
+  ],
+  [
+   "Hot smoked x10",
+   20300,
+   null
+  ],
+  [
+   "Jupiter x10",
+   20300,
+   null
+  ],
+  [
+   "Tentacion  x10",
+   20300,
+   null
+  ],
+  [
+   "Ens. langostinos XL",
+   28900,
+   null
+  ],
+  [
+   "Ens. salmón ahumado XL",
+   28900,
+   null
+  ],
+  [
+   "Ens. salmón crispy XL",
+   28900,
+   null
+  ],
+  [
+   "Ens. vegetariana XL",
+   24700,
+   null
+  ],
+  [
+   "Ens. pollo teriyaki  XL",
+   24700,
+   null
+  ],
+  [
+   "Ens. salmón XL",
+   28900,
+   null
+  ],
+  [
+   "Ebi fried",
+   19600,
+   null
+  ],
+  [
+   "Spring rolls x4",
+   17300,
+   null
+  ],
+  [
+   "Tiradito maracuyá",
+   28400,
+   null
+  ],
+  [
+   "Teri grill de lomo",
+   27300,
+   null
+  ],
+  [
+   "Teri grill de salmón",
+   31800,
+   null
+  ],
+  [
+   "Yakimeshi con langostinos",
+   28900,
+   null
+  ],
+  [
+   "Yakimeshi con salmón",
+   30900,
+   null
+  ],
+  [
+   "Yakimeshi con vegetales",
+   23700,
+   null
+  ],
+  [
+   "Yakisoba con carne",
+   26400,
+   null
+  ],
+  [
+   "Yakisoba con langostinos",
+   28900,
+   null
+  ],
+  [
+   "Yakisoba con pollo",
+   23700,
+   null
+  ],
+  [
+   "Yakisoba con salmón",
+   30900,
+   null
+  ],
+  [
+   "Yakisoba con vegetales",
+   23700,
+   null
+  ],
+  [
+   "Yakiyasai con carne",
+   26400,
+   null
+  ],
+  [
+   "Yakiyasai con langostinos",
+   28900,
+   null
+  ],
+  [
+   "Yakiyasai con pollo",
+   23700,
+   null
+  ],
+  [
+   "Yakiyasai con salmón",
+   30900,
+   null
+  ],
+  [
+   "Yakiyasai con vegetales",
+   23700,
+   null
+  ],
+  [
+   "Yakimeshi con carne",
+   26400,
+   null
+  ],
+  [
+   "Yakimeshi con pollo",
+   23700,
+   null
+  ],
+  [
+   "Milanesas de pollo con papas fritas",
+   23900,
+   null
+  ],
+  [
+   "Nuggets crispy de pollo con papas fritas",
+   23900,
+   null
+  ],
+  [
+   "Postre Deli",
+   10500,
+   null
+  ],
+  [
+   "Agua mineral con gas",
+   4100,
+   null
+  ],
+  [
+   "Agua mineral sin gas",
+   4100,
+   null
+  ],
+  [
+   "Coca cola",
+   4200,
+   null
+  ],
+  [
+   "Coca zero",
+   4200,
+   null
+  ],
+  [
+   "Fanta zero",
+   4200,
+   null
+  ],
+  [
+   "Schweppes tónica",
+   4200,
+   null
+  ],
+  [
+   "Sprite",
+   4200,
+   null
+  ],
+  [
+   "Sprite zero",
+   4200,
+   null
+  ],
+  [
+   "Schweppes pomelo",
+   4200,
+   null
+  ],
+  [
+   "Extra bs. as.",
+   1300,
+   null
+  ],
+  [
+   "Extra jengibre",
+   1300,
+   null
+  ],
+  [
+   "Extra maracuyá",
+   1300,
+   null
+  ],
+  [
+   "Extra mostaza y miel",
+   1300,
+   null
+  ],
+  [
+   "Extra palitos",
+   1300,
+   null
+  ],
+  [
+   "Extra tamarindo",
+   1300,
+   null
+  ],
+  [
+   "Extra teriyaki",
+   1300,
+   null
+  ],
+  [
+   "Extra wasabi",
+   1300,
+   null
+  ]
+ ]
+}

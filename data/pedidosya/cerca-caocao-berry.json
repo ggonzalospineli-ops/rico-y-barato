@@ -1,0 +1,83 @@
+{
+ "store": "Caocao Berry",
+ "brand": "caocao berry",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/caocao-berry-72863748-564b-40f9-853d-3b147870f27c-menu",
+ "fetchedAt": "2026-10-26T19:07:47.822Z",
+ "products": [
+  [
+   "$13.336,5",
+   15690,
+   null
+  ],
+  [
+   "$14.783,2",
+   17392,
+   null
+  ],
+  [
+   "$10.947,6",
+   12164,
+   null
+  ],
+  [
+   "Vaso chico caocao banana + dip",
+   9588,
+   null
+  ],
+  [
+   "Vaso mediano caocao banana+dip",
+   11590,
+   null
+  ],
+  [
+   "Más vendido",
+   13210,
+   null
+  ],
+  [
+   "Vaso caocao grande de frutillas + dip",
+   19860,
+   null
+  ],
+  [
+   "Vaso caocao mediano de frutillas + dip",
+   16590,
+   null
+  ],
+  [
+   "Vaso caocao chico de frutillas + dip",
+   13200,
+   null
+  ],
+  [
+   "Nuevo dip chocolate semiamargo 100 gr",
+   3002,
+   null
+  ],
+  [
+   "Nuevo dip chocolate blanco 100 gr",
+   3002,
+   null
+  ],
+  [
+   "Dip Chocolate 100 Gr",
+   3300,
+   null
+  ],
+  [
+   "Dip chocolate 140 gr",
+   4160,
+   null
+  ],
+  [
+   "Dip Chocolate 200 Gr",
+   5340,
+   null
+  ],
+  [
+   "Nuevo dip nutella 100 gr",
+   6020,
+   null
+  ]
+ ]
+}

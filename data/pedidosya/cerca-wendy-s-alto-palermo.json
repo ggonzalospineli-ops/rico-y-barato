@@ -1,0 +1,63 @@
+{
+ "store": "Wendy's Alto Palermo",
+ "brand": "wendy's",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/wendy-s-alto-palermo-menu",
+ "fetchedAt": "2026-10-26T18:54:14.386Z",
+ "products": [
+  [
+   "2 Doble BBQ + 2 papas + 2 Megatenders",
+   22750,
+   45500
+  ],
+  [
+   "Hamburguesa Son Of Baconator + Papas",
+   12500,
+   19600
+  ],
+  [
+   "2 Bacon Cheddar Lovers Jr + papas",
+   24700,
+   38000
+  ],
+  [
+   "2 BBQ Crispy Bacon + 2 papas + 2 tenders",
+   29999,
+   43200
+  ],
+  [
+   "Hamburguesa Daves doble + Papas medianas",
+   14900,
+   19900
+  ],
+  [
+   "Hamburguesa Doble Jr con pepino + papas",
+   8690,
+   11000
+  ],
+  [
+   "Bastones de Muzzarella x6",
+   5600,
+   7000
+  ],
+  [
+   "Chili grande",
+   5600,
+   7000
+  ],
+  [
+   "Tostado porteño",
+   3400,
+   4000
+  ],
+  [
+   "Combo Chicken Jr",
+   7715,
+   8900
+  ],
+  [
+   "2 Tostados porteños",
+   7600,
+   8000
+  ]
+ ]
+}

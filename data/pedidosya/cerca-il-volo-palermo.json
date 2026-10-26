@@ -1,0 +1,38 @@
+{
+ "store": "Il Volo Palermo",
+ "brand": "il volo",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/il-volo-palermo-menu",
+ "fetchedAt": "2026-10-26T19:06:34.135Z",
+ "products": [
+  [
+   "Helado 1/2 kilo",
+   15300,
+   null
+  ],
+  [
+   "Helado 1 kilo",
+   24200,
+   null
+  ],
+  [
+   "Helado 1/4 kilo",
+   8800,
+   null
+  ],
+  [
+   "Más vendido",
+   15300,
+   null
+  ],
+  [
+   "Vaso de pasta (unidad)",
+   390,
+   null
+  ],
+  [
+   "Cucurucho (unidad)",
+   600,
+   null
+  ]
+ ]
+}

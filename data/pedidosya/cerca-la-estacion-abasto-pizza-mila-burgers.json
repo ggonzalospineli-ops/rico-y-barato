@@ -1,0 +1,338 @@
+{
+ "store": "La Estación Abasto - Pizza, Mila Burgers",
+ "brand": "la estacion",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/la-estacion-abasto-pizza-mila-burgers-c68eab7c-edb6-4e12-b33e-f3eb9f98749c-menu",
+ "fetchedAt": "2026-10-26T19:16:04.374Z",
+ "products": [
+  [
+   "Docena de empanadas a elección",
+   29665,
+   43625
+  ],
+  [
+   "$27.657,5",
+   37375,
+   null
+  ],
+  [
+   "Dos porciones de muzza + 1 faina",
+   6900,
+   8625
+  ],
+  [
+   "Grande de muzza + 2 fainá + bebida",
+   29900,
+   37375
+  ],
+  [
+   "Hamb premium americana + papas",
+   17900,
+   null
+  ],
+  [
+   "Empanada de carne suave",
+   2999,
+   null
+  ],
+  [
+   "Empanada de verdura",
+   2999,
+   null
+  ],
+  [
+   "Empanada de queso y cebolla",
+   2999,
+   null
+  ],
+  [
+   "Empanada napolitana",
+   2999,
+   null
+  ],
+  [
+   "Empanada de pollo",
+   2999,
+   null
+  ],
+  [
+   "Empanada humita",
+   2999,
+   null
+  ],
+  [
+   "Empanada de jamón y queso",
+   2999,
+   null
+  ],
+  [
+   "Empanada de roquefort y apio",
+   2999,
+   null
+  ],
+  [
+   "Empanada de panceta y verdeo",
+   2999,
+   null
+  ],
+  [
+   "Pizza muzzarella a la piedra",
+   24000,
+   null
+  ],
+  [
+   "Pizza Margarita a la piedra",
+   29000,
+   null
+  ],
+  [
+   "Pizza fugazzeta a la piedra",
+   29000,
+   null
+  ],
+  [
+   "Pizza muzza con jamón piedra",
+   29000,
+   null
+  ],
+  [
+   "Pizza napolitana a la piedra",
+   29000,
+   null
+  ],
+  [
+   "Pizza napo con jamón piedra",
+   32000,
+   null
+  ],
+  [
+   "Pizza napo calabresa piedra",
+   42000,
+   null
+  ],
+  [
+   "Pizza roquefort a la piedra",
+   32000,
+   null
+  ],
+  [
+   "Pizza provolone a la piedra",
+   32000,
+   null
+  ],
+  [
+   "Pizza Snack a la piedra",
+   39000,
+   null
+  ],
+  [
+   "Pizza cuatro quesos piedra",
+   39000,
+   null
+  ],
+  [
+   "Pizza fugazzeta rellena jamón",
+   42000,
+   null
+  ],
+  [
+   "Pizza palmito premium piedra",
+   46000,
+   null
+  ],
+  [
+   "Pizza muzzarella al molde",
+   26000,
+   null
+  ],
+  [
+   "Pizza fugazzeta al molde",
+   31000,
+   null
+  ],
+  [
+   "Pizza Margarita al molde",
+   31000,
+   null
+  ],
+  [
+   "Pizza muzza con jamón al molde",
+   31000,
+   null
+  ],
+  [
+   "Pizza napolitana al molde",
+   31000,
+   null
+  ],
+  [
+   "Pizza napo con jamón al molde",
+   34000,
+   null
+  ],
+  [
+   "Pizza cuatro quesos al molde",
+   41000,
+   null
+  ],
+  [
+   "Pizza napo calabresa al molde",
+   44000,
+   null
+  ],
+  [
+   "Pizza jamón y morron al molde",
+   34000,
+   null
+  ],
+  [
+   "Pizza calabresa al molde",
+   41000,
+   null
+  ],
+  [
+   "Pizza primavera al molde",
+   41000,
+   null
+  ],
+  [
+   "Pizza Snack a al molde",
+   41000,
+   null
+  ],
+  [
+   "Pizza panceta y verdeo molde",
+   41000,
+   null
+  ],
+  [
+   "Pizza estación al molde",
+   44000,
+   null
+  ],
+  [
+   "Calzone napolitano",
+   40000,
+   null
+  ],
+  [
+   "Calzone calabrés",
+   44000,
+   null
+  ],
+  [
+   "20 % OFF",
+   6900,
+   8625
+  ],
+  [
+   "32 % OFF",
+   29665,
+   43625
+  ],
+  [
+   "Más vendido",
+   9900,
+   null
+  ],
+  [
+   "Hamb americana simple + papas",
+   10900,
+   null
+  ],
+  [
+   "Pizza Chica FUGAZZETTA",
+   14900,
+   null
+  ],
+  [
+   "Pizza Chica NAPOLITANA",
+   14900,
+   null
+  ],
+  [
+   "Milanesa + papas al plato",
+   15900,
+   null
+  ],
+  [
+   "Empanada de carne picante",
+   2999,
+   null
+  ],
+  [
+   "NUEVA Empanada Burger",
+   2999,
+   null
+  ],
+  [
+   "Pizza jamón y morrones piedra",
+   32000,
+   null
+  ],
+  [
+   "Pizza calabresa a la piedra",
+   39000,
+   null
+  ],
+  [
+   "Pizza primavera a la piedra",
+   39000,
+   null
+  ],
+  [
+   "Pizza verdeo y panceta piedra",
+   39000,
+   null
+  ],
+  [
+   "Pizza roquefort al molde",
+   34000,
+   null
+  ],
+  [
+   "Pizza provolone al molde",
+   34000,
+   null
+  ],
+  [
+   "Pizza palmitos premium molde",
+   48000,
+   null
+  ],
+  [
+   "Hamb premium completa",
+   18500,
+   null
+  ],
+  [
+   "Hamb premium americana",
+   18500,
+   null
+  ],
+  [
+   "Hamb premium estación",
+   19900,
+   null
+  ],
+  [
+   "Sándwich de milanesa con papas",
+   16500,
+   null
+  ],
+  [
+   "Sánd de mila completo con papa",
+   18900,
+   null
+  ],
+  [
+   "Porción de papas con 2 huevos",
+   13000,
+   null
+  ],
+  [
+   "Papas Estación",
+   13000,
+   null
+  ]
+ ]
+}

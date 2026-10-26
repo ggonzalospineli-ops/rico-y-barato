@@ -1,0 +1,138 @@
+{
+ "store": "Crêpas Palermo",
+ "brand": "crepas",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/crepas-palermo-menu",
+ "fetchedAt": "2026-10-26T18:26:58.321Z",
+ "products": [
+  [
+   "Crêpa caprese",
+   17100,
+   19000
+  ],
+  [
+   "Crêpa de jamón y queso",
+   17100,
+   19000
+  ],
+  [
+   "Crêpa veggie",
+   17100,
+   19000
+  ],
+  [
+   "Crêpa roquefort",
+   17100,
+   19000
+  ],
+  [
+   "Crêpa de dulce de leche",
+   13050,
+   14500
+  ],
+  [
+   "Crêpa de choco Crêpas",
+   13050,
+   14500
+  ],
+  [
+   "Crêpa de humita",
+   12000,
+   null
+  ],
+  [
+   "Crêpa pizza",
+   12000,
+   null
+  ],
+  [
+   "Crepa salada más bebida",
+   26500,
+   null
+  ],
+  [
+   "Más vendido",
+   12000,
+   null
+  ],
+  [
+   "10 % OFF",
+   17100,
+   19000
+  ],
+  [
+   "Crêpa de pollo al curry",
+   19000,
+   null
+  ],
+  [
+   "Crêpa Cerdo picante",
+   19000,
+   null
+  ],
+  [
+   "Crêpa Carne al Malbec",
+   22500,
+   null
+  ],
+  [
+   "Crêpa Brie",
+   19000,
+   null
+  ],
+  [
+   "Crêpa Provolone",
+   19000,
+   null
+  ],
+  [
+   "Crêpa de manteca y azúcar",
+   14500,
+   null
+  ],
+  [
+   "Crêpa de manzanas caramelizada",
+   14500,
+   null
+  ],
+  [
+   "Crepa de granola",
+   14500,
+   null
+  ],
+  [
+   "Crêpa Chocoblanco",
+   14500,
+   null
+  ],
+  [
+   "Crêpas de pistacho",
+   14500,
+   null
+  ],
+  [
+   "Refresco Coca Cola 400 ml",
+   5000,
+   null
+  ],
+  [
+   "Cafe",
+   3900,
+   null
+  ],
+  [
+   "Agua mineral 500ml",
+   5000,
+   null
+  ],
+  [
+   "Sándwich de Pollo Grillado.",
+   17000,
+   null
+  ],
+  [
+   "Sándwich tostad de jamón & que",
+   10800,
+   null
+  ]
+ ]
+}

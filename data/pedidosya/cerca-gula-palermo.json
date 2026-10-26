@@ -1,0 +1,93 @@
+{
+ "store": "Gula Palermo",
+ "brand": "gula palermo",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/gula-palermo-bacfb47c-1ba1-461f-80c9-d07d220cc84c-menu",
+ "fetchedAt": "2026-10-26T19:23:56.646Z",
+ "products": [
+  [
+   "Cono de papas",
+   4900,
+   null
+  ],
+  [
+   "Fritas con cheddar",
+   9000,
+   null
+  ],
+  [
+   "Porción de fritas",
+   9800,
+   null
+  ],
+  [
+   "Hamburguesa sola + papas fritas",
+   11500,
+   null
+  ],
+  [
+   "Hamburguesa c/ cheddar y bacon + papas fritas",
+   16500,
+   null
+  ],
+  [
+   "Hamburguesa completa + papas fritas",
+   14200,
+   null
+  ],
+  [
+   "Lomito solo + papas fritas",
+   15500,
+   null
+  ],
+  [
+   "Bondiola sola + papas fritas",
+   10800,
+   null
+  ],
+  [
+   "Más vendido",
+   18300,
+   null
+  ],
+  [
+   "Bondiola completa + papas fritas",
+   13800,
+   null
+  ],
+  [
+   "Pancho argentino",
+   7000,
+   null
+  ],
+  [
+   "Pancho suizo",
+   7000,
+   null
+  ],
+  [
+   "Super pancho",
+   3600,
+   null
+  ],
+  [
+   "Pancho americano",
+   7000,
+   null
+  ],
+  [
+   "Pancho alemán",
+   12500,
+   null
+  ],
+  [
+   "Pancho doble",
+   9000,
+   null
+  ],
+  [
+   "Pancho italiano",
+   7000,
+   null
+  ]
+ ]
+}

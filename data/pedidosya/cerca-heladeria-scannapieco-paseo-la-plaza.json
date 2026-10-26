@@ -1,0 +1,43 @@
+{
+ "store": "Heladería Scannapieco - Paseo La Plaza",
+ "brand": "heladeria scannapieco",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/heladeria-scannapieco-paseo-la-plaza-86733a8e-ec12-47fe-b7bc-48ca9339fc14-menu",
+ "fetchedAt": "2026-10-26T18:47:55.708Z",
+ "products": [
+  [
+   "Más vendido",
+   11500,
+   null
+  ],
+  [
+   "Helado 1/2 kg",
+   20500,
+   null
+  ],
+  [
+   "Helado 3/4 kg",
+   29000,
+   null
+  ],
+  [
+   "Vasitos 3 unidades",
+   400,
+   null
+  ],
+  [
+   "Vasitos 5 unidades",
+   500,
+   null
+  ],
+  [
+   "Cucuruchitos mini 5 unidades",
+   800,
+   null
+  ],
+  [
+   "Cucuruchos 3 unidades",
+   950,
+   null
+  ]
+ ]
+}

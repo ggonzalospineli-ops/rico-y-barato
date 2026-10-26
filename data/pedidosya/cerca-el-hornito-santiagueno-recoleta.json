@@ -1,0 +1,38 @@
+{
+ "store": "El Hornito Santiagueño - Recoleta",
+ "brand": "el hornito santiagueno",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/el-hornito-santiagueno-recoleta-1c829b1e-44e7-40eb-98d0-9fcdf4414cf8-menu",
+ "fetchedAt": "2026-10-26T18:38:43.814Z",
+ "products": [
+  [
+   "Box premium 6 empanadas xl + bebida",
+   29990,
+   59980
+  ],
+  [
+   "Box premium 12 empanadas xl + bebida",
+   53950,
+   83000
+  ],
+  [
+   "Box premium por 6 empanadas xl + 2 salsas",
+   24500,
+   35000
+  ],
+  [
+   "Box premium 24 empanadas xl+ 4 salsas",
+   97500,
+   130000
+  ],
+  [
+   "10 empanadas xl + 2 gratis",
+   50000,
+   62500
+  ],
+  [
+   "Box premium por 12 empanadas xl + 2 salsas",
+   50000,
+   62500
+  ]
+ ]
+}

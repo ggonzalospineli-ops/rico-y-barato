@@ -1,0 +1,93 @@
+{
+ "store": "Oy Vey - Comida Judia",
+ "brand": "oy vey",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/oy-vey-comida-judia-2bb2ec39-0b53-4677-a95f-0b6ffbc748b6-menu",
+ "fetchedAt": "2026-10-26T19:29:24.293Z",
+ "products": [
+  [
+   "2 Falafel En Laffa Con Latkes De Papa",
+   29380,
+   45200
+  ],
+  [
+   "Oy vey para compartir",
+   39450,
+   52600
+  ],
+  [
+   "Más vendido",
+   4350,
+   null
+  ],
+  [
+   "Hummus",
+   8450,
+   null
+  ],
+  [
+   "Mila schnitzel con latkes",
+   25400,
+   null
+  ],
+  [
+   "Bagel De Trucha Ahumada",
+   20570,
+   null
+  ],
+  [
+   "Falafel en laffa con latkes",
+   21200,
+   null
+  ],
+  [
+   "Jalá",
+   8000,
+   null
+  ],
+  [
+   "Coca-cola original 354 ml",
+   5300,
+   null
+  ],
+  [
+   "Coca cola light 354 ml",
+   5300,
+   null
+  ],
+  [
+   "Gaseosa Sprite Lima-Limón 354 ml",
+   5300,
+   null
+  ],
+  [
+   "Bebida Sprite Lata Zero Azucar 350 ml",
+   5300,
+   null
+  ],
+  [
+   "Andes rubia 473 ml",
+   6650,
+   null
+  ],
+  [
+   "Andes rubia oro 473 ml",
+   6650,
+   null
+  ],
+  [
+   "Andes ipa 473 ml",
+   6650,
+   null
+  ],
+  [
+   "Andes roja 473 cc",
+   6650,
+   null
+  ],
+  [
+   "Andes negra lata 473ml",
+   6650,
+   null
+  ]
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "store": "Absenta Bar",
+ "brand": "absenta bar",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/absenta-bar-e9b0fcb1-e4e0-4eaa-9fa7-9cacf036501b-menu",
+ "fetchedAt": "2026-10-26T19:09:02.441Z",
+ "products": [
+  [
+   "Yoru ramen soja",
+   11835,
+   13150
+  ],
+  [
+   "Yoru ramen soja xl",
+   20007,
+   22230
+  ],
+  [
+   "Sopa wantan deluxe xl",
+   22005,
+   24450
+  ],
+  [
+   "$13.049,1",
+   14499,
+   null
+  ],
+  [
+   "Yoru ramen picante xl",
+   22005,
+   24450
+  ],
+  [
+   "10 % OFF",
+   11835,
+   13150
+  ],
+  [
+   "Limonada frozzen clásica",
+   6500,
+   null
+  ],
+  [
+   "Limonada saborizada frozzen",
+   7500,
+   null
+  ]
+ ]
+}

@@ -1,0 +1,533 @@
+{
+ "store": "Barcena Resto Bar",
+ "brand": "barcena resto bar",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/barcena-resto-bar-menu",
+ "fetchedAt": "2026-10-26T19:20:18.507Z",
+ "products": [
+  [
+   "Grande muzzarella + 6 empanadas",
+   49500,
+   null
+  ],
+  [
+   "Grande muzza + pepsi 1.5 l",
+   32500,
+   null
+  ],
+  [
+   "Empanada de carne 170 gs horno",
+   4300,
+   null
+  ],
+  [
+   "Emp.humita 155 gs al horno",
+   4300,
+   null
+  ],
+  [
+   "Emp.calabresa al 170 gs al horno",
+   4300,
+   null
+  ],
+  [
+   "Empanadas de pollo 170 gs horno",
+   4300,
+   null
+  ],
+  [
+   "Emp.capresse 170 gs al horno",
+   4300,
+   null
+  ],
+  [
+   "Emp.jamón y queso 170 gs al horno",
+   4300,
+   null
+  ],
+  [
+   "Emp.queso y cebolla 170 gs horno",
+   4300,
+   null
+  ],
+  [
+   "Emp.queso y roquefort 170 gs horno",
+   4300,
+   null
+  ],
+  [
+   "Tarta de jamón y queso",
+   18500,
+   null
+  ],
+  [
+   "Tarta primavera",
+   19500,
+   null
+  ],
+  [
+   "Tallarines c/estofado de carne",
+   23500,
+   null
+  ],
+  [
+   "Tallarines con bolognesa",
+   23500,
+   null
+  ],
+  [
+   "Mondongo a la española",
+   23500,
+   null
+  ],
+  [
+   "S.milanesa de terner c/lyt.jyq",
+   25000,
+   null
+  ],
+  [
+   "S. suprema de pollo lyt.jyq",
+   25000,
+   null
+  ],
+  [
+   "Sand.milanesa de ternera completo",
+   27500,
+   null
+  ],
+  [
+   "S.de suprema de pollo completo",
+   27500,
+   null
+  ],
+  [
+   "Bife de cuadril con guarnición",
+   40000,
+   null
+  ],
+  [
+   "Mila deternera a la napolitana",
+   27000,
+   null
+  ],
+  [
+   "Suprema de pollo a la napolitana c/ fritas",
+   27000,
+   null
+  ],
+  [
+   "1/4 de pollo deshuesado",
+   27000,
+   null
+  ],
+  [
+   "1/4 pechuga de pollo al ajillo",
+   27000,
+   null
+  ],
+  [
+   "Filete a la romana con guarnic",
+   22000,
+   null
+  ],
+  [
+   "Papas Fritas Grandes",
+   11000,
+   null
+  ],
+  [
+   "Sand.milanesa lyt c/ papas fritas",
+   23500,
+   null
+  ],
+  [
+   "Locro Criollo 2 Porciones",
+   67500,
+   null
+  ],
+  [
+   "Asado+chorizo + morcilla +p.fritas",
+   70000,
+   null
+  ],
+  [
+   "Combo pizzas + bebidas",
+   100000,
+   null
+  ],
+  [
+   "Sand de milanesa completo",
+   27300,
+   null
+  ],
+  [
+   "Muzzarella 8 porciones",
+   25000,
+   null
+  ],
+  [
+   "Muzzarella mediana 6 porciones",
+   20900,
+   null
+  ],
+  [
+   "Napolitana grande 8 porciones",
+   31000,
+   null
+  ],
+  [
+   "Napolitana mediana 6 porciones",
+   25700,
+   null
+  ],
+  [
+   "Jamón grande 8 porciones",
+   31000,
+   null
+  ],
+  [
+   "Jamón mediana 6 porciones",
+   25700,
+   null
+  ],
+  [
+   "Fugazzeta grande 8 porciones",
+   31000,
+   null
+  ],
+  [
+   "Fugazzeta de 6 porciones",
+   25700,
+   null
+  ],
+  [
+   "Anchoas con muzza 8 porciones",
+   32500,
+   null
+  ],
+  [
+   "Calabresa grande 8 porciones",
+   32500,
+   null
+  ],
+  [
+   "Provolone grande 8 porciones",
+   35000,
+   null
+  ],
+  [
+   "Roquefort grande 8 porciones",
+   35000,
+   null
+  ],
+  [
+   "Jamón y morrones 8 porciones",
+   36500,
+   null
+  ],
+  [
+   "Jamón y morrón 6 porciones",
+   31000,
+   null
+  ],
+  [
+   "Napolitana con jamón 8 porcion",
+   36500,
+   null
+  ],
+  [
+   "Napolitana con jamón 6 porcion",
+   31000,
+   null
+  ],
+  [
+   "Cuatro quesos 8 porciones",
+   35000,
+   null
+  ],
+  [
+   "Docena de empanadas horneados",
+   47300,
+   null
+  ],
+  [
+   "Más vendido",
+   4300,
+   null
+  ],
+  [
+   "Emp.carne picante 170 gs al horno",
+   4300,
+   null
+  ],
+  [
+   "Emp.verduras 170 gs al horno",
+   4300,
+   null
+  ],
+  [
+   "Docena de empanadas fritas",
+   51500,
+   null
+  ],
+  [
+   "Empanada frita de calabresa",
+   4650,
+   null
+  ],
+  [
+   "Empanada frita capresse",
+   4650,
+   null
+  ],
+  [
+   "Emp.frita de carne picante",
+   4650,
+   null
+  ],
+  [
+   "Empanada frita de jamón y queso",
+   4650,
+   null
+  ],
+  [
+   "Empanada frita de q y cebolla",
+   4650,
+   null
+  ],
+  [
+   "Empanada frita de queso azul y mozarella",
+   4650,
+   null
+  ],
+  [
+   "12 emp de carne a cuchillo 170 gs horno",
+   50000,
+   null
+  ],
+  [
+   "12 emp.de carne a cuchillos 170 gs fritas.",
+   52500,
+   null
+  ],
+  [
+   "Tarta capresse",
+   18500,
+   null
+  ],
+  [
+   "Tarta de verduras",
+   18500,
+   null
+  ],
+  [
+   "Tarta de calabaza y queso",
+   18500,
+   null
+  ],
+  [
+   "Ravioles con estofado de carne",
+   23500,
+   null
+  ],
+  [
+   "Ravioles con salsa bolognesa",
+   23500,
+   null
+  ],
+  [
+   "Ñoquis caseros c/estof carne",
+   23500,
+   null
+  ],
+  [
+   "Ñoquis caseros de papa c/bolog",
+   23500,
+   null
+  ],
+  [
+   "Lentejas a la española",
+   23500,
+   null
+  ],
+  [
+   "Ensalada De Atún",
+   21600,
+   null
+  ],
+  [
+   "ENSALADA DE JAMON Y QUESO",
+   21600,
+   null
+  ],
+  [
+   "Ensalada capresse",
+   21600,
+   null
+  ],
+  [
+   "Ensalada césar",
+   24900,
+   null
+  ],
+  [
+   "Ensalada con palmitos",
+   24900,
+   null
+  ],
+  [
+   "Sand.milanesa de terner c/lyt.",
+   23500,
+   null
+  ],
+  [
+   "Sand.suprema de pollo con lyt.",
+   23500,
+   null
+  ],
+  [
+   "San.hamburguesa completo",
+   19000,
+   null
+  ],
+  [
+   "Sand. lomito con lechuga y tomate",
+   23500,
+   null
+  ],
+  [
+   "Sand.lomito completo p/compartir",
+   27500,
+   null
+  ],
+  [
+   "Sand.churrasquito de pollo completo",
+   27500,
+   null
+  ],
+  [
+   "Bife de cuadril a caballo c/g",
+   43500,
+   null
+  ],
+  [
+   "Bife de costilla con guarnic",
+   40000,
+   null
+  ],
+  [
+   "Bife de costilla a caballo c/g",
+   43500,
+   null
+  ],
+  [
+   "Milanesa de ternera",
+   24000,
+   null
+  ],
+  [
+   "Escalope de ternera c/guarnic",
+   24000,
+   null
+  ],
+  [
+   "Milanesa de ternera a la fugazzeta",
+   27000,
+   null
+  ],
+  [
+   "Sandwich de lomito con lyt.",
+   23000,
+   null
+  ],
+  [
+   "Suprema de pollo con guarnicion",
+   24000,
+   null
+  ],
+  [
+   "Sup de pollo a lafugazzeta c/fritas",
+   27000,
+   null
+  ],
+  [
+   "Escalope de supre de pollo c/ pure",
+   24500,
+   null
+  ],
+  [
+   "Pollo a la parrilla con guarn",
+   20000,
+   null
+  ],
+  [
+   "1/4 a de pollo deshuesada",
+   24000,
+   null
+  ],
+  [
+   "Filete a la milanesa con guarn",
+   22000,
+   null
+  ],
+  [
+   "Huevo fritos",
+   2000,
+   null
+  ],
+  [
+   "Tortilla de papa 20 cm por 3cm",
+   18000,
+   null
+  ],
+  [
+   "Tortillas de papa y cebolla",
+   19000,
+   null
+  ],
+  [
+   "Tortilla de papa a la española",
+   19500,
+   null
+  ],
+  [
+   "Gaseosa Pepsi 1.5 L",
+   8500,
+   null
+  ],
+  [
+   "Gaseosa Pepsi 500 ml",
+   5000,
+   null
+  ],
+  [
+   "Agua pomelo levite 500 ml",
+   4200,
+   null
+  ],
+  [
+   "Cerveza Brahma",
+   11900,
+   null
+  ],
+  [
+   "Cerveza Quilmes Clásica 473 ml",
+   6000,
+   null
+  ],
+  [
+   "Agua Mineral Bot. 1.5 Lt",
+   5900,
+   null
+  ],
+  [
+   "Vino domingo hnos , 3 litros.",
+   33000,
+   null
+  ],
+  [
+   "Cerveza salta lata negra 473 u",
+   6500,
+   null
+  ]
+ ]
+}

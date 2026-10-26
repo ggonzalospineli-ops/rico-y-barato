@@ -1,0 +1,88 @@
+{
+ "store": "Cang Tin - Comida Internacional",
+ "brand": "cang tin",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/cang-tin-comida-internacional-456e86c4-8cc1-4876-9ddf-4fb4d6af0bcd-menu",
+ "fetchedAt": "2026-10-26T19:12:16.678Z",
+ "products": [
+  [
+   "Dumpling veggie",
+   25200,
+   null
+  ],
+  [
+   "Nems fritos",
+   30300,
+   null
+  ],
+  [
+   "Más vendido",
+   23300,
+   null
+  ],
+  [
+   "Ensalada de mango con tamarindo y maní",
+   22200,
+   null
+  ],
+  [
+   "Satay de pollo",
+   30300,
+   null
+  ],
+  [
+   "Pad thai con langostinos",
+   41300,
+   null
+  ],
+  [
+   "Girgolas grilladas",
+   37200,
+   null
+  ],
+  [
+   "Udon veggie",
+   36600,
+   null
+  ],
+  [
+   "Cambodian lok lak",
+   40100,
+   null
+  ],
+  [
+   "Udon de pollo",
+   36600,
+   null
+  ],
+  [
+   "Drunken noodles de langostinos",
+   38400,
+   null
+  ],
+  [
+   "Udon de langostinos",
+   39500,
+   null
+  ],
+  [
+   "Bun thit nuong",
+   32800,
+   null
+  ],
+  [
+   "Curry veggie",
+   34700,
+   null
+  ],
+  [
+   "Pad thai con pollo",
+   38900,
+   null
+  ],
+  [
+   "Pad thai con pak choi y tofu",
+   38900,
+   null
+  ]
+ ]
+}

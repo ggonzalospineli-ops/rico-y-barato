@@ -1,0 +1,73 @@
+{
+ "store": "Mimis Deli.",
+ "brand": "mimis deli",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/mimis-deli-5d112a50-4b27-4d22-9937-1bfd5ab3c20f-menu",
+ "fetchedAt": "2026-10-26T19:22:12.341Z",
+ "products": [
+  [
+   "Wrap de pollo",
+   23000,
+   null
+  ],
+  [
+   "Egg salad sándwich",
+   15000,
+   null
+  ],
+  [
+   "Más vendido",
+   29000,
+   null
+  ],
+  [
+   "Brisket braseado",
+   21000,
+   null
+  ],
+  [
+   "Club sándwich",
+   23000,
+   null
+  ],
+  [
+   "House Pastrami Sandwich",
+   30000,
+   null
+  ],
+  [
+   "Combo 6 empanadas",
+   33000,
+   null
+  ],
+  [
+   "Combo 12 empanadas",
+   66000,
+   null
+  ],
+  [
+   "Empanada de carne dulce",
+   5500,
+   null
+  ],
+  [
+   "Empanada de hongos y cebolla caramelizada",
+   4500,
+   null
+  ],
+  [
+   "Empanada de verdura",
+   4500,
+   null
+  ],
+  [
+   "Knishe papa y cebolla",
+   4500,
+   null
+  ],
+  [
+   "Ensalada César con pollo",
+   22000,
+   null
+  ]
+ ]
+}

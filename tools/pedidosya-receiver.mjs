@@ -20,9 +20,37 @@ createServer((req, res) => {
   res.setHeader('Access-Control-Allow-Headers', 'content-type');
   res.setHeader('Access-Control-Allow-Private-Network', 'true');
   if (req.method === 'OPTIONS') { res.writeHead(204).end(); return; }
+  // Espera del lado del servidor: Chrome frena los setTimeout de las pestañas en segundo plano (uno por
+  // minuto), pero no las respuestas de red. El extractor espera pidiendo /esperar?ms=N.
+  if (req.method === 'GET' && req.url.startsWith('/esperar')) {
+    const ms = Math.min(30000, Math.max(0, +(new URL(req.url, 'http://x').searchParams.get('ms')) || 0));
+    setTimeout(() => res.writeHead(204).end(), ms);
+    return;
+  }
+  if (req.method === 'GET' && req.url === '/lista') {
+    res.writeHead(200, { 'content-type': 'application/json', 'cache-control': 'no-store' })
+      .end(readFileSync(new URL('../.cache/pedidosya-lista.json', import.meta.url)));
+    return;
+  }
   if (req.method === 'GET' && req.url.startsWith('/scrape.js')) {
     res.writeHead(200, { 'content-type': 'text/javascript; charset=utf-8', 'cache-control': 'no-store' })
       .end(readFileSync(new URL('pedidosya-scrape.js', import.meta.url)));
+    return;
+  }
+  // Lista de locales que entregan en la dirección (para saber qué menús bajar): .cache/pedidosya-cerca.json
+  if (req.method === 'POST' && req.url === '/indice') {
+    let body = '';
+    req.on('data', c => { body += c; if (body.length > 5e6) req.destroy(); });
+    req.on('end', () => {
+      try {
+        const list = JSON.parse(body).items.filter(x => /^https:\/\/www\.pedidosya\.com\.ar\/restaurantes\//.test(x.url))
+          .map(x => ({ name: String(x.name).slice(0, 120), url: x.url.split('?')[0], info: String(x.info || '').slice(0, 200) }));
+        mkdirSync(new URL('../.cache/', import.meta.url), { recursive: true });
+        writeFileSync(new URL('../.cache/pedidosya-cerca.json', import.meta.url), JSON.stringify(list, null, 1));
+        console.log(`índice: ${list.length} locales`);
+        res.writeHead(200).end(JSON.stringify({ ok: true, n: list.length }));
+      } catch (e) { res.writeHead(400).end(String(e.message)); }
+    });
     return;
   }
   if (req.method !== 'POST' || req.url !== '/guardar') { res.writeHead(404).end(); return; }

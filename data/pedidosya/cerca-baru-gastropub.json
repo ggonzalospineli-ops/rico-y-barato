@@ -1,0 +1,63 @@
+{
+ "store": "Barú Gastropub",
+ "brand": "baru gastropub",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/baru-gastropub-menu",
+ "fetchedAt": "2026-10-26T19:03:04.306Z",
+ "products": [
+  [
+   "Tequeños",
+   15950,
+   null
+  ],
+  [
+   "Atollado de Mariscos",
+   25850,
+   null
+  ],
+  [
+   "Sancocho",
+   21450,
+   null
+  ],
+  [
+   "Patacón Fusión",
+   25850,
+   null
+  ],
+  [
+   "Pescado Frito",
+   32450,
+   null
+  ],
+  [
+   "Más vendido",
+   32450,
+   null
+  ],
+  [
+   "El Electrico",
+   20500,
+   null
+  ],
+  [
+   "Carne y cebolla caramelizada",
+   24200,
+   null
+  ],
+  [
+   "Vegetales Asados",
+   19800,
+   null
+  ],
+  [
+   "Arepa Burger",
+   23100,
+   null
+  ],
+  [
+   "Touch Down",
+   23100,
+   null
+  ]
+ ]
+}

@@ -1,0 +1,393 @@
+{
+ "store": "Otaku Sushi Palermo",
+ "brand": "otaku sushi",
+ "url": "https://www.pedidosya.com.ar/restaurantes/buenos-aires/otaku-sushi-palermo-7b06f378-c560-4bfb-95bb-764f54bdfa33-menu",
+ "fetchedAt": "2026-10-26T18:55:54.596Z",
+ "products": [
+  [
+   "Subite al barco (26 piezas)",
+   21500,
+   43000
+  ],
+  [
+   "Tabla ikura 40",
+   49500,
+   99000
+  ],
+  [
+   "Tabla ikura 60",
+   73500,
+   147000
+  ],
+  [
+   "TABLA 25 MP - FULL SALMON",
+   27600,
+   46000
+  ],
+  [
+   "Tabla 15 mp - full salmón",
+   17500,
+   25000
+  ],
+  [
+   "TABLA MP X12 - FULL SALMON",
+   14000,
+   20000
+  ],
+  [
+   "Tabla chill (24 piezas)",
+   25200,
+   36000
+  ],
+  [
+   "Tabla summer (12 piezas)",
+   12600,
+   18000
+  ],
+  [
+   "Tabla winter",
+   12600,
+   18000
+  ],
+  [
+   "Tabla chill 12",
+   12600,
+   18000
+  ],
+  [
+   "Tabla Nippon",
+   15400,
+   22000
+  ],
+  [
+   "Tabla Keiken",
+   18200,
+   26000
+  ],
+  [
+   "50 % OFF",
+   21500,
+   43000
+  ],
+  [
+   "30 % OFF",
+   17500,
+   25000
+  ],
+  [
+   "40 % OFF",
+   27600,
+   46000
+  ],
+  [
+   "Tabla summer (24 piezas)",
+   36000,
+   null
+  ],
+  [
+   "Más vendido",
+   22000,
+   null
+  ],
+  [
+   "Tabla Otaku",
+   27000,
+   null
+  ],
+  [
+   "Tabla Black",
+   28000,
+   null
+  ],
+  [
+   "Tabla Hot",
+   26000,
+   null
+  ],
+  [
+   "Tabla love veggie (15 piezas)",
+   22000,
+   null
+  ],
+  [
+   "Tabla veggan (15 piezas)",
+   22000,
+   null
+  ],
+  [
+   "Omakase veggie vegan (15 piezas)",
+   22000,
+   null
+  ],
+  [
+   "Tabla veggie (15 piezas)",
+   22000,
+   null
+  ],
+  [
+   "Veggie hot roll",
+   11000,
+   null
+  ],
+  [
+   "Shrimp hot roll",
+   11000,
+   null
+  ],
+  [
+   "Philadelphia roll",
+   10500,
+   null
+  ],
+  [
+   "New york roll",
+   11000,
+   null
+  ],
+  [
+   "Cooked salmón roll",
+   11000,
+   null
+  ],
+  [
+   "Buenos aires roll",
+   10500,
+   null
+  ],
+  [
+   "Green tare roll",
+   11000,
+   null
+  ],
+  [
+   "Green laki roll",
+   10500,
+   null
+  ],
+  [
+   "California roll",
+   10500,
+   null
+  ],
+  [
+   "Veggie roll",
+   10500,
+   null
+  ],
+  [
+   "Maki roll salmón",
+   10500,
+   null
+  ],
+  [
+   "Maki roll veggie",
+   10500,
+   null
+  ],
+  [
+   "Maki langostinos",
+   10500,
+   null
+  ],
+  [
+   "Maki roll lisboa",
+   10500,
+   null
+  ],
+  [
+   "Maki roll turin",
+   10500,
+   null
+  ],
+  [
+   "Maki roll viena",
+   10500,
+   null
+  ],
+  [
+   "O'taku roll",
+   11000,
+   null
+  ],
+  [
+   "Passion roll",
+   10500,
+   null
+  ],
+  [
+   "Smoked shrimps",
+   10000,
+   null
+  ],
+  [
+   "Temptation roll",
+   10000,
+   null
+  ],
+  [
+   "Texas roll",
+   10500,
+   null
+  ],
+  [
+   "Zen roll",
+   10500,
+   null
+  ],
+  [
+   "Tamago roll",
+   10500,
+   null
+  ],
+  [
+   "Chic roll",
+   11000,
+   null
+  ],
+  [
+   "Hikari roll",
+   10500,
+   null
+  ],
+  [
+   "Mexican veggie roll",
+   10000,
+   null
+  ],
+  [
+   "Austral Roll",
+   10000,
+   null
+  ],
+  [
+   "Ushuaia Roll",
+   10000,
+   null
+  ],
+  [
+   "Puerto Madryn Roll",
+   10000,
+   null
+  ],
+  [
+   "Ocean Sushi Salad",
+   20000,
+   null
+  ],
+  [
+   "Teriyaki sushi salad",
+   15000,
+   null
+  ],
+  [
+   "Bittersweet salad",
+   20000,
+   null
+  ],
+  [
+   "Teriyaki Sushi Salad",
+   15000,
+   null
+  ],
+  [
+   "Sashimi Salmón Ahumado",
+   2000,
+   null
+  ],
+  [
+   "Nigiri salmón",
+   2000,
+   null
+  ],
+  [
+   "Nigiri tomate confitado",
+   2000,
+   null
+  ],
+  [
+   "Nigiri zanahoria tepan",
+   2000,
+   null
+  ],
+  [
+   "Nigiri portobello braseado",
+   2000,
+   null
+  ],
+  [
+   "Nigiri lenguado y palta",
+   2000,
+   null
+  ],
+  [
+   "Geisha Salmón",
+   2000,
+   null
+  ],
+  [
+   "Geisha de salmón ahumado",
+   2000,
+   null
+  ],
+  [
+   "Geisha Tempura",
+   2000,
+   null
+  ],
+  [
+   "Wok de salmón",
+   24000,
+   null
+  ],
+  [
+   "Wok De Pollo",
+   20000,
+   null
+  ],
+  [
+   "Wok de langostinos",
+   25000,
+   null
+  ],
+  [
+   "Otaku noodles",
+   24000,
+   null
+  ],
+  [
+   "Langostinos panko x8",
+   18000,
+   null
+  ],
+  [
+   "Gyosas de pollo al curry x5",
+   10000,
+   null
+  ],
+  [
+   "Arrolladitos primavera de carne x2",
+   10000,
+   null
+  ],
+  [
+   "Otaku nuggets x12",
+   17000,
+   null
+  ],
+  [
+   "Arrolladitos primavera veggie x2",
+   10000,
+   null
+  ],
+  [
+   "Gyosas de cerdo x5",
+   10000,
+   null
+  ],
+  [
+   "Gyosas de verdura x5",
+   10000,
+   null
+  ]
+ ]
+}
