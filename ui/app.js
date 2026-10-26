@@ -6,6 +6,7 @@ import { splitBill, splitMessage } from '../engine/split.js';
 import { parseIntent } from '../engine/intent.js';
 import { decideDeck } from '../engine/shuffle.js';
 import { dailyKcal } from '../engine/nutrition.js';
+import { emptyGroup, encodeGroup, decodeGroup, setPersonLines, groupTotals, mergedLines, cleanName } from '../engine/group.js';
 import { mountAssistant } from './assistant.js';
 import { hasKey, setKey, hasAI, aiLabel, activeProvider, detectLocal, warmLocal, localStatus, getProvider, setProvider, testAI, interpretWithAI, readTicket } from './ai.js';
 
@@ -800,7 +801,10 @@ function openMenu(restaurantId) {
             <span class="chev" aria-hidden="true">›</span>
           </div>`).join('')}</div>`).join('')}
     </div>
-    ${rest.url ? `<div class="sheet-bar"><a class="btn red" href="${esc(rest.url)}" target="_blank" rel="noopener">Abrir en Rappi ${icon('out')}</a></div>` : ''}`);
+    <div class="sheet-bar">
+      <button class="btn ghost" data-group-start="${esc(rest.id)}">👥 Pedido grupal</button>
+      ${rest.url ? `<a class="btn red" href="${esc(rest.url)}" target="_blank" rel="noopener">Abrir en Rappi ${icon('out')}</a>` : ''}
+    </div>`);
 }
 
 // Detalle de un producto del menú completo: foto, descripción, cuánto rinde, historial de precio,
@@ -869,7 +873,7 @@ engine.on(({ type }) => {
 });
 
 document.addEventListener('click', e => {
-  const t = e.target.closest('[data-palette],[data-people],[data-results],[data-decide],[data-swipe],[data-cmd],[data-spin],[data-tab],[data-hunger],[data-cat],[data-money],[data-add],[data-fav],[data-fav-plan],[data-plan],[data-rest],[data-close],[data-hide],[data-unhide],[data-confirm],[data-remove],[data-toptab],[data-step],[data-enable],[data-exclude],[data-suggest],[data-assist-toggle],[data-assist-enable],[data-item],[data-iqty],[data-when],[data-eta],[data-km],[data-fitness],[data-kcal],[data-goal],#sheet-wrap');
+  const t = e.target.closest('[data-palette],[data-people],[data-results],[data-decide],[data-swipe],[data-cmd],[data-spin],[data-tab],[data-hunger],[data-cat],[data-money],[data-add],[data-fav],[data-fav-plan],[data-plan],[data-rest],[data-close],[data-hide],[data-unhide],[data-confirm],[data-remove],[data-toptab],[data-step],[data-enable],[data-exclude],[data-suggest],[data-assist-toggle],[data-assist-enable],[data-item],[data-iqty],[data-when],[data-eta],[data-km],[data-fitness],[data-kcal],[data-goal],[data-group-start],[data-gq],[data-group-share],[data-group-cart],[data-group-back],#sheet-wrap');
   if (!t) return;
   const d = t.dataset;
 
@@ -886,6 +890,11 @@ document.addEventListener('click', e => {
   if (d.hunger) { ui.hunger = d.hunger; saveUi(); render(); return; }
   if (d.cat) { ui.category = d.cat; saveUi(); render(); return; }
   if ('money' in d) { ui.money = d.money ? +d.money : null; saveUi(); render(); return; }
+  if (d.groupStart) { startGroup(d.groupStart); return; }
+  if (d.gq) { changeGroupQty(d.gq, +d.delta); return; }
+  if ('groupShare' in d) { shareGroup(); return; }
+  if ('groupCart' in d) { groupToCart(); return; }
+  if (d.groupBack) { closeGroup(); reopen = () => openMenu(d.groupBack); openMenu(d.groupBack); return; }
   if ('fitness' in d) { ui.fitness = !ui.fitness; saveUi(); render(); return; }
   if ('kcal' in d) { ui.maxKcal = d.kcal === '' ? null : +d.kcal; saveUi(); render(); return; }
   if (d.goal) { ui.goal = d.goal; saveUi(); render(); return; }
@@ -2083,3 +2092,139 @@ document.addEventListener('change', e => {
   saveUi();
   render();
 });
+
+// =====================================================================
+// Pedido grupal por link (engine/group.js): el pedido viaja en la URL (#grupo=...)
+// =====================================================================
+let groupState = null; // { group, me, filter }
+function myName() { try { return localStorage.getItem('ryb:me') || ''; } catch { return ''; } }
+function saveMyName(n) { try { localStorage.setItem('ryb:me', n); } catch {} }
+function itemById(id) { return engine.menu(id.slice(0, id.lastIndexOf(':'))).find(x => x.id === id); }
+function groupLink() { return `${location.origin}${location.pathname}#grupo=${encodeGroup(groupState.group)}`; }
+
+function startGroup(restaurantId) {
+  groupState = { group: emptyGroup(restaurantId), me: myName() };
+  openGroup();
+}
+function closeGroup() {
+  groupState = null;
+  if (location.hash.startsWith('#grupo=')) history.replaceState(null, '', location.pathname + location.search);
+}
+function mine() {
+  const me = groupState.me.toLowerCase();
+  return groupState.group.people.find(p => p.name.toLowerCase() === me)?.lines || [];
+}
+function changeGroupQty(itemId, delta) {
+  const name = cleanName($('#group-me')?.value || groupState.me);
+  if (!name) { toast('Primero poné tu nombre'); $('#group-me')?.focus(); return; }
+  groupState.me = name; saveMyName(name);
+  const lines = mine().map(l => ({ ...l }));
+  const l = lines.find(x => x.itemId === itemId);
+  if (l) l.qty = Math.max(0, l.qty + delta); else if (delta > 0) lines.push({ itemId, qty: delta });
+  groupState.group = setPersonLines(groupState.group, name, lines);
+  history.replaceState(null, '', `#grupo=${encodeGroup(groupState.group)}`);
+  const scroll = $('#overlay .sheet-body')?.scrollTop;
+  openGroup();
+  const body = $('#overlay .sheet-body'); if (body && scroll != null) body.scrollTop = scroll;
+}
+
+function openGroup() {
+  const { group } = groupState;
+  const rest = engine.restaurants().find(r => r.id === group.restaurantId);
+  if (!rest) { toast('Ese local ya no está en el catálogo'); closeGroup(); return; }
+  reopen = () => groupState && openGroup();
+  const items = engine.menu(rest.id);
+  const t = groupTotals(group, id => itemById(id)?.price, rest.deliveryFee || 0);
+  const myLines = Object.fromEntries(mine().map(l => [l.itemId, l.qty]));
+  const q = (groupState.filter || '').toLowerCase();
+  const shown = items.filter(it => !q || it.name.toLowerCase().includes(q) || (it.section || '').toLowerCase().includes(q));
+  openSheet(`
+    <div class="cover sheet-cover" ${coverStyle('otro')}>${sheetCoverHtml('otro', rest.coverUrl)}</div>
+    <div class="sheet-top">
+      <button class="icon-btn" data-group-back="${esc(rest.id)}" aria-label="Volver al menú">${icon('back')}</button>
+      <span class="pill">👥 Pedido grupal</span>
+      <span></span>
+    </div>
+    <div class="sheet-body">
+      <div class="kicker">${esc(rest.name)}</div>
+      <h2>Pedido grupal</h2>
+      <p class="blurb">Cada uno elige lo suyo y comparte el link. El envío se divide en partes iguales.</p>
+      <div class="group-people">
+        ${t.shares.length ? t.shares.map(sh => {
+          const person = group.people.find(p => p.name === sh.name);
+          return `<div class="gp ${sh.name.toLowerCase() === groupState.me.toLowerCase() ? 'me' : ''}">
+            <div><b>${esc(sh.name)}</b><small>${person.lines.map(l => `${l.qty}× ${esc(itemById(l.itemId)?.name || '')}`).join(' + ')}</small></div>
+            <span>${ars(sh.amount)}</span></div>`;
+        }).join('') : '<p class="note">Todavía no pidió nadie. Empezá vos.</p>'}
+      </div>
+      <div class="section-head" style="margin-top:18px"><h2>Lo tuyo</h2><span>${Object.keys(myLines).length ? `${Object.values(myLines).reduce((a, b) => a + b, 0)} producto(s)` : ''}</span></div>
+      <label class="group-me"><span>Tu nombre</span><input id="group-me" value="${esc(groupState.me)}" placeholder="¿Cómo te llamás?" maxlength="24" autocomplete="given-name"></label>
+      <input id="group-filter" class="group-filter" type="search" placeholder="Buscá en el menú…" value="${esc(groupState.filter || '')}">
+      <div class="list group-menu">${shown.slice(0, 80).map(it => `
+        <div class="line-item ${myLines[it.id] ? 'picked' : ''}">
+          ${thumb(catOfItem(it), it.imageUrl, 'sm')}
+          <div class="row-main"><h4>${esc(it.name)}</h4><p>${ars(it.price)}${it.section ? ` · ${esc(it.section)}` : ''}</p></div>
+          <div class="stepper"><div><button data-gq="${esc(it.id)}" data-delta="-1" aria-label="Menos" ${myLines[it.id] ? '' : 'disabled'}>−</button><span>${myLines[it.id] || 0}</span><button data-gq="${esc(it.id)}" data-delta="1" aria-label="Más">+</button></div></div>
+        </div>`).join('')}
+        ${shown.length > 80 ? `<p class="note">Mostrando 80 de ${shown.length}. Buscá para encontrar el resto.</p>` : ''}
+      </div>
+    </div>
+    <div class="sheet-bar">
+      <div class="tot"><small>Total del grupo${rest.deliveryFee == null ? ' + envío' : ' con envío'}</small><b>${ars(t.total)}</b></div>
+      <button class="btn ghost" data-group-share ${t.shares.length ? '' : 'disabled'}>🔗 Compartir</button>
+      <button class="btn primary" data-group-cart ${t.shares.length ? '' : 'disabled'}>${icon('bag')} Al pedido</button>
+    </div>`);
+}
+
+async function shareGroup() {
+  const rest = engine.restaurants().find(r => r.id === groupState.group.restaurantId);
+  const t = groupTotals(groupState.group, id => itemById(id)?.price, rest?.deliveryFee || 0);
+  const text = `🍔 Pedido grupal en ${rest?.name}\n${t.shares.map(s => `• ${s.name}: ${ars(s.amount)}`).join('\n')}\nTotal ${ars(t.total)}\n\nSumá lo tuyo acá:`;
+  const url = groupLink();
+  try {
+    if (navigator.share) { await navigator.share({ title: 'Pedido grupal', text, url }); return; }
+  } catch (e) { if (e?.name === 'AbortError') return; }
+  try { await navigator.clipboard.writeText(`${text} ${url}`); toast('🔗 Link copiado: pegalo en el grupo'); }
+  catch { toast('No pude copiar el link: copialo de la barra de direcciones'); }
+}
+
+function groupToCart() {
+  const plan = engine.planForLines(mergedLines(groupState.group));
+  if (!plan) { toast('No pude armar el pedido'); return; }
+  itemPlans.set(plan.id, plan);
+  if (!inCart(plan.id)) engine.addToCart(plan);
+  toast(`Agregado al pedido: ${ars(plan.total)} · dividilo con ➗`);
+}
+
+document.addEventListener('input', e => {
+  if (e.target.id !== 'group-filter' || !groupState) return;
+  groupState.filter = e.target.value;
+  const pos = e.target.selectionStart;
+  openGroup();
+  const f = $('#group-filter'); if (f) { f.focus(); f.setSelectionRange(pos, pos); }
+});
+document.addEventListener('change', e => {
+  if (e.target.id !== 'group-me' || !groupState) return;
+  const name = cleanName(e.target.value);
+  if (!name) return;
+  // Cambiar el nombre mueve lo que ya elegiste al nombre nuevo.
+  const lines = mine();
+  if (lines.length && name.toLowerCase() !== groupState.me.toLowerCase()) {
+    groupState.group = setPersonLines(setPersonLines(groupState.group, groupState.me, []), name, lines);
+    history.replaceState(null, '', `#grupo=${encodeGroup(groupState.group)}`);
+  }
+  groupState.me = name; saveMyName(name);
+  openGroup();
+});
+
+// Abrir un link de pedido grupal.
+function openGroupFromHash() {
+  const m = location.hash.match(/^#grupo=([A-Za-z0-9_-]+)$/);
+  if (!m) return;
+  const group = decodeGroup(m[1], id => !!itemById(id));
+  if (!group || !engine.restaurants().some(r => r.id === group.restaurantId)) { toast('Ese link de pedido grupal no es válido'); return; }
+  groupState = { group, me: myName() };
+  openGroup();
+}
+window.addEventListener('hashchange', openGroupFromHash);
+openGroupFromHash();

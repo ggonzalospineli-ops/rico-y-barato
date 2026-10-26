@@ -333,13 +333,20 @@ export function createEngine({ source, storage = memoryStorage(), now = () => Da
     // Plan de un solo producto elegido a mano desde el menú (para agregarlo al pedido). Si el producto no
     // es de una categoría que el motor mide (una tortilla, una bebida), queda como "otro" en unidades.
     planForItem(itemId, qty = 1) {
-      const it = items.find(i => i.id === itemId);
-      const r = it && restaurantsById[it.restaurantId];
-      if (!r) return null;
-      const n = Math.max(1, Math.round(qty));
-      const category = Object.keys(it.yields || {})[0] || 'otro';
-      const quantity = (it.yields?.[category] || 1) * n;
-      return makePlan(r, category, quantity, { lines: [{ product: it, qty: n }], subtotal: it.price * n, quantity }, `item-${it.id}`, taste());
+      return this.planForLines([{ itemId, qty }], `item-${itemId}`);
+    },
+    // Plan con varios productos de un mismo local (pedido grupal). La categoría es la que más rinde.
+    planForLines(lines, variant = 'grupo') {
+      const picked = lines.map(l => ({ product: items.find(i => i.id === l.itemId), qty: Math.max(1, Math.round(l.qty)) }))
+        .filter(l => l.product);
+      const r = picked.length && restaurantsById[picked[0].product.restaurantId];
+      if (!r || picked.some(l => l.product.restaurantId !== r.id)) return null;
+      const byCat = {};
+      for (const l of picked) for (const [c, n] of Object.entries(l.product.yields || {})) byCat[c] = (byCat[c] || 0) + n * l.qty;
+      const category = Object.entries(byCat).sort((a, b) => b[1] - a[1])[0]?.[0] || 'otro';
+      const quantity = byCat[category] || picked.reduce((s, l) => s + l.qty, 0);
+      const subtotal = picked.reduce((s, l) => s + l.product.price * l.qty, 0);
+      return makePlan(r, category, quantity, { lines: picked, subtotal, quantity }, variant, taste());
     },
     restaurants: () => restaurants.map(publicRestaurant),
     catalogSummary: () => ({
