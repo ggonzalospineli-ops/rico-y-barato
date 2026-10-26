@@ -28,6 +28,249 @@
         "note": "En Morfy el combo incluye gaseosa; precio de las sucursales de Malabia y Junín"
       }
     ],
+    "burger-king-palermo:759951": [
+      {
+        "app": "pedidosya",
+        "name": "2 Doble Cheese Onion + 2 Papas Regulares",
+        "price": 20400,
+        "same": true,
+        "note": "Burger King Facultad, con descuento (sin descuento 29.143); relevado el 2026-10-26"
+      }
+    ],
+    "burger-king-palermo:761261": [
+      {
+        "app": "pedidosya",
+        "name": "2 Doble Carne Doble Queso + Box de Papas",
+        "price": 21000,
+        "same": true,
+        "note": "Burger King Facultad, con descuento (sin descuento 30.000); relevado el 2026-10-26"
+      }
+    ],
+    "burger-king-palermo:1949068": [
+      {
+        "app": "pedidosya",
+        "name": "2 dobles cuarto XL + 2 papas regulares",
+        "price": 27500,
+        "same": true,
+        "note": "Burger King Facultad, con descuento (sin descuento 42.308); relevado el 2026-10-26"
+      }
+    ],
+    "burger-king-palermo:4036254": [
+      {
+        "app": "pedidosya",
+        "name": "Doble Whopper Extreme + Papas regulares",
+        "price": 18486,
+        "same": true,
+        "note": "Burger King Facultad, con descuento (sin descuento 30.429); relevado el 2026-10-26"
+      }
+    ],
+    "burger-king-palermo:5424069": [
+      {
+        "app": "pedidosya",
+        "name": "Combo King Sr. Whopper",
+        "price": 26400,
+        "same": true,
+        "note": "Burger King Facultad; relevado el 2026-10-26"
+      }
+    ],
+    "burger-king-palermo:5424096": [
+      {
+        "app": "pedidosya",
+        "name": "Combo King Sr. Whopper Vegetal",
+        "price": 26400,
+        "same": true,
+        "note": "Burger King Facultad; relevado el 2026-10-26"
+      }
+    ],
+    "burger-king-palermo:5424123": [
+      {
+        "app": "pedidosya",
+        "name": "Combo King Sr. Stacker Doble XL",
+        "price": 29400,
+        "same": true,
+        "note": "Burger King Facultad; relevado el 2026-10-26"
+      }
+    ],
+    "burger-king-palermo:761079": [
+      {
+        "app": "pedidosya",
+        "name": "Combo pollo con queso",
+        "price": 9900,
+        "same": true,
+        "note": "Burger King Facultad; relevado el 2026-10-26"
+      }
+    ],
+    "burger-king-palermo:761571": [
+      {
+        "app": "pedidosya",
+        "name": "Combo pollo clásica con queso",
+        "price": 9900,
+        "same": true,
+        "note": "Burger King Facultad; relevado el 2026-10-26"
+      }
+    ],
+    "burger-king-palermo:4036534": [
+      {
+        "app": "pedidosya",
+        "name": "King de Pollo Frances + papas regulares",
+        "price": 22143,
+        "same": true,
+        "note": "Burger King Facultad; relevado el 2026-10-26"
+      }
+    ],
+    "burger-king-turbo-balvanera:1310058": [
+      {
+        "app": "pedidosya",
+        "name": "2 Doble Cheese Onion + 2 Papas Regulares",
+        "price": 20400,
+        "same": true,
+        "note": "Burger King Facultad, con descuento (sin descuento 29.143); relevado el 2026-10-26"
+      }
+    ],
+    "burger-king-turbo-balvanera:1310019": [
+      {
+        "app": "pedidosya",
+        "name": "2 Doble Carne Doble Queso + Box de Papas",
+        "price": 21000,
+        "same": true,
+        "note": "Burger King Facultad, con descuento (sin descuento 30.000); relevado el 2026-10-26"
+      }
+    ],
+    "burger-king-turbo-balvanera:1952277": [
+      {
+        "app": "pedidosya",
+        "name": "2 dobles cuarto XL + 2 papas regulares",
+        "price": 27500,
+        "same": true,
+        "note": "Burger King Facultad, con descuento (sin descuento 42.308); relevado el 2026-10-26"
+      }
+    ],
+    "burger-king-turbo-balvanera:4037147": [
+      {
+        "app": "pedidosya",
+        "name": "2 King de Pollo + 2 papas regulares",
+        "price": 18999,
+        "same": true,
+        "note": "Burger King Facultad, con descuento (sin descuento 31.665); relevado el 2026-10-26"
+      }
+    ],
+    "burger-king-turbo-balvanera:4637282": [
+      {
+        "app": "pedidosya",
+        "name": "2 Cuarto XL + 2 Papas Regulares",
+        "price": 19714,
+        "same": true,
+        "note": "Burger King Facultad, con descuento (sin descuento 32.857); relevado el 2026-10-26"
+      }
+    ],
+    "burger-king-turbo-balvanera:4036918": [
+      {
+        "app": "pedidosya",
+        "name": "Doble Whopper Extreme + Papas regulares",
+        "price": 18486,
+        "same": true,
+        "note": "Burger King Facultad, con descuento (sin descuento 30.429); relevado el 2026-10-26"
+      }
+    ],
+    "burger-king-turbo-balvanera:4037084": [
+      {
+        "app": "pedidosya",
+        "name": "Whopper Extreme + Papas regulares",
+        "price": 15999,
+        "same": true,
+        "note": "Burger King Facultad, con descuento (sin descuento 26.665); relevado el 2026-10-26"
+      }
+    ],
+    "burger-king-turbo-balvanera:1869300": [
+      {
+        "app": "pedidosya",
+        "name": "King de Pollo Frances + papas regulares",
+        "price": 22143,
+        "same": true,
+        "note": "Burger King Facultad; relevado el 2026-10-26"
+      }
+    ],
+    "burger-king-turbo-balvanera:4037126": [
+      {
+        "app": "pedidosya",
+        "name": "King de Pollo + papas regulares",
+        "price": 17498,
+        "same": true,
+        "note": "Burger King Facultad; relevado el 2026-10-26"
+      }
+    ],
+    "burger-king-turbo-balvanera:1310021": [
+      {
+        "app": "pedidosya",
+        "name": "Combo pollo con queso",
+        "price": 9900,
+        "same": true,
+        "note": "Burger King Facultad; relevado el 2026-10-26"
+      }
+    ],
+    "burger-king-turbo-balvanera:1310037": [
+      {
+        "app": "pedidosya",
+        "name": "Combo pollo clásica con queso",
+        "price": 9900,
+        "same": true,
+        "note": "Burger King Facultad; relevado el 2026-10-26"
+      }
+    ],
+    "burger-king-turbo-balvanera:1310032": [
+      {
+        "app": "pedidosya",
+        "name": "Combo Nuggets x 10",
+        "price": 13500,
+        "same": true,
+        "note": "Burger King Facultad, con descuento (sin descuento 22.500); relevado el 2026-10-26"
+      }
+    ],
+    "kfc-turbo-balvanera:4991458": [
+      {
+        "app": "pedidosya",
+        "name": "Bucket 6 Alitas 5 Strips + 3 papas",
+        "price": 28500,
+        "same": true,
+        "note": "KFC Caballito, con descuento (sin descuento 45.700); relevado el 2026-10-26"
+      }
+    ],
+    "kfc-turbo-balvanera:5122649": [
+      {
+        "app": "pedidosya",
+        "name": "2 crispy strips",
+        "price": 3360,
+        "same": true,
+        "note": "KFC Caballito, con descuento (sin descuento 5.600); relevado el 2026-10-26"
+      }
+    ],
+    "kfc-turbo-balvanera:1261802": [
+      {
+        "app": "pedidosya",
+        "name": "3 alitas",
+        "price": 4200,
+        "same": true,
+        "note": "KFC Caballito, con descuento (sin descuento 5.600); relevado el 2026-10-26"
+      }
+    ],
+    "kfc-turbo-balvanera:1261848": [
+      {
+        "app": "pedidosya",
+        "name": "Bacon cheese fries",
+        "price": 5900,
+        "same": true,
+        "note": "KFC Caballito; relevado el 2026-10-26"
+      }
+    ],
+    "kfc-turbo-balvanera:1261861": [
+      {
+        "app": "pedidosya",
+        "name": "Papas fritas grandes",
+        "price": 4500,
+        "same": true,
+        "note": "KFC Caballito; relevado el 2026-10-26"
+      }
+    ],
     "mcdonald-s-almagro:2970868": [
       {
         "app": "pedidosya",
@@ -161,6 +404,249 @@
         "price": 5015,
         "same": true,
         "note": "McDonald's Mad, con descuento (sin descuento 5.900); relevado el 2026-10-26"
+      }
+    ],
+    "mostaza-palermo:4288352": [
+      {
+        "app": "pedidosya",
+        "name": "Doble Cheddar Junior + Papas Regulares",
+        "price": 13900,
+        "same": true,
+        "note": "Mostaza Alto Palermo Shopping; relevado el 2026-10-26"
+      }
+    ],
+    "mostaza-palermo:4288354": [
+      {
+        "app": "pedidosya",
+        "name": "Triple Cheese Bacon Jr + Papas Regulares",
+        "price": 12490,
+        "same": true,
+        "note": "Mostaza Alto Palermo Shopping, con descuento (sin descuento 19.700); relevado el 2026-10-26"
+      }
+    ],
+    "mostaza-palermo:5430467": [
+      {
+        "app": "pedidosya",
+        "name": "Combo Mega Cuarto Bacon",
+        "price": 15990,
+        "same": true,
+        "note": "Mostaza Alto Palermo Shopping, con descuento (sin descuento 19.700); relevado el 2026-10-26"
+      }
+    ],
+    "mostaza-palermo:5430435": [
+      {
+        "app": "pedidosya",
+        "name": "Combo Black Kalis Halloween",
+        "price": 16990,
+        "same": true,
+        "note": "Mostaza Alto Palermo Shopping, con descuento (sin descuento 21.500); relevado el 2026-10-26"
+      }
+    ],
+    "mostaza-palermo:5430469": [
+      {
+        "app": "pedidosya",
+        "name": "Mega Doble Black Kalis + Papas Regulares",
+        "price": 18990,
+        "same": true,
+        "note": "Mostaza Alto Palermo Shopping, con descuento (sin descuento 22.300); relevado el 2026-10-26"
+      }
+    ],
+    "mostaza-palermo:4288405": [
+      {
+        "app": "pedidosya",
+        "name": "Papas Regulares",
+        "price": 4200,
+        "same": true,
+        "note": "Mostaza Alto Palermo Shopping; relevado el 2026-10-26"
+      }
+    ],
+    "mostaza-palermo:4288355": [
+      {
+        "app": "pedidosya",
+        "name": "2 Tostados XL Queso & Jamón",
+        "price": 7990,
+        "same": true,
+        "note": "Mostaza Alto Palermo Shopping, con descuento (sin descuento 13.400); relevado el 2026-10-26"
+      }
+    ],
+    "mostaza-palermo:5430450": [
+      {
+        "app": "pedidosya",
+        "name": "2 Combos Mega Cuarto",
+        "price": 30990,
+        "same": true,
+        "note": "Mostaza Alto Palermo Shopping, con descuento (sin descuento 38.600); relevado el 2026-10-26"
+      }
+    ],
+    "mostaza-palermo:4288357": [
+      {
+        "app": "pedidosya",
+        "name": "2 Triple Cheese Bacon Jr + 2 Papas",
+        "price": 25990,
+        "same": true,
+        "note": "Mostaza Alto Palermo Shopping, con descuento (sin descuento 39.400); relevado el 2026-10-26"
+      }
+    ],
+    "mostaza-palermo:4288406": [
+      {
+        "app": "pedidosya",
+        "name": "Balde de Papas",
+        "price": 9500,
+        "same": true,
+        "note": "Mostaza Alto Palermo Shopping; relevado el 2026-10-26"
+      }
+    ],
+    "mostaza-turbo-balvanera:4983627": [
+      {
+        "app": "pedidosya",
+        "name": "Doble Cheddar Junior + Papas Regulares",
+        "price": 13900,
+        "same": true,
+        "note": "Mostaza Alto Palermo Shopping; relevado el 2026-10-26"
+      }
+    ],
+    "mostaza-turbo-balvanera:4983781": [
+      {
+        "app": "pedidosya",
+        "name": "Triple Cheese Bacon Jr + Papas Regulares",
+        "price": 12490,
+        "same": true,
+        "note": "Mostaza Alto Palermo Shopping, con descuento (sin descuento 19.700); relevado el 2026-10-26"
+      }
+    ],
+    "mostaza-turbo-balvanera:5414589": [
+      {
+        "app": "pedidosya",
+        "name": "Combo Black Kalis Halloween",
+        "price": 16990,
+        "same": true,
+        "note": "Mostaza Alto Palermo Shopping, con descuento (sin descuento 21.500); relevado el 2026-10-26"
+      }
+    ],
+    "mostaza-turbo-balvanera:4983704": [
+      {
+        "app": "pedidosya",
+        "name": "Papas Regulares",
+        "price": 4200,
+        "same": true,
+        "note": "Mostaza Alto Palermo Shopping; relevado el 2026-10-26"
+      }
+    ],
+    "mostaza-turbo-balvanera:4983654": [
+      {
+        "app": "pedidosya",
+        "name": "Nuggets x10",
+        "price": 11700,
+        "same": true,
+        "note": "Mostaza Alto Palermo Shopping; relevado el 2026-10-26"
+      }
+    ],
+    "mostaza-turbo-balvanera:4983739": [
+      {
+        "app": "pedidosya",
+        "name": "2 Tostados XL Queso & Jamón",
+        "price": 7990,
+        "same": true,
+        "note": "Mostaza Alto Palermo Shopping, con descuento (sin descuento 13.400); relevado el 2026-10-26"
+      }
+    ],
+    "mostaza-turbo-balvanera:4983582": [
+      {
+        "app": "pedidosya",
+        "name": "2 Triple Cheese Bacon Jr + 2 Papas",
+        "price": 25990,
+        "same": true,
+        "note": "Mostaza Alto Palermo Shopping, con descuento (sin descuento 39.400); relevado el 2026-10-26"
+      }
+    ],
+    "mostaza-turbo-balvanera:4983771": [
+      {
+        "app": "pedidosya",
+        "name": "2 Combos Mega Cuarto",
+        "price": 30990,
+        "same": true,
+        "note": "Mostaza Alto Palermo Shopping, con descuento (sin descuento 38.600); relevado el 2026-10-26"
+      }
+    ],
+    "mostaza-turbo-balvanera:4983670": [
+      {
+        "app": "pedidosya",
+        "name": "Combo Mega Cuarto Bacon",
+        "price": 15990,
+        "same": true,
+        "note": "Mostaza Alto Palermo Shopping, con descuento (sin descuento 19.700); relevado el 2026-10-26"
+      }
+    ],
+    "mostaza-turbo-balvanera:4983637": [
+      {
+        "app": "pedidosya",
+        "name": "Balde de Papas",
+        "price": 9500,
+        "same": true,
+        "note": "Mostaza Alto Palermo Shopping; relevado el 2026-10-26"
+      }
+    ],
+    "mostaza-turbo-balvanera:4983774": [
+      {
+        "app": "pedidosya",
+        "name": "Papas Grandes",
+        "price": 4500,
+        "same": true,
+        "note": "Mostaza Alto Palermo Shopping; relevado el 2026-10-26"
+      }
+    ],
+    "mostaza-deli-cafe-y-postres-palermo:5091692": [
+      {
+        "app": "pedidosya",
+        "name": "2 Tostados XL Queso & Jamón",
+        "price": 7990,
+        "same": true,
+        "note": "Mostaza Alto Palermo Shopping, con descuento (sin descuento 13.400); relevado el 2026-10-26"
+      }
+    ],
+    "mostaza-deli-turbo-balvanera:5091711": [
+      {
+        "app": "pedidosya",
+        "name": "2 Tostados XL Queso & Jamón",
+        "price": 7990,
+        "same": true,
+        "note": "Mostaza Alto Palermo Shopping, con descuento (sin descuento 13.400); relevado el 2026-10-26"
+      }
+    ],
+    "romario-recoleta:486870": [
+      {
+        "app": "pedidosya",
+        "name": "Lemon pie",
+        "price": 9900,
+        "same": true,
+        "note": "Romario - Belgrano; relevado el 2026-10-26"
+      }
+    ],
+    "romario-turbo-recoleta:128691": [
+      {
+        "app": "pedidosya",
+        "name": "Lemon pie",
+        "price": 9900,
+        "same": true,
+        "note": "Romario - Belgrano; relevado el 2026-10-26"
+      }
+    ],
+    "romario-turbo-recoleta:128683": [
+      {
+        "app": "pedidosya",
+        "name": "Tarta de banana con ddl",
+        "price": 9900,
+        "same": true,
+        "note": "Romario - Belgrano; relevado el 2026-10-26"
+      }
+    ],
+    "romario-turbo-recoleta:128777": [
+      {
+        "app": "pedidosya",
+        "name": "Chocotorta",
+        "price": 8800,
+        "same": true,
+        "note": "Romario - Belgrano; relevado el 2026-10-26"
       }
     ]
   }

@@ -30,7 +30,11 @@ let matched = 0, files = 0;
 for (const file of existsSync(pyaDir) ? readdirSync(pyaDir).filter(f => f.endsWith('.json')) : []) {
   const store = JSON.parse(readFileSync(new URL(file, pyaDir), 'utf8'));
   files++;
-  const byKey = new Map(store.products.map(([name, price, original]) => [photoKey(name), { name, price, original }]));
+  // PedidosYa le pega la promo al nombre ("Combo Whopper 50% OFF", "2x1"): se saca para cruzar.
+  const clean = name => name.replace(/\s*\d+\s?%?\s*off\b/gi, '').replace(/\s*\b2x1\b/gi, '').replace(/\s+/g, ' ').trim();
+  const byKey = new Map(store.products
+    .filter(([name]) => clean(name).length > 2)
+    .map(([name, price, original]) => [photoKey(clean(name)), { name: clean(name), price, original }]));
   const day = store.fetchedAt.slice(0, 10);
   for (const it of catalog.items) {
     const r = restaurantsById[it.restaurantId];
