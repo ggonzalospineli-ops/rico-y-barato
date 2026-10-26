@@ -386,3 +386,9 @@ code { font-size: 12px; background: var(--bg); padding: 1px 5px; border-radius: 
 .item-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
 .item-actions .btn { flex: 1; min-width: 140px; }
 .item-actions .btn { background: var(--card); box-shadow: var(--shadow-sm); }
+
+/* Cuándo / demora / distancia */
+.filter-row { margin-top: 10px; }
+.filter-label { display: block; margin-bottom: 6px; font-size: 12px; font-weight: 800; color: var(--ink-2); }
+.when-other { padding: 7px 10px; border-radius: 10px; border: 0; background: var(--bg); font: inherit; font-size: 12px; font-weight: 700; color: var(--ink-2); }
+.when-other.on { background: var(--yellow); color: var(--ink); }

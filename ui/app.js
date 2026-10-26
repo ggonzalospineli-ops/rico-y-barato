@@ -125,7 +125,7 @@ function mountAssistantShell() {
 const ui = Object.assign({
   tab: 'home', hunger: 'mucho', category: 'all', money: 20000, ricoWeight: 0.5, topTab: 'sellers', people: 1, results: 'cards',
 }, store.get('ui') || {});
-const saveUi = () => store.set('ui', { hunger: ui.hunger, category: ui.category, money: ui.money, ricoWeight: ui.ricoWeight, topTab: ui.topTab, people: ui.people, results: ui.results, assistant: ui.assistant });
+const saveUi = () => store.set('ui', { hunger: ui.hunger, category: ui.category, money: ui.money, ricoWeight: ui.ricoWeight, topTab: ui.topTab, people: ui.people, results: ui.results, assistant: ui.assistant, maxEta: ui.maxEta ?? null, maxKm: ui.maxKm ?? null });
 
 const LOOK = {
   nuggets:     { e: '🍗', bg: 'linear-gradient(135deg,#FFE08A,#FF9F1C)' },
@@ -258,7 +258,7 @@ let lastResult = null;
 const PAGE = 20;
 let shown = { key: '', n: PAGE };
 function shownLimit() {
-  const key = JSON.stringify([ui.hunger, ui.money, ui.category, ui.ricoWeight, ui.people, ui.tempExclude, ui.showClosed]);
+  const key = JSON.stringify([ui.hunger, ui.money, ui.category, ui.ricoWeight, ui.people, ui.tempExclude, ui.showClosed, ui.when, ui.maxEta, ui.maxKm]);
   if (key !== shown.key) shown = { key, n: PAGE };
   return shown.n;
 }
@@ -276,10 +276,49 @@ function currentResult() {
     people: ui.people,
     exclude: ui.tempExclude || [],
     openOnly: !ui.showClosed,
+    at: whenAt(),
+    maxEta: ui.maxEta ?? null,
+    maxKm: ui.maxKm ?? null,
     limit: shownLimit(),
     map: true,
   });
   return lastResult;
+}
+
+// "Pedir para más tarde": ui.when es una hora (0-23) o null = ahora. Si esa hora ya pasó hoy, es mañana.
+function whenAt() {
+  if (ui.when == null) return null;
+  const d = new Date();
+  d.setHours(ui.when, 0, 0, 0);
+  if (d.getTime() <= Date.now()) d.setDate(d.getDate() + 1);
+  return d.getTime();
+}
+function whenLabel() {
+  const at = whenAt();
+  if (at == null) return 'ahora';
+  const tomorrow = new Date(at).getDate() !== new Date().getDate();
+  return `${tomorrow ? 'mañana ' : 'hoy '}a las ${String(ui.when).padStart(2, '0')}:00`;
+}
+function whenControlsHtml() {
+  const presets = [[null, 'Ahora'], [13, '🍽️ Almuerzo 13 hs'], [17, '☕ Merienda 17 hs'], [21, '🌙 Cena 21 hs']];
+  const isPreset = presets.some(([h]) => h === (ui.when ?? null));
+  const hours = Array.from({ length: 24 }, (_, h) => h);
+  return `
+      <div class="divider"></div>
+      <div class="filter-row"><span class="filter-label">¿Cuándo?</span>
+        <div class="quick">${presets.map(([h, lb]) => `<button class="${(ui.when ?? null) === h ? 'on' : ''}" data-when="${h ?? ''}">${lb}</button>`).join('')}
+          <select id="when-other" class="when-other ${isPreset ? '' : 'on'}" aria-label="Otra hora">
+            <option value="">Otra hora…</option>
+            ${hours.map(h => `<option value="${h}" ${!isPreset && ui.when === h ? 'selected' : ''}>${String(h).padStart(2, '0')}:00</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <div class="filter-row"><span class="filter-label">Que llegue en</span>
+        <div class="quick">${[[null, 'Cualquiera'], [30, 'hasta 30 min'], [45, 'hasta 45 min']].map(([m, lb]) => `<button class="${(ui.maxEta ?? null) === m ? 'on' : ''}" data-eta="${m ?? ''}">${lb}</button>`).join('')}</div>
+      </div>
+      <div class="filter-row"><span class="filter-label">Distancia</span>
+        <div class="quick">${[[null, 'Cualquiera'], [1, 'hasta 1 km'], [2, 'hasta 2 km'], [3, 'hasta 3 km']].map(([k, lb]) => `<button class="${(ui.maxKm ?? null) === k ? 'on' : ''}" data-km="${k ?? ''}">${lb}</button>`).join('')}</div>
+      </div>`;
 }
 const findPlan = id => lastResult?.options.find(p => p.id === id) || lastResult?.all?.find(p => p.id === id) || favPlans.find(p => p.id === id) || lastResult?.overBudget.find(p => p.id === id)
   || engine.getState().cart.find(p => p.id === id) || itemPlans.get(id);
@@ -407,6 +446,7 @@ function viewHome() {
       <div class="balance-labels"><span>💸 Barato</span><span>Rico 😋</span></div>
       <input id="balance" class="balance" type="range" min="0" max="1" step="0.05" value="${ui.ricoWeight}" aria-label="Barato o rico">
       <div class="balance-hint" id="balance-hint">${balanceHint()}</div>
+      ${whenControlsHtml()}
     </section>
 
     </aside><div class="home-results">
@@ -414,7 +454,7 @@ function viewHome() {
     <section class="section" id="drops-wrap"></section>
     <section class="section results-head">
       <div class="results-bar">
-        <div><h2>Para vos ahora</h2><span id="result-count"></span></div>
+        <div><h2 id="results-title">Para vos ${whenLabel()}</h2><span id="result-count"></span></div>
         <div class="results-actions">
           <div class="seg mini-seg">
             <button class="${ui.results === 'cards' ? 'on' : ''}" data-results="cards">▦ Tarjetas</button>
@@ -820,7 +860,7 @@ engine.on(({ type }) => {
 });
 
 document.addEventListener('click', e => {
-  const t = e.target.closest('[data-palette],[data-people],[data-results],[data-decide],[data-swipe],[data-cmd],[data-spin],[data-tab],[data-hunger],[data-cat],[data-money],[data-add],[data-fav],[data-fav-plan],[data-plan],[data-rest],[data-close],[data-hide],[data-unhide],[data-confirm],[data-remove],[data-toptab],[data-step],[data-enable],[data-exclude],[data-suggest],[data-assist-toggle],[data-assist-enable],[data-item],[data-iqty],#sheet-wrap');
+  const t = e.target.closest('[data-palette],[data-people],[data-results],[data-decide],[data-swipe],[data-cmd],[data-spin],[data-tab],[data-hunger],[data-cat],[data-money],[data-add],[data-fav],[data-fav-plan],[data-plan],[data-rest],[data-close],[data-hide],[data-unhide],[data-confirm],[data-remove],[data-toptab],[data-step],[data-enable],[data-exclude],[data-suggest],[data-assist-toggle],[data-assist-enable],[data-item],[data-iqty],[data-when],[data-eta],[data-km],#sheet-wrap');
   if (!t) return;
   const d = t.dataset;
 
@@ -837,6 +877,9 @@ document.addEventListener('click', e => {
   if (d.hunger) { ui.hunger = d.hunger; saveUi(); render(); return; }
   if (d.cat) { ui.category = d.cat; saveUi(); render(); return; }
   if ('money' in d) { ui.money = d.money ? +d.money : null; saveUi(); render(); return; }
+  if ('when' in d) { ui.when = d.when === '' ? null : +d.when; render(); return; }
+  if ('eta' in d) { ui.maxEta = d.eta === '' ? null : +d.eta; saveUi(); render(); return; }
+  if ('km' in d) { ui.maxKm = d.km === '' ? null : +d.km; saveUi(); render(); return; }
   if (d.toptab) { ui.topTab = d.toptab; saveUi(); render(); return; }
 
   if (d.add) {
@@ -1554,9 +1597,11 @@ function listen() {
 function renderExtras(r) {
   // Locales cerrados
   const note = $('#closed-note');
+  const far = r.far ? ` Otros ${r.far} abiertos quedan afuera por demora o distancia.` : '';
   if (note) note.innerHTML = r.closed && !ui.showClosed
-    ? `<div class="closed-note">🌙 ${r.closed} locales están cerrados ahora y no los muestro. <button class="linkish" data-showclosed>Ver igual</button></div>`
-    : ui.showClosed ? '<div class="closed-note">Mostrando también locales cerrados. <button class="linkish" data-showclosed>Ocultarlos</button></div>' : '';
+    ? `<div class="closed-note">🌙 ${r.closed} locales ${r.at ? `van a estar cerrados ${whenLabel()}` : 'están cerrados ahora'} y no los muestro.${far} <button class="linkish" data-showclosed>Ver igual</button></div>`
+    : ui.showClosed ? `<div class="closed-note">Mostrando también locales cerrados.${far} <button class="linkish" data-showclosed>Ocultarlos</button></div>`
+    : far ? `<div class="closed-note">📍${far}</div>` : '';
   // ¿Estuvo rico?
   const rate = $('#rate-wrap');
   const pending = engine.pendingRatings()[0];
@@ -1926,4 +1971,10 @@ function askExample() {
 document.addEventListener('keydown', e => {
   const row = e.target.closest?.('[data-item]');
   if (row && e.target === row && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); row.click(); }
+});
+
+document.addEventListener('change', e => {
+  if (e.target.id !== 'when-other') return;
+  ui.when = e.target.value === '' ? null : +e.target.value;
+  render();
 });

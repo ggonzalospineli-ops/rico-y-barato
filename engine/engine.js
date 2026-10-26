@@ -101,11 +101,14 @@ export function createEngine({ source, storage = memoryStorage(), now = () => Da
   // map: true devuelve además todos los planes que entran en la plata, para el mapa Rico × Barato.
   // openOnly: sin locales cerrados en el momento `at` (por defecto, ahora).
   function recommend({ hunger = 'normal', money = Infinity, categories, ricoWeight = 0.5, limit = 12, people = 1, map = false,
-    openOnly = true, at = null, exclude = [] } = {}) {
+    openOnly = true, at = null, exclude = [], maxEta = null, maxKm = null } = {}) {
     const n = Math.max(1, Math.round(people));
     const when = new Date(at ?? now());
     const status = Object.fromEntries(restaurants.map(r => [r.id, openStatus(r.schedule, when)]));
     const closed = new Set(restaurants.filter(r => !status[r.id].open).map(r => r.id));
+    // Con filtro de demora o distancia, un local sin el dato queda afuera: "llega en 30" tiene que ser cierto.
+    const tooFar = r => (maxEta != null && !(r.etaMin <= maxEta)) || (maxKm != null && !(r.distanceKm <= maxKm));
+    let farCount = 0;
     const cats = categories?.length ? categories : state.profile.enabledCategories;
     const t = taste();
     const available = Math.min(money, budgetSummary().remaining);
@@ -115,6 +118,7 @@ export function createEngine({ source, storage = memoryStorage(), now = () => Da
       const target = targetFor(category, hunger) * n;
       for (const r of restaurants) {
         if (openOnly && closed.has(r.id)) continue;
+        if (tooFar(r)) { if (category === cats[0]) farCount++; continue; }
         const products = (byRestaurant[r.id] || []).filter(it => allowed(it, exclude));
         const cover = cheapestCover(products, category, target);
         if (!cover?.best) continue;
@@ -154,6 +158,8 @@ export function createEngine({ source, storage = memoryStorage(), now = () => Da
       target: Object.fromEntries(cats.map(c => [c, targetFor(c, hunger) * n])),
       people: n,
       closed: openOnly ? closed.size : 0,   // locales que se saltearon por estar cerrados
+      far: farCount,                        // abiertos que quedaron afuera por demora o distancia
+      at: at ?? null,
       available: Number.isFinite(available) ? available : null,
       options: ranked.slice(0, limit),
       total: ranked.length,                 // cuántas hay en total (options trae solo las primeras `limit`)

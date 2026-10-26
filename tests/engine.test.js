@@ -138,3 +138,14 @@ test('somos N: la cantidad objetivo se multiplica por la cantidad de personas', 
   assert.equal(tres.target.empanadas, solo * 3);
   assert.ok(tres.options.every(o => o.quantity >= Math.ceil(solo * 3 * 0.8)));
 });
+
+test('recommend: filtro de demora deja solo locales que llegan a tiempo (y saca los sin dato)', async () => {
+  const e = await engine();
+  const all = e.recommend({ categories: ['sushi'], limit: 50 });
+  const fast = e.recommend({ categories: ['sushi'], limit: 50, maxEta: 40 });
+  assert.ok(fast.options.length > 0 && fast.options.length < all.options.length);
+  assert.ok(fast.options.every(p => p.restaurant.etaMin <= 40));
+  assert.ok(fast.far > 0);
+  // Sin distancia en los datos de ejemplo: con filtro de km no queda nada.
+  assert.equal(e.recommend({ categories: ['sushi'], maxKm: 3 }).options.length, 0);
+});
