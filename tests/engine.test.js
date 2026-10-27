@@ -30,6 +30,24 @@ async function engine() {
   return e;
 }
 
+test('ubicación: recalcula distancia y el radio usa la dirección elegida', async () => {
+  const source = {
+    async load() { return { restaurants: [
+      { id: 'cerca', name: 'Cerca', lat: -34.60, lng: -58.40 },
+      { id: 'lejos', name: 'Lejos', lat: -34.70, lng: -58.40 },
+    ], items: [
+      { id: 'cerca:burger', restaurantId: 'cerca', name: 'Burger', price: 5000, yields: { hamburguesa: 1 }, tags: [] },
+      { id: 'lejos:burger', restaurantId: 'lejos', name: 'Burger', price: 4000, yields: { hamburguesa: 1 }, tags: [] },
+    ] }; },
+    orderUrl: () => '#',
+  };
+  const e = createEngine({ source }); await e.load();
+  e.setLocation({ lat: -34.60, lng: -58.40 });
+  assert.equal(e.restaurants().find(r => r.id === 'cerca').distanceKm, 0);
+  const r = e.recommend({ categories: ['hamburguesa'], maxKm: 2, limit: 10 });
+  assert.deepEqual(r.options.map(p => p.restaurant.id), ['cerca']);
+});
+
 test('recommend: modo bestia escala con el apetito del usuario', async () => {
   const e = await engine();
   e.setAppetite('nuggets', { normal: 20, max: 30 });

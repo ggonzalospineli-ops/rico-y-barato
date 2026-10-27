@@ -275,6 +275,9 @@ export function convert(scrape, { google = {}, preferences = null, minPrice = 30
       logoUrl: page.logo ? `${page.logo.split('?')[0]}?d=200x200&e=webp&q=80` : null,
       coverUrl: page.background ? `${page.background.split('?')[0]}?d=1600x1200&e=webp&q=82` : null, // la CDN no agranda: si el original es menor, llega el original
       schedule: fullSchedule(page),
+      // Coordenadas del local: permiten recalcular la distancia cuando quien usa la app cambia su dirección.
+      lat: page.location?.[1] ?? null,
+      lng: page.location?.[0] ?? null,
       distanceKm: home && page.location ? +distanceKm([home.lat, home.lng], [page.location[1], page.location[0]]).toFixed(2) : null,
     });
     if (!r.address && page.address) restaurants[restaurants.length - 1].address = page.address.trim();

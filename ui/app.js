@@ -130,10 +130,11 @@ function mountAssistantShell() {
 
 // ---------- Estado de la interfaz (preferencias del visor, no del motor) ----------
 const ui = Object.assign({
-  tab: 'home', hunger: 'mucho', category: 'all', money: 20000, ricoWeight: 0.5, topTab: 'sellers', people: 1, results: 'cards', address: '',
+  tab: 'home', hunger: 'mucho', category: 'all', money: 20000, ricoWeight: 0.5, topTab: 'sellers', people: 1, results: 'cards', address: '', location: null,
 }, store.get('ui') || {});
 const deliveryAddress = () => ui.address?.trim() || catalogAddress;
-const saveUi = () => store.set('ui', { hunger: ui.hunger, category: ui.category, money: ui.money, ricoWeight: ui.ricoWeight, topTab: ui.topTab, people: ui.people, results: ui.results, address: ui.address || '', assistant: ui.assistant, maxEta: ui.maxEta ?? null, maxKm: ui.maxKm ?? null, fitness: !!ui.fitness, maxKcal: ui.maxKcal ?? null, bodyWeight: ui.bodyWeight ?? null, goal: ui.goal || 'mantener' });
+const saveUi = () => store.set('ui', { hunger: ui.hunger, category: ui.category, money: ui.money, ricoWeight: ui.ricoWeight, topTab: ui.topTab, people: ui.people, results: ui.results, address: ui.address || '', location: ui.location || null, assistant: ui.assistant, maxEta: ui.maxEta ?? null, maxKm: ui.maxKm ?? null, fitness: !!ui.fitness, maxKcal: ui.maxKcal ?? null, bodyWeight: ui.bodyWeight ?? null, goal: ui.goal || 'mantener' });
+if (ui.location) engine.setLocation(ui.location);
 
 const LOOK = {
   nuggets:     { e: '🍗', bg: 'linear-gradient(135deg,#FFE08A,#FF9F1C)' },
@@ -718,9 +719,10 @@ function viewSettings() {
     <div class="settings-grid">
     <div class="setting">
       <h3>📍 Dirección de entrega</h3>
-      <p>Usamos esta dirección para personalizar la experiencia. El catálogo actual fue relevado en ${esc(catalogAddress)}; envío, demora y disponibilidad pueden variar al pedir.</p>
+      <p>${ui.location ? '✅ Distancias y el filtro de km se calculan desde tu ubicación.' : `El catálogo se relevó en ${esc(catalogAddress)}. Elegí tu ubicación para recalcular las distancias y filtrar locales cerca tuyo.`} Envío, demora y disponibilidad se confirman al abrir Rappi.</p>
       <div class="field"><span>📍</span><input id="delivery-address" autocomplete="street-address" value="${esc(ui.address || '')}" placeholder="${esc(catalogAddress)}"></div>
-      <div class="cart-actions"><button class="btn ghost sm" data-address-save>Guardar dirección</button>${ui.address ? '<button class="btn ghost sm" data-address-reset>Usar zona del catálogo</button>' : ''}</div>
+      <div class="cart-actions"><button class="btn primary sm" data-use-location>Usar mi ubicación</button><button class="btn ghost sm" data-address-save>Usar esta dirección</button>${ui.location ? '<button class="btn ghost sm" data-address-reset>Usar zona del catálogo</button>' : ''}</div>
+      <p class="note">Al usar una dirección se consulta OpenStreetMap para ubicarla. Tu ubicación no se guarda en un servidor.</p>
     </div>
 
     <div class="setting">
@@ -1940,6 +1942,35 @@ function extraSettingsHtml() {
 
 window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); installPrompt = e; if (ui.tab === 'settings') render(); });
 
+function applyDeliveryLocation({ lat, lng, address }) {
+  ui.location = { lat: +lat, lng: +lng };
+  if (address) ui.address = address;
+  engine.setLocation(ui.location);
+  saveUi();
+}
+
+async function geocodeDeliveryAddress(address) {
+  const query = `${address}, Buenos Aires, Argentina`;
+  const res = await fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=ar&q=${encodeURIComponent(query)}`, {
+    headers: { Accept: 'application/json' },
+  });
+  if (!res.ok) throw new Error('No pude buscar esa dirección');
+  const hit = (await res.json())[0];
+  if (!hit?.lat || !hit?.lon) throw new Error('No encontré esa dirección. Probá con calle y altura.');
+  applyDeliveryLocation({ lat: hit.lat, lng: hit.lon, address: hit.display_name.replace(/, Argentina$/i, '') });
+}
+
+function useBrowserLocation() {
+  return new Promise((resolve, reject) => {
+    if (!navigator.geolocation) return reject(new Error('Este navegador no permite usar ubicación'));
+    navigator.geolocation.getCurrentPosition(
+      pos => resolve(pos.coords),
+      err => reject(new Error(err.code === 1 ? 'No diste permiso para usar tu ubicación' : 'No pude obtener tu ubicación')),
+      { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 },
+    );
+  });
+}
+
 async function notifyPriceDrops() {
   if (!('Notification' in window) || Notification.permission !== 'granted') return;
   const seenKey = 'ryb:notified';
@@ -1976,7 +2007,7 @@ if ('serviceWorker' in navigator) {
 // Clics y teclas de las funciones de esta sección
 // =====================================================================
 document.addEventListener('click', async e => {
-  const t = e.target.closest('[data-ask],[data-mic],[data-claude],[data-clear-temp],[data-showclosed],[data-rate],[data-skip],[data-split],[data-split-units],[data-split-people],[data-split-tip],[data-split-copy],[data-ticket],[data-manual],[data-save-order],[data-key-save],[data-key-test],[data-key-clear],[data-install],[data-notify],[data-ai-provider],[data-ai-detect],[data-address-save],[data-address-reset],[data-unwatch]');
+  const t = e.target.closest('[data-ask],[data-mic],[data-claude],[data-clear-temp],[data-showclosed],[data-rate],[data-skip],[data-split],[data-split-units],[data-split-people],[data-split-tip],[data-split-copy],[data-ticket],[data-manual],[data-save-order],[data-key-save],[data-key-test],[data-key-clear],[data-install],[data-notify],[data-ai-provider],[data-ai-detect],[data-address-save],[data-address-reset],[data-use-location],[data-unwatch]');
   if (!t) return;
   const d = t.dataset;
   if ('ask' in d) { understand($('#ask').value); return; }
@@ -2001,8 +2032,21 @@ document.addEventListener('click', async e => {
   if ('ticket' in d) { openTicket({ withPhoto: true }); return; }
   if ('manual' in d) { openTicket({ withPhoto: false }); return; }
   if ('saveOrder' in d) { saveExternalOrder(); return; }
-  if ('addressSave' in d) { ui.address = $('#delivery-address')?.value.trim() || ''; saveUi(); toast(`📍 Entrega: ${deliveryAddress()}`); render(); return; }
-  if ('addressReset' in d) { ui.address = ''; saveUi(); toast(`📍 Volvimos a ${catalogAddress}`); render(); return; }
+  if ('addressSave' in d) {
+    const address = $('#delivery-address')?.value.trim();
+    if (!address) { toast('Escribí una dirección primero'); return; }
+    t.disabled = true; t.textContent = 'Buscando…';
+    try { await geocodeDeliveryAddress(address); toast(`📍 Filtrando desde ${deliveryAddress()}`); render(); }
+    catch (err) { toast(err.message); t.disabled = false; t.textContent = 'Usar esta dirección'; }
+    return;
+  }
+  if ('useLocation' in d) {
+    t.disabled = true; t.textContent = 'Ubicando…';
+    try { const pos = await useBrowserLocation(); applyDeliveryLocation({ lat: pos.latitude, lng: pos.longitude, address: ui.address || 'Mi ubicación actual' }); toast('📍 Distancias actualizadas desde tu ubicación'); render(); }
+    catch (err) { toast(err.message); t.disabled = false; t.textContent = 'Usar mi ubicación'; }
+    return;
+  }
+  if ('addressReset' in d) { ui.address = ''; ui.location = null; engine.setLocation(null); saveUi(); toast(`📍 Volvimos a ${catalogAddress}`); render(); return; }
   if (d.unwatch) { engine.unwatchPrice(d.unwatch); toast('Dejaste de seguir ese precio'); return; }
   if ('keySave' in d) { const k = $('#ai-key').value.trim(); if (!k) { toast('Pegá la clave primero'); return; } setKey(k); toast('🔑 Clave guardada en este navegador'); render(); return; }
   if ('keyTest' in d) { toast('Probando…'); const t0 = performance.now(); try { await testAI(); toast(`✅ ${aiLabel()} responde (${((performance.now() - t0) / 1000).toFixed(1)} s)`); } catch (err) { toast(err.message); } return; }

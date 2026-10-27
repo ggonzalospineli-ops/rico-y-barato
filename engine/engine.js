@@ -6,7 +6,7 @@ import { CATEGORIES, BIG_FOUR } from '../data/catalog.js';
 import { cheapestCover } from './planner.js';
 import { quality, isHiddenGem, cheapnessByRank, clamp01 } from './scoring.js';
 import { buildTaste, affinity, describeTaste } from './taste.js';
-import { openStatus } from './hours.js';
+import { openStatus, distanceKm as geoDistanceKm } from './hours.js';
 
 export const HUNGER = {
   poco:   { label: 'Picoteo',      factor: n => n.normal * 0.6 },
@@ -65,6 +65,8 @@ export function createEngine({ source, storage = memoryStorage(), now = () => Da
     },
   };
   let meta = {};
+  // Es efímera: la ubicación la persiste la interfaz, no el perfil de gustos.
+  let activeLocation = null;
   let restaurants = [], items = [], byRestaurant = {}, restaurantsById = {}, medianUnitPrice = {};
 
   // Memo de recommend() (los últimos 4 pedidos: la app pide los resultados y los favoritos con parámetros
@@ -117,7 +119,11 @@ export function createEngine({ source, storage = memoryStorage(), now = () => Da
     const status = Object.fromEntries(restaurants.map(r => [r.id, openStatus(r.schedule, when)]));
     const closed = new Set(restaurants.filter(r => !status[r.id].open).map(r => r.id));
     // Con filtro de demora o distancia, un local sin el dato queda afuera: "llega en 30" tiene que ser cierto.
-    const tooFar = r => (maxEta != null && !(r.etaMin <= maxEta)) || (maxKm != null && !(r.distanceKm <= maxKm));
+    const tooFar = r => {
+      const distance = effectiveDistance(r);
+      return (maxEta != null && !(r.etaMin <= maxEta))
+        || (maxKm != null && !(Number.isFinite(distance) && distance <= maxKm));
+    };
     let farCount = 0;
     const cats = categories?.length ? categories : state.profile.enabledCategories;
     const t = taste();
@@ -316,6 +322,12 @@ export function createEngine({ source, storage = memoryStorage(), now = () => Da
     };
   }
 
+  const effectiveDistance = r => {
+    if (activeLocation && Number.isFinite(r.lat) && Number.isFinite(r.lng)) {
+      return +geoDistanceKm([activeLocation.lat, activeLocation.lng], [r.lat, r.lng]).toFixed(2);
+    }
+    return r.distanceKm ?? null;
+  };
   const publicRestaurant = r => ({
     id: r.id, name: r.name, brand: r.brand || r.id, chain: r.chain, demo: !!r.demo, tags: r.tags,
     address: r.address || null, url: r.url || null, logoUrl: r.logoUrl || null, coverUrl: r.coverUrl || null,
@@ -323,7 +335,7 @@ export function createEngine({ source, storage = memoryStorage(), now = () => Da
     googlePositive: r.googlePositive ?? null, googleNegative: r.googleNegative ?? null, mentions: r.mentions || [],
     googleRating: r.googleRating ?? null, googleReviews: r.googleReviews ?? null, rappiRating: r.rappiRating ?? null,
     deliveryFee: r.deliveryFee ?? null, etaMin: r.etaMin ?? null, quality: quality(r), hiddenGem: isHiddenGem(r),
-    distanceKm: r.distanceKm ?? null, open: openStatus(r.schedule, new Date(now())),
+    distanceKm: effectiveDistance(r), open: openStatus(r.schedule, new Date(now())),
     googleUrl: r.googleUrl || null, catalogStats: r.catalogStats || null,
   });
   const publicItem = it => ({
@@ -347,6 +359,11 @@ export function createEngine({ source, storage = memoryStorage(), now = () => Da
     categories: () => structuredClone(CATEGORIES),
     hungerLevels: () => Object.fromEntries(Object.entries(HUNGER).map(([k, v]) => [k, v.label])),
     targetFor,               // (category, hunger) → cantidad que va a buscar recommend()
+    setLocation(location) {
+      activeLocation = location && Number.isFinite(location.lat) && Number.isFinite(location.lng)
+        ? { lat: +location.lat, lng: +location.lng } : null;
+      emit('location');
+    },
     notOnRappi: () => structuredClone(meta.notOnRappi || []), // locales recomendados por otras fuentes que Rappi no tiene
     item: id => { const it = items.find(i => i.id === id); return it ? publicItem(it) : null; },
     menu: restaurantId => (byRestaurant[restaurantId] || []).map(publicItem),
