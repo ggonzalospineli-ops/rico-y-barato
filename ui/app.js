@@ -14,7 +14,9 @@ import { hasKey, setKey, hasAI, aiLabel, activeProvider, detectLocal, warmLocal,
 // ---------- Datos y motor ----------
 const real = await fetch('../data/rappi-catalog.json').then(r => (r.ok ? r.json() : null)).catch(() => null);
 const source = real ? jsonSource(async () => real) : demoSource();
-const address = real?.meta?.address?.split(',')[0] || 'Tu dirección';
+// El catálogo se releva para una zona, pero la dirección que la persona ve es propia
+// y se guarda localmente. No fingimos que cambiarla vuelve a calcular tarifas de Rappi.
+const catalogAddress = real?.meta?.address?.split(',')[0] || 'Tu dirección';
 
 // Si el navegador borró los ajustes pero quedó la copia de respaldo (IndexedDB), se restauran antes de arrancar.
 const restoredKeys = await restoreBackup();
@@ -128,9 +130,10 @@ function mountAssistantShell() {
 
 // ---------- Estado de la interfaz (preferencias del visor, no del motor) ----------
 const ui = Object.assign({
-  tab: 'home', hunger: 'mucho', category: 'all', money: 20000, ricoWeight: 0.5, topTab: 'sellers', people: 1, results: 'cards',
+  tab: 'home', hunger: 'mucho', category: 'all', money: 20000, ricoWeight: 0.5, topTab: 'sellers', people: 1, results: 'cards', address: '',
 }, store.get('ui') || {});
-const saveUi = () => store.set('ui', { hunger: ui.hunger, category: ui.category, money: ui.money, ricoWeight: ui.ricoWeight, topTab: ui.topTab, people: ui.people, results: ui.results, assistant: ui.assistant, maxEta: ui.maxEta ?? null, maxKm: ui.maxKm ?? null, fitness: !!ui.fitness, maxKcal: ui.maxKcal ?? null, bodyWeight: ui.bodyWeight ?? null, goal: ui.goal || 'mantener' });
+const deliveryAddress = () => ui.address?.trim() || catalogAddress;
+const saveUi = () => store.set('ui', { hunger: ui.hunger, category: ui.category, money: ui.money, ricoWeight: ui.ricoWeight, topTab: ui.topTab, people: ui.people, results: ui.results, address: ui.address || '', assistant: ui.assistant, maxEta: ui.maxEta ?? null, maxKm: ui.maxKm ?? null, fitness: !!ui.fitness, maxKcal: ui.maxKcal ?? null, bodyWeight: ui.bodyWeight ?? null, goal: ui.goal || 'mantener' });
 
 const LOOK = {
   nuggets:     { e: '🍗', bg: 'linear-gradient(135deg,#FFE08A,#FF9F1C)' },
@@ -359,7 +362,7 @@ function renderTabbar() {
       ${s.planned ? `<span class="planned">${ars(s.planned)} por gastar</span>` : ''}
       ${s.monthly ? `<i><em style="width:${Math.min(100, (s.spent / s.monthly) * 100)}%"></em></i>` : ''}
     </div>
-    <p class="side-foot">📍 ${esc(address)}</p>`;
+    <p class="side-foot">📍 ${esc(deliveryAddress())}</p>`;
 }
 
 function heroHtml() {
@@ -395,10 +398,10 @@ function viewHome() {
   return `
     <div class="home-head">
     <header class="topbar">
-      <h1 class="desk-title"><small>Entregar en ${esc(address)}</small>¿Qué comemos hoy?</h1>
+      <h1 class="desk-title"><small>Entregar en ${esc(deliveryAddress())}</small>¿Qué comemos hoy?</h1>
       <div class="loc">
         <div class="loc-pin">${icon('pin')}</div>
-        <div><small>Entregar en</small><strong>${esc(address)}</strong></div>
+        <div><small>Entregar en</small><strong>${esc(deliveryAddress())}</strong></div>
       </div>
       <button class="icon-btn" data-tab="cart" aria-label="Pedidos">${icon('bag')}${engine.getState().cart.length ? `<span class="dot">${engine.getState().cart.length}</span>` : ''}</button>
     </header>
@@ -707,11 +710,27 @@ function viewSettings() {
   const st = engine.getState();
   const catalog = engine.catalogSummary();
   const hidden = st.hiddenItems.map(id => engine.item(id)).filter(Boolean);
+  const watched = engine.watchedItems();
   return `
     <div class="page-title"><h1>Ajustes</h1></div>
     ${extraSettingsHtml()}
 
     <div class="settings-grid">
+    <div class="setting">
+      <h3>📍 Dirección de entrega</h3>
+      <p>Usamos esta dirección para personalizar la experiencia. El catálogo actual fue relevado en ${esc(catalogAddress)}; envío, demora y disponibilidad pueden variar al pedir.</p>
+      <div class="field"><span>📍</span><input id="delivery-address" autocomplete="street-address" value="${esc(ui.address || '')}" placeholder="${esc(catalogAddress)}"></div>
+      <div class="cart-actions"><button class="btn ghost sm" data-address-save>Guardar dirección</button>${ui.address ? '<button class="btn ghost sm" data-address-reset>Usar zona del catálogo</button>' : ''}</div>
+    </div>
+
+    <div class="setting">
+      <h3>🔔 Seguimiento de precios</h3>
+      <p>Marcá productos para recibir un aviso cuando lleguen a un precio menor. Los precios se actualizan cuando se publica un catálogo nuevo.</p>
+      <div class="list" style="margin-top:12px">${watched.length ? watched.map(it => `
+        <div class="row"><div class="row-main"><h4>${esc(it.name)}</h4><p>${esc(it.restaurant.name)} · hoy ${ars(it.price)} · objetivo ${ars(it.watch.target)}${it.watch.reached ? ' · ✅ ya llegó' : ''}</p></div>
+          <button class="btn ghost sm" data-unwatch="${esc(it.id)}">Dejar de seguir</button></div>`).join('') : '<p class="note">Todavía no seguís ningún producto. Abrí una recomendación y tocá “Avisarme si baja”.</p>'}</div>
+    </div>
+
     <div class="setting">
       <h3>💰 Tope mensual</h3>
       <p>Cuánto querés gastar en delivery por mes. 0 = sin tope.</p>
@@ -806,6 +825,7 @@ function openPlan(id) {
           <div class="row-main"><h4>${esc(l.name)}</h4><p>${ars(l.price)} c/u${l.discount ? ` · ${esc(l.discount)}` : ''}</p>${signalsHtml(l.signals)}${priceChangeHtml(l)}${otherAppsHtml(l.otherApps, l.price)}</div>
           <button class="heart ${favs.includes(l.itemId) ? 'on' : ''}" data-fav="${esc(l.itemId)}" aria-label="Favorito">${icon('heart', favs.includes(l.itemId) ? 'fill' : '')}</button>
           <button class="flag" data-hide="${esc(l.itemId)}" title="La cantidad o la comida está mal detectada">Está mal</button>
+          <button class="btn ghost sm" data-watch="${esc(l.itemId)}">${engine.getState().watches?.[l.itemId] ? '🔔 Siguiendo precio' : '🔔 Avisarme si baja'}</button>
         </div>`).join('')}</div>
       <a class="btn ghost block" style="margin-top:14px" data-rest="${esc(p.restaurant.id)}">Ver todo el menú del local</a>
     </div>
@@ -927,7 +947,7 @@ engine.on(({ type }) => {
 });
 
 document.addEventListener('click', e => {
-  const t = e.target.closest('[data-palette],[data-people],[data-results],[data-decide],[data-swipe],[data-cmd],[data-spin],[data-tab],[data-hunger],[data-cat],[data-money],[data-add],[data-fav],[data-fav-plan],[data-plan],[data-rest],[data-close],[data-hide],[data-unhide],[data-confirm],[data-remove],[data-toptab],[data-step],[data-enable],[data-exclude],[data-suggest],[data-assist-toggle],[data-assist-enable],[data-item],[data-iqty],[data-when],[data-eta],[data-km],[data-fitness],[data-kcal],[data-goal],[data-group-start],[data-gq],[data-group-share],[data-group-cart],[data-group-back],[data-block-rest],[data-unblock-rest],#sheet-wrap');
+  const t = e.target.closest('[data-palette],[data-people],[data-results],[data-decide],[data-swipe],[data-cmd],[data-spin],[data-tab],[data-hunger],[data-cat],[data-money],[data-add],[data-fav],[data-fav-plan],[data-plan],[data-rest],[data-close],[data-hide],[data-unhide],[data-confirm],[data-remove],[data-toptab],[data-step],[data-enable],[data-exclude],[data-suggest],[data-assist-toggle],[data-assist-enable],[data-item],[data-iqty],[data-when],[data-eta],[data-km],[data-fitness],[data-kcal],[data-goal],[data-group-start],[data-gq],[data-group-share],[data-group-cart],[data-group-back],[data-block-rest],[data-unblock-rest],[data-watch],#sheet-wrap');
   if (!t) return;
   const d = t.dataset;
 
@@ -984,6 +1004,14 @@ document.addEventListener('click', e => {
     return;
   }
   if (d.fav) { e.stopPropagation(); const was = engine.getState().favorites.includes(d.fav); engine.toggleFavorite(d.fav); toast(was ? 'Sacado de favoritos' : '❤️ Guardado en favoritos'); return; }
+  if (d.watch) {
+    e.stopPropagation();
+    const item = engine.item(d.watch);
+    if (!item) return;
+    if (engine.getState().watches?.[d.watch]) { engine.unwatchPrice(d.watch); toast('Dejaste de seguir ese precio'); }
+    else { engine.watchPrice(d.watch, Math.max(1, Math.round(item.price * .95 / 100) * 100)); toast(`🔔 Te aviso si baja a ${ars(Math.max(1, Math.round(item.price * .95 / 100) * 100))}`); }
+    return;
+  }
   if (d.hide) {
     engine.hideItem(d.hide);
     closeSheet(); reopen = null;
@@ -1322,7 +1350,21 @@ function bindDrag(card) {
   if (!card || card.dataset.bound) return;
   card.dataset.bound = '1';
   let x0 = 0, dx = 0, dragging = false;
-  card.addEventListener('pointerdown', e => { dragging = true; x0 = e.clientX; card.setPointerCapture(e.pointerId); card.classList.add('drag'); });
+  // La foto no se arrastra ni se selecciona: si no, el navegador arranca su propio arrastre de imagen
+  // (o el menú de "guardar imagen") y el deslizamiento a veces anda y a veces no.
+  card.addEventListener('dragstart', e => e.preventDefault());
+  card.addEventListener('contextmenu', e => e.preventDefault());
+  card.querySelectorAll('img').forEach(img => { img.draggable = false; });
+  card.addEventListener('pointerdown', e => {
+    if (e.button > 0) return;
+    e.preventDefault(); // sin selección de texto ni arrastre nativo
+    dragging = true; dx = 0; x0 = e.clientX;
+    card.setPointerCapture(e.pointerId); card.classList.add('drag');
+  });
+  // Si el navegador cancela el gesto, la carta vuelve a su lugar (antes quedaba torcida a mitad de camino).
+  card.addEventListener('pointercancel', () => {
+    dragging = false; dx = 0; card.classList.remove('drag', 'to-yes', 'to-no'); card.style.transform = '';
+  });
   card.addEventListener('pointermove', e => {
     if (!dragging) return;
     dx = e.clientX - x0;
@@ -1331,6 +1373,7 @@ function bindDrag(card) {
     card.classList.toggle('to-no', dx < -60);
   });
   card.addEventListener('pointerup', () => {
+    if (!dragging) return;
     dragging = false; card.classList.remove('drag');
     if (dx > 100) swipe('right'); else if (dx < -100) swipe('left');
     else { card.style.transform = ''; card.classList.remove('to-yes', 'to-no'); }
@@ -1902,14 +1945,20 @@ async function notifyPriceDrops() {
   const seenKey = 'ryb:notified';
   let seen = [];
   try { seen = JSON.parse(localStorage.getItem(seenKey)) || []; } catch {}
-  const fresh = engine.priceAlerts().filter(it => !seen.includes(`${it.id}@${it.price}`));
+  const drops = engine.priceAlerts().map(it => ({ ...it, alertKind: 'drop' }));
+  const targets = engine.watchedItems().filter(it => it.watch.reached).map(it => ({ ...it, alertKind: 'target' }));
+  const fresh = [...drops, ...targets].filter(it => !seen.includes(`${it.alertKind}:${it.id}@${it.price}`));
   if (!fresh.length) return;
   const reg = await navigator.serviceWorker?.getRegistration();
-  const body = fresh.slice(0, 3).map(it => `${it.name}: ${ars(it.priceChange.from)} → ${ars(it.price)}`).join('\n');
-  const title = fresh.length === 1 ? '📉 Bajó algo que te gusta' : `📉 Bajaron ${fresh.length} cosas que te gustan`;
+  const body = fresh.slice(0, 3).map(it => it.alertKind === 'target'
+    ? `${it.name}: llegó a ${ars(it.price)} (objetivo ${ars(it.watch.target)})`
+    : `${it.name}: ${ars(it.priceChange.from)} → ${ars(it.price)}`).join('\n');
+  const title = fresh.length === 1
+    ? (fresh[0].alertKind === 'target' ? '🎯 Llegó a tu precio' : '📉 Bajó algo que te gusta')
+    : `🔔 Hay ${fresh.length} novedades de precio`;
   if (reg) reg.showNotification(title, { body, icon: 'icons/icon-192.png', tag: 'bajas' });
   else new Notification(title, { body });
-  try { localStorage.setItem(seenKey, JSON.stringify([...seen, ...fresh.map(it => `${it.id}@${it.price}`)].slice(-200))); } catch {}
+  try { localStorage.setItem(seenKey, JSON.stringify([...seen, ...fresh.map(it => `${it.alertKind}:${it.id}@${it.price}`)].slice(-200))); } catch {}
 }
 
 if ('serviceWorker' in navigator) {
@@ -1927,7 +1976,7 @@ if ('serviceWorker' in navigator) {
 // Clics y teclas de las funciones de esta sección
 // =====================================================================
 document.addEventListener('click', async e => {
-  const t = e.target.closest('[data-ask],[data-mic],[data-claude],[data-clear-temp],[data-showclosed],[data-rate],[data-skip],[data-split],[data-split-units],[data-split-people],[data-split-tip],[data-split-copy],[data-ticket],[data-manual],[data-save-order],[data-key-save],[data-key-test],[data-key-clear],[data-install],[data-notify],[data-ai-provider],[data-ai-detect]');
+  const t = e.target.closest('[data-ask],[data-mic],[data-claude],[data-clear-temp],[data-showclosed],[data-rate],[data-skip],[data-split],[data-split-units],[data-split-people],[data-split-tip],[data-split-copy],[data-ticket],[data-manual],[data-save-order],[data-key-save],[data-key-test],[data-key-clear],[data-install],[data-notify],[data-ai-provider],[data-ai-detect],[data-address-save],[data-address-reset],[data-unwatch]');
   if (!t) return;
   const d = t.dataset;
   if ('ask' in d) { understand($('#ask').value); return; }
@@ -1952,6 +2001,9 @@ document.addEventListener('click', async e => {
   if ('ticket' in d) { openTicket({ withPhoto: true }); return; }
   if ('manual' in d) { openTicket({ withPhoto: false }); return; }
   if ('saveOrder' in d) { saveExternalOrder(); return; }
+  if ('addressSave' in d) { ui.address = $('#delivery-address')?.value.trim() || ''; saveUi(); toast(`📍 Entrega: ${deliveryAddress()}`); render(); return; }
+  if ('addressReset' in d) { ui.address = ''; saveUi(); toast(`📍 Volvimos a ${catalogAddress}`); render(); return; }
+  if (d.unwatch) { engine.unwatchPrice(d.unwatch); toast('Dejaste de seguir ese precio'); return; }
   if ('keySave' in d) { const k = $('#ai-key').value.trim(); if (!k) { toast('Pegá la clave primero'); return; } setKey(k); toast('🔑 Clave guardada en este navegador'); render(); return; }
   if ('keyTest' in d) { toast('Probando…'); const t0 = performance.now(); try { await testAI(); toast(`✅ ${aiLabel()} responde (${((performance.now() - t0) / 1000).toFixed(1)} s)`); } catch (err) { toast(err.message); } return; }
   if (d.aiProvider) { setProvider(d.aiProvider); render(); return; }
